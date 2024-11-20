@@ -23,13 +23,32 @@ bool ModelCreator::Create(System *system)
 
     const double Simulation_time=100; // Simulation Time in Days
 
-    //Model properties
-    const double S_s_concentration=0;
-    const double X_b_concentration=1;
-    const double r_storage=1000;
+    //Model Properties
+    const double v_settling_vel=10000; // Unit: m/day
+    const double v_S_s_concentration=0;
+    const double v_X_b_concentration=1;
+    const double v_r_storage=1000;
+    const double v_mu=2;
+    const double v_Ks=20;
+    const double v_Y=0.5;
+    const double v_b=0.3;
+    const double v_r_constant_flow=800; //Unit: m3/day
+    const double v_s_t_storage=200; //Settling element top: initial storage
+    const double v_s_t_bottom_elevation=1; //Settling element top: bottom elevation
+    const double v_s_b_storage=200; //Settling element bottom: initial storage
+    const double v_s_b_bottom_elevation=0; //Settling element bottom: bottom elevation
+    const double v_r_st_flow=1700; //Link: Reactor to Settling element top: flow
+    const double v_st_c_flow=750; //Link: Settling element top to Clarifier: flow
+    const double v_st_sb_flow=950; //Link: Settling element top to Settling element bottom: flow
+    const double v_st_sb_area=100; //Link: Settling element top to Settling element bottom: area
+    const double v_sb_r_flow=900; //Link: Settling element bottom to Reactor: flow
+    const double v_sb_was_flow=50; //Link: Settling element bottom to WAS: flow
 
 
-    //Model configuration
+
+    //Model Configuration
+
+    //Consistuents
     Constituent S_s;
     S_s.SetQuantities(system, "Constituent");
     S_s.SetName("S_s");
@@ -37,47 +56,35 @@ bool ModelCreator::Create(System *system)
     system->AddConstituent(S_s,false);
 
     Constituent X_b;
-    X_b.SetQuantities(system, "Constituent");
+    X_b.SetQuantities(system, "Particle");
     X_b.SetName("X_b");
-    X_b.SetType("Constituent");
+    X_b.SetType("Particle");
+    X_b.SetVal("settling_velocity",v_settling_vel);
     system->AddConstituent(X_b,false);
 
-    /*
-    Constituent Settled_Particles;
-    Settled_Particles.SetQuantities(system, "Immobile_Constituent");
-    Settled_Particles.SetName("Settled_Particles");
-    Settled_Particles.SetType("Immobile_Constituent");
-    system->AddConstituent(Settled_Particles,false);
-     */
-
-    //RxnParameter Rxparam_K;
-    //Rxparam_K.SetQuantities(system,"ReactionParameter");
-    //Rxparam_K.SetName("K");
-    //Rxparam_K.SetVal("base_value",0.1);
-    //system->AddReactionParameter(Rxparam_K, false);
-
+    //Reaction Parameters
     RxnParameter mu;
     mu.SetQuantities(system,"ReactionParameter");
     mu.SetName("mu");
-    mu.SetVal("base_value",2);
+    mu.SetVal("base_value",v_mu);
     system->AddReactionParameter(mu, false);
 
     RxnParameter Ks;
     Ks.SetQuantities(system,"ReactionParameter");
     Ks.SetName("Ks");
-    Ks.SetVal("base_value",20);
+    Ks.SetVal("base_value",v_Ks);
     system->AddReactionParameter(Ks, false);
 
     RxnParameter Y;
     Y.SetQuantities(system,"ReactionParameter");
     Y.SetName("Y");
-    Y.SetVal("base_value",0.5);
+    Y.SetVal("base_value",v_Y);
     system->AddReactionParameter(Y, false);
 
     RxnParameter b;
     b.SetQuantities(system,"ReactionParameter");
     b.SetName("b");
-    b.SetVal("base_value",0.3);
+    b.SetVal("base_value",v_b);
     system->AddReactionParameter(b, false);
 
     Reaction Growth;
@@ -96,6 +103,7 @@ bool ModelCreator::Create(System *system)
     Decay.SetProperty("rate_expression","(b*X_b)");
     system->AddReaction(Decay,false);
 
+    //Settling Elements
     Block Stl_element_top;
     Stl_element_top.SetQuantities(system, "Settling element");
     Stl_element_top.SetName("Settling element top");
@@ -115,8 +123,8 @@ bool ModelCreator::Create(System *system)
 
     Stl_element_top.SetVal("Settled_Particles:concentration",0);
     Stl_element_top.SetVal("Solids:concentration",0);
-    Stl_element_top.SetVal("Storage",20);
-    Stl_element_top.SetVal("bottom_elevation",0);
+    Stl_element_top.SetVal("Storage",v_s_t_storage);
+    Stl_element_top.SetVal("bottom_elevation",v_s_t_bottom_elevation);
     Stl_element_top.SetVal("x",800);
     Stl_element_top.SetVal("y",600);
     system->AddBlock(Stl_element_top,false);
@@ -140,12 +148,13 @@ bool ModelCreator::Create(System *system)
 
     Stl_element_bottom.SetVal("Settled_Particles:concentration",0);
     Stl_element_bottom.SetVal("Solids:concentration",0);
-    Stl_element_bottom.SetVal("Storage",20);
-    Stl_element_bottom.SetVal("bottom_elevation",0);
+    Stl_element_bottom.SetVal("Storage",v_s_b_storage);
+    Stl_element_bottom.SetVal("bottom_elevation",v_s_b_bottom_elevation);
     Stl_element_bottom.SetVal("x",800);
     Stl_element_bottom.SetVal("y",1000);
     system->AddBlock(Stl_element_bottom,false);
 
+    //Fixed Head Blocks
     Block fh_clarifier;
     fh_clarifier.SetQuantities(system, "fixed_head");
     fh_clarifier.SetName("Clarifier");
@@ -168,14 +177,16 @@ bool ModelCreator::Create(System *system)
     fh_WAS.SetVal("y",1000);
     system->AddBlock(fh_WAS,false);
 
+    //Reactor Block
     Block Reactor;
     Reactor.SetQuantities(system, "Reactor");
     Reactor.SetName("Reactor");
     Reactor.SetType("Reactor");
-    Reactor.SetProperty("S_s:Inflow concentration","/home/behzad/Projects/ASM_Models/ASM GUI Model/Inflow_S.txt");
-    Reactor.SetVal("S_s:concentration",S_s_concentration);
-    Reactor.SetVal("X_b:concentration",X_b_concentration);
-    Reactor.SetVal("Storage",r_storage);
+    Reactor.SetProperty("S_s:inflow_concentration","/home/behzad/Projects/ASM_Models/ASM GUI Model/Inflow_S.txt");
+    Reactor.SetVal("S_s:concentration",v_S_s_concentration);
+    Reactor.SetVal("X_b:concentration",v_X_b_concentration);
+    Reactor.SetVal("Storage",v_r_storage);
+    Reactor.SetVal("constant_inflow",v_r_constant_flow);
     Reactor.SetVal("x",400);
     Reactor.SetVal("y",800);
 
@@ -217,47 +228,50 @@ bool ModelCreator::Create(System *system)
     inflow_timeseries.CreateConstant(0,Simulation_time, r_inflow);
     inflow_timeseries.writefile("/home/behzad/Projects/ASM_Models/inflow.csv");
 
-    Reactor.SetVal("constant_inflow",r_inflow);
+    //Reactor.SetVal("constant_inflow",r_inflow);
 
     system->AddBlock(Reactor,false);
 
     //system->block("Reactor (1)")->SetProperty("inflow","/home/behzad/Projects/ASM_Models/inflow.txt");
 
+    //Links
     Link l_r_st;
     l_r_st.SetQuantities(system, "Fixed flow");
     l_r_st.SetName("Reactor - Settling element top");
     l_r_st.SetType("Fixed flow");
-    l_r_st.SetVal("flow", r_inflow);
+    l_r_st.SetVal("flow", v_r_st_flow);
     system->AddLink(l_r_st, "Reactor", "Settling element top", false);
 
     Link l_st_c;
     l_st_c.SetQuantities(system, "Fixed flow");
     l_st_c.SetName("Settling element top - Clarifier");
     l_st_c.SetType("Fixed flow");
-    l_st_c.SetVal("flow", r_inflow);
+    l_st_c.SetVal("flow", v_st_c_flow);
     system->AddLink(l_st_c, "Settling element top", "Clarifier", false);
 
     Link l_st_sb;
     l_st_sb.SetQuantities(system, "Settling element interface");
     l_st_sb.SetName("Settling element top - Settling element bottom");
     l_st_sb.SetType("Settling element interface");
-    l_st_sb.SetVal("flow", r_inflow);
+    l_st_sb.SetVal("flow", v_st_sb_flow);
+    l_st_sb.SetVal("area", v_st_sb_area);
     system->AddLink(l_st_sb, "Settling element top", "Settling element bottom", false);
 
     Link l_sb_r;
     l_sb_r.SetQuantities(system, "Fixed flow");
     l_sb_r.SetName("Settling element bottom - Reactor");
     l_sb_r.SetType("Fixed flow");
-    l_sb_r.SetVal("flow", r_inflow);
+    l_sb_r.SetVal("flow", v_sb_r_flow);
     system->AddLink(l_sb_r, "Settling element bottom", "Reactor", false);
 
-    Link l_st_was;
-    l_st_was.SetQuantities(system, "Fixed flow");
-    l_st_was.SetName("Settling element bottom - WAS");
-    l_st_was.SetType("Fixed flow");
-    l_st_was.SetVal("flow", r_inflow);
-    system->AddLink(l_st_was, "Settling element bottom", "WAS", false);
+    Link l_sb_was;
+    l_sb_was.SetQuantities(system, "Fixed flow");
+    l_sb_was.SetName("Settling element bottom - WAS");
+    l_sb_was.SetType("Fixed flow");
+    l_sb_was.SetVal("flow", v_sb_was_flow);
+    system->AddLink(l_sb_was, "Settling element bottom", "WAS", false);
 
+    //Observations
     Observation total_inflow;
 
     total_inflow.SetQuantities(system, "Observation");
