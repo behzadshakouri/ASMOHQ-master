@@ -21,34 +21,11 @@ bool ModelCreator::Create(System *system)
     system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/mass_transfer.json");
     system->ReadSystemSettingsTemplate("/home/behzad/Projects/OpenHydroQual/resources/settings.json");
 
-    const double Simulation_time=100; // Simulation Time in Days
+    const double Simulation_time=1; // Simulation Time in Days
 
-    //Model Properties
-    const double v_settling_vel=10000; // X_b : Unit: m/day
-    const double v_S_S_concentration=0;
-    const double v_X_b_concentration=1;
-    const double v_r_storage=1000;
-    const double v_mu=2;
-    const double v_Ks=20;
-    const double v_Y=0.5;
-    const double v_b=0.3;
-    const double v_r_constant_flow=800; // Reactor: Constant flow : Unit: m3/day
-    const double v_s_t_storage=200; // Settling element top: initial storage
-    const double v_s_t_bottom_elevation=1; // Settling element top: bottom elevation
-    const double v_s_b_storage=200; // Settling element bottom: initial storage
-    const double v_s_b_bottom_elevation=0; // Settling element bottom: bottom elevation
-    const double v_r_st_flow=1700; // Link: Reactor to Settling element top: flow
-    const double v_st_c_flow=750; // Link: Settling element top to Clarifier: flow
-    const double v_st_sb_flow=950; // Link: Settling element top to Settling element bottom: flow
-    const double v_st_sb_area=100; // Link: Settling element top to Settling element bottom: area
-    const double v_sb_r_flow=900; // Link: Settling element bottom to Reactor: flow
-    const double v_sb_was_flow=50; // Link: Settling element bottom to WAS: flow
+    // Model Configuration
 
-
-
-    //Model Configuration
-
-    //Consistuents
+    // Consistuents
     Constituent S_S;
     S_S.SetQuantities(system, "Constituent");
     S_S.SetName("S_S");
@@ -127,48 +104,321 @@ bool ModelCreator::Create(System *system)
     S_ND.SetType("Constituent");
     system->AddConstituent(S_ND,false);
 
-    //Reaction Parameters
-    RxnParameter mu;
-    mu.SetQuantities(system,"ReactionParameter");
-    mu.SetName("mu");
-    mu.SetVal("base_value",v_mu);
-    system->AddReactionParameter(mu, false);
 
-    RxnParameter Ks;
-    Ks.SetQuantities(system,"ReactionParameter");
-    Ks.SetName("Ks");
-    Ks.SetVal("base_value",v_Ks);
-    system->AddReactionParameter(Ks, false);
+    // Reaction Parameters
+    RxnParameter mu_H;
+    mu_H.SetQuantities(system,"ReactionParameter");
+    mu_H.SetName("mu_H");
+    mu_H.SetVal("base_value",v_mu_H);
+    system->AddReactionParameter(mu_H, false);
 
-    RxnParameter Y;
-    Y.SetQuantities(system,"ReactionParameter");
-    Y.SetName("Y");
-    Y.SetVal("base_value",v_Y);
-    system->AddReactionParameter(Y, false);
+    RxnParameter K_S;
+    K_S.SetQuantities(system,"ReactionParameter");
+    K_S.SetName("K_S");
+    K_S.SetVal("base_value",v_K_S);
+    system->AddReactionParameter(K_S, false);
 
-    RxnParameter b;
-    b.SetQuantities(system,"ReactionParameter");
-    b.SetName("b");
-    b.SetVal("base_value",v_b);
-    system->AddReactionParameter(b, false);
+    RxnParameter K_MH;
+    K_MH.SetQuantities(system,"ReactionParameter");
+    K_MH.SetName("K_MH");
+    K_MH.SetVal("base_value",v_K_MH);
+    system->AddReactionParameter(K_MH, false);
 
-    Reaction Growth;
-    Growth.SetQuantities(system,"Reaction");
-    Growth.SetName("Growth");
-    Growth.SetProperty("S_S:stoichiometric_constant","(0-1/Y)");
-    Growth.SetProperty("X_b:stoichiometric_constant","1");
-    Growth.SetProperty("rate_expression","(mu*S_S/(Ks+S_S)*X_b)");
-    system->AddReaction(Growth,false);
+    RxnParameter K_OH;
+    K_OH.SetQuantities(system,"ReactionParameter");
+    K_OH.SetName("K_OH");
+    K_OH.SetVal("base_value",v_K_OH);
+    system->AddReactionParameter(K_OH, false);
 
-    Reaction Decay;
-    Decay.SetQuantities(system,"Reaction");
-    Decay.SetName("Decay");
-    Decay.SetProperty("S_S:stoichiometric_constant","1");
-    Decay.SetProperty("X_b:stoichiometric_constant","-1");
-    Decay.SetProperty("rate_expression","(b*X_b)");
-    system->AddReaction(Decay,false);
+    RxnParameter K_NOH;
+    K_NOH.SetQuantities(system,"ReactionParameter");
+    K_NOH.SetName("K_NOH");
+    K_NOH.SetVal("base_value",v_K_NOH);
+    system->AddReactionParameter(K_NOH, false);
 
-    //Settling Elements
+    RxnParameter eta_g;
+    eta_g.SetQuantities(system,"ReactionParameter");
+    eta_g.SetName("eta_g");
+    eta_g.SetVal("base_value",v_eta_g);
+    system->AddReactionParameter(eta_g, false);
+
+    RxnParameter b_H;
+    b_H.SetQuantities(system,"ReactionParameter");
+    b_H.SetName("b_H");
+    b_H.SetVal("base_value",v_b_H);
+    system->AddReactionParameter(b_H, false);
+
+    RxnParameter K_NH;
+    K_NH.SetQuantities(system,"ReactionParameter");
+    K_NH.SetName("K_NH");
+    K_NH.SetVal("base_value",v_K_NH);
+    system->AddReactionParameter(K_NH, false);
+
+    RxnParameter mu_M;
+    mu_M.SetQuantities(system,"ReactionParameter");
+    mu_M.SetName("mu_M");
+    mu_M.SetVal("base_value",v_mu_M);
+    system->AddReactionParameter(mu_M, false);
+
+    RxnParameter K_MM;
+    K_MM.SetQuantities(system,"ReactionParameter");
+    K_MM.SetName("K_MM");
+    K_MM.SetVal("base_value",v_K_MM);
+    system->AddReactionParameter(K_MM, false);
+
+    RxnParameter K_OM;
+    K_OM.SetQuantities(system,"ReactionParameter");
+    K_OM.SetName("K_OM");
+    K_OM.SetVal("base_value",v_K_OM);
+    system->AddReactionParameter(K_OM, false);
+
+    RxnParameter K_NOM;
+    K_NOM.SetQuantities(system,"ReactionParameter");
+    K_NOM.SetName("K_NOM");
+    K_NOM.SetVal("base_value",v_K_NOM);
+    system->AddReactionParameter(K_NOM, false);
+
+    RxnParameter b_M;
+    b_M.SetQuantities(system,"ReactionParameter");
+    b_M.SetName("b_M");
+    b_M.SetVal("base_value",v_b_M);
+    system->AddReactionParameter(b_M, false);
+
+    RxnParameter mu_A;
+    mu_A.SetQuantities(system,"ReactionParameter");
+    mu_A.SetName("mu_A");
+    mu_A.SetVal("base_value",v_mu_A);
+    system->AddReactionParameter(mu_A, false);
+
+    RxnParameter K_NHA;
+    K_NHA.SetQuantities(system,"ReactionParameter");
+    K_NHA.SetName("K_NHA");
+    K_NHA.SetVal("base_value",v_K_NHA);
+    system->AddReactionParameter(K_NHA, false);
+
+    RxnParameter K_NOA;
+    K_NOA.SetQuantities(system,"ReactionParameter");
+    K_NOA.SetName("K_NOA");
+    K_NOA.SetVal("base_value",v_K_NOA);
+    system->AddReactionParameter(K_NOA, false);
+
+    RxnParameter K_OA;
+    K_OA.SetQuantities(system,"ReactionParameter");
+    K_OA.SetName("K_OA");
+    K_OA.SetVal("base_value",v_K_OA);
+    system->AddReactionParameter(K_OA, false);
+
+    RxnParameter b_A;
+    b_A.SetQuantities(system,"ReactionParameter");
+    b_A.SetName("b_A");
+    b_A.SetVal("base_value",v_b_A);
+    system->AddReactionParameter(b_A, false);
+
+    RxnParameter eta_h;
+    eta_h.SetQuantities(system,"ReactionParameter");
+    eta_h.SetName("eta_h");
+    eta_h.SetVal("base_value",v_eta_h);
+    system->AddReactionParameter(eta_h, false);
+
+    RxnParameter K_h;
+    K_h.SetQuantities(system,"ReactionParameter");
+    K_h.SetName("K_h");
+    K_h.SetVal("base_value",v_K_h);
+    system->AddReactionParameter(K_h, false);
+
+    RxnParameter K_X;
+    K_X.SetQuantities(system,"ReactionParameter");
+    K_X.SetName("K_X");
+    K_X.SetVal("base_value",v_K_X);
+    system->AddReactionParameter(K_X, false);
+
+    RxnParameter K_a;
+    K_a.SetQuantities(system,"ReactionParameter");
+    K_a.SetName("K_a");
+    K_a.SetVal("base_value",v_K_a);
+    system->AddReactionParameter(K_a, false);
+
+    RxnParameter Y_H;
+    Y_H.SetQuantities(system,"ReactionParameter");
+    Y_H.SetName("Y_H");
+    Y_H.SetVal("base_value",v_Y_H);
+    system->AddReactionParameter(Y_H, false);
+
+    RxnParameter Y_HM;
+    Y_HM.SetQuantities(system,"ReactionParameter");
+    Y_HM.SetName("Y_HM");
+    Y_HM.SetVal("base_value",v_Y_HM);
+    system->AddReactionParameter(Y_HM, false);
+
+    RxnParameter Y_A;
+    Y_A.SetQuantities(system,"ReactionParameter");
+    Y_A.SetName("Y_A");
+    Y_A.SetVal("base_value",v_Y_A);
+    system->AddReactionParameter(Y_A, false);
+
+    RxnParameter Y_M;
+    Y_M.SetQuantities(system,"ReactionParameter");
+    Y_M.SetName("Y_M");
+    Y_M.SetVal("base_value",v_Y_M);
+    system->AddReactionParameter(Y_M, false);
+
+    RxnParameter f_p;
+    f_p.SetQuantities(system,"ReactionParameter");
+    f_p.SetName("f_p");
+    f_p.SetVal("base_value",v_f_p);
+    system->AddReactionParameter(f_p, false);
+
+    RxnParameter i_XB;
+    i_XB.SetQuantities(system,"ReactionParameter");
+    i_XB.SetName("i_XB");
+    i_XB.SetVal("base_value",v_i_XB);
+    system->AddReactionParameter(i_XB, false);
+
+    RxnParameter i_VSSB;
+    i_VSSB.SetQuantities(system,"ReactionParameter");
+    i_VSSB.SetName("i_VSSB");
+    i_VSSB.SetVal("base_value",v_i_VSSB);
+    system->AddReactionParameter(i_VSSB, false);
+
+    RxnParameter i_VSSi;
+    i_VSSi.SetQuantities(system,"ReactionParameter");
+    i_VSSi.SetName("i_VSSi");
+    i_VSSi.SetVal("base_value",v_i_VSSi);
+    system->AddReactionParameter(i_VSSi, false);
+
+    RxnParameter i_VSSs;
+    i_VSSs.SetQuantities(system,"ReactionParameter");
+    i_VSSs.SetName("i_VSSs");
+    i_VSSs.SetVal("base_value",v_i_VSSs);
+    system->AddReactionParameter(i_VSSs, false);
+
+    RxnParameter i_VSSP;
+    i_VSSP.SetQuantities(system,"ReactionParameter");
+    i_VSSP.SetName("i_VSSP");
+    i_VSSP.SetVal("base_value",v_i_VSSP);
+    system->AddReactionParameter(i_VSSP, false);
+
+    RxnParameter i_MeOH;
+    i_MeOH.SetQuantities(system,"ReactionParameter");
+    i_MeOH.SetName("i_MeOH");
+    i_MeOH.SetVal("base_value",v_i_MeOH);
+    system->AddReactionParameter(i_MeOH, false);
+
+    RxnParameter k_LO2;
+    k_LO2.SetQuantities(system,"ReactionParameter");
+    k_LO2.SetName("k_LO2");
+    k_LO2.SetVal("base_value",v_k_LO2);
+    system->AddReactionParameter(k_LO2, false);
+
+
+    // Reactions
+    Reaction AerobicGH; // Reaction 1
+    AerobicGH.SetQuantities(system,"Reaction");
+    AerobicGH.SetName("AerobicGH");
+    AerobicGH.SetProperty("S_S:stoichiometric_constant","(0-1/Y_H)");
+    AerobicGH.SetProperty("S_O:stoichiometric_constant","(0-(1-1/Y_H)/Y_H)");
+    AerobicGH.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
+    AerobicGH.SetProperty("X_BH:stoichiometric_constant","(X_BH)");
+    AerobicGH.SetProperty("rate_expression","(mu_H*(S_S/(K_S+S_S))*(S_O/(K_OH+S_O))*(S_NH/(K_NH+S_NH))*X_BH)");
+    system->AddReaction(AerobicGH,false);
+
+    Reaction AerobicGHM; // Reaction 2
+    AerobicGHM.SetQuantities(system,"Reaction");
+    AerobicGHM.SetName("AerobicGHM");
+    AerobicGHM.SetProperty("S_M:stoichiometric_constant","(0-1/Y_HM)");
+    AerobicGHM.SetProperty("S_O:stoichiometric_constant","(0-(1-1/Y_H)/Y_H)");
+    AerobicGHM.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
+    AerobicGHM.SetProperty("X_BH:stoichiometric_constant","(X_BH)");
+    AerobicGHM.SetProperty("rate_expression","(mu_H*(S_M/(K_MH+S_M))*(S_O/(K_OH+S_O))*(S_NH/(K_NH+S_NH))*X_BH)");
+    system->AddReaction(AerobicGHM,false);
+
+    Reaction AnoxicGH; // Reaction 3
+    AnoxicGH.SetQuantities(system,"Reaction");
+    AnoxicGH.SetName("AnoxicGH");
+    AnoxicGH.SetProperty("S_M:stoichiometric_constant","(0-1/Y_H)");
+    AnoxicGH.SetProperty("S_NO:stoichiometric_constant","(0-(1-1/Y_H)/(2.86*Y_H))");
+    AnoxicGH.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
+    AnoxicGH.SetProperty("X_BH:stoichiometric_constant","(X_BH)");
+    AnoxicGH.SetProperty("rate_expression","(mu_H*(S_S/(K_S+S_S))*(K_OH/(K_OH+S_O))*(S_NO/(K_NOH+S_NO))*(S_NH/(K_NH+S_NH))*eta_g*X_BH)");
+    system->AddReaction(AnoxicGH,false);
+
+    Reaction AnoxicGM; // Reaction 4
+    AnoxicGM.SetQuantities(system,"Reaction");
+    AnoxicGM.SetName("AnoxicGM");
+    AnoxicGM.SetProperty("S_M:stoichiometric_constant","(0-1/Y_M)");
+    AnoxicGM.SetProperty("S_NO:stoichiometric_constant","(0-(1-1/Y_M)/(2.86*Y_M))");
+    AnoxicGM.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
+    AnoxicGM.SetProperty("X_BM:stoichiometric_constant","(X_BM)");
+    AnoxicGM.SetProperty("rate_expression","(mu_M*(S_M/(K_MM+S_M))*(K_OM/(K_OM+S_O))*(S_NO/(K_NOM+S_NO))*(S_NH/(K_NH+S_NH))*X_BM)");
+    system->AddReaction(AnoxicGM,false);
+
+    Reaction AerobicGA; // Reaction 5
+    AerobicGA.SetQuantities(system,"Reaction");
+    AerobicGA.SetName("AerobicGA");
+    AerobicGA.SetProperty("S_O:stoichiometric_constant","(0-((4.57-Y_A)/Y_A)");
+    AerobicGA.SetProperty("S_NH:stoichiometric_constant","(0-(i_XB+(1/Y_A)))");
+    AerobicGA.SetProperty("X_BA:stoichiometric_constant","(X_BA)");
+    AerobicGA.SetProperty("S_O:stoichiometric_constant","(1/Y_A)");
+    AerobicGA.SetProperty("rate_expression","(mu_A*(S_O/(K_OA+S_O))*(S_NH/(K_NHA+S_NH))*X_BA)");
+    system->AddReaction(AerobicGA,false);
+
+    Reaction DecayH; // Reaction 6
+    DecayH.SetQuantities(system,"Reaction");
+    DecayH.SetName("DecayH");
+    DecayH.SetProperty("X_BH:stoichiometric_constant","(-1)");
+    DecayH.SetProperty("X_S:stoichiometric_constant","(1-f_p)");
+    DecayH.SetProperty("X_p:stoichiometric_constant","(f_p)");
+    DecayH.SetProperty("X_ND:stoichiometric_constant","((1-f_p)*i_XB)");
+    DecayH.SetProperty("rate_expression","(b_H*(S_O/(K_OH+S_O)+(eta_h*(S_NO/(K_NOH+S_NO))*(K_OH/(K_OH+S_O)))*X_BH))");
+    system->AddReaction(DecayH,false);
+
+    Reaction DecayM; // Reaction 7
+    DecayM.SetQuantities(system,"Reaction");
+    DecayM.SetName("DecayM");
+    DecayM.SetProperty("X_BM:stoichiometric_constant","(-1)");
+    DecayM.SetProperty("X_S:stoichiometric_constant","(1-f_p)");
+    DecayM.SetProperty("X_p:stoichiometric_constant","(f_p)");
+    DecayM.SetProperty("X_ND:stoichiometric_constant","((1-f_p)*i_XB)");
+    DecayM.SetProperty("rate_expression","(b_M*(S_O/(K_OM+S_O)+(eta_h*(S_NO/(K_NOM+S_NO))*(K_OM/(K_OM+S_O)))*X_BM))");
+    system->AddReaction(DecayM,false);
+
+    Reaction DecayA; // Reaction 8
+    DecayA.SetQuantities(system,"Reaction");
+    DecayA.SetName("DecayA");
+    DecayA.SetProperty("X_BA:stoichiometric_constant","(-1)");
+    DecayA.SetProperty("X_S:stoichiometric_constant","(1-f_p)");
+    DecayA.SetProperty("X_p:stoichiometric_constant","(f_p)");
+    DecayA.SetProperty("X_ND:stoichiometric_constant","((1-f_p)*i_XB)");
+    DecayA.SetProperty("rate_expression","(b_A*(S_O/(K_OA+S_O)+(eta_h*(S_NO/(K_NOA+S_NO))*(K_OA/(K_OA+S_O)))*X_BA))");
+    system->AddReaction(DecayA,false);
+
+    Reaction AmmonificationSON; // Reaction 9
+    AmmonificationSON.SetQuantities(system,"Reaction");
+    AmmonificationSON.SetName("AmmonificationSON");
+    AmmonificationSON.SetProperty("S_ND:stoichiometric_constant","(-1)");
+    AmmonificationSON.SetProperty("S_NH:stoichiometric_constant","(1)");
+    AmmonificationSON.SetProperty("rate_expression","(K_a*S_ND*(X_BH+X_BM+X_BA))");
+    system->AddReaction(AmmonificationSON,false);
+
+    Reaction HydrolysisEO; // Reaction 10
+    HydrolysisEO.SetQuantities(system,"Reaction");
+    HydrolysisEO.SetName("HydrolysisEO");
+    HydrolysisEO.SetProperty("X_S:stoichiometric_constant","(-1)");
+    HydrolysisEO.SetProperty("S_S:stoichiometric_constant","(1)");
+    HydrolysisEO.SetProperty("rate_expression","(K_h*(X_S/(X_BH+X_BM+X_BA))/(K_X+(X_S/(X_BH+X_BM+X_BA)))*((S_O/(K_OH+S_O))+(eta_h*(S_NO/(K_NOH+S_NO))*(K_OH/(K_OH+S_O))))*(X_BH+X_BM+X_BA))");
+    system->AddReaction(HydrolysisEO,false);
+
+
+    Reaction HydrolysisEON; // Reaction 11
+    HydrolysisEON.SetQuantities(system,"Reaction");
+    HydrolysisEON.SetName("HydrolysisEON");
+    HydrolysisEON.SetProperty("X_ND:stoichiometric_constant","(-1)");
+    HydrolysisEON.SetProperty("S_ND:stoichiometric_constant","(1)");
+    HydrolysisEON.SetProperty("rate_expression","((X_ND/X_S)*K_h*(X_S/(X_BH+X_BM+X_BA))/(K_X+(X_S/(X_BH+X_BM+X_BA)))*((S_O/(K_OH+S_O))+(eta_h*(S_NO/(K_NOH+S_NO))*(K_OH/(K_OH+S_O))))*(X_BH+X_BM+X_BA))");
+    system->AddReaction(HydrolysisEON,false);
+
+
+    // Settling Elements
     Block Stl_element_top;
     Stl_element_top.SetQuantities(system, "Settling element");
     Stl_element_top.SetName("Settling element top");
@@ -219,7 +469,8 @@ bool ModelCreator::Create(System *system)
     Stl_element_bottom.SetVal("y",1000);
     system->AddBlock(Stl_element_bottom,false);
 
-    //Fixed Head Blocks
+
+    // Fixed Head Blocks
     Block fh_clarifier;
     fh_clarifier.SetQuantities(system, "fixed_head");
     fh_clarifier.SetName("Clarifier");
@@ -242,14 +493,17 @@ bool ModelCreator::Create(System *system)
     fh_WAS.SetVal("y",1000);
     system->AddBlock(fh_WAS,false);
 
-    //Reactor Block
+
+    // Reactor Block
     Block Reactor;
     Reactor.SetQuantities(system, "Reactor");
     Reactor.SetName("Reactor");
     Reactor.SetType("Reactor");
     Reactor.SetProperty("S_S:inflow_concentration","/home/behzad/Projects/ASM_Models/ASM GUI Model/Inflow_S.txt");
     Reactor.SetVal("S_S:concentration",v_S_S_concentration);
-    Reactor.SetVal("X_b:concentration",v_X_b_concentration);
+    Reactor.SetVal("S_O:concentration",v_S_O_concentration);
+    Reactor.SetVal("S_NH:concentration",v_S_NH_concentration);
+    Reactor.SetVal("X_BH:concentration",v_X_BH_concentration);
     Reactor.SetVal("Storage",v_r_storage);
     Reactor.SetVal("constant_inflow",v_r_constant_flow);
     Reactor.SetVal("x",400);
@@ -299,7 +553,8 @@ bool ModelCreator::Create(System *system)
 
     //system->block("Reactor (1)")->SetProperty("inflow","/home/behzad/Projects/ASM_Models/inflow.txt");
 
-    //Links
+
+    // Links
     Link l_r_st;
     l_r_st.SetQuantities(system, "Fixed flow");
     l_r_st.SetName("Reactor - Settling element top");
@@ -336,7 +591,7 @@ bool ModelCreator::Create(System *system)
     l_sb_was.SetVal("flow", v_sb_was_flow);
     system->AddLink(l_sb_was, "Settling element bottom", "WAS", false);
 
-    //Observations
+    // Observations
     Observation total_inflow;
 
     total_inflow.SetQuantities(system, "Observation");
@@ -383,15 +638,42 @@ bool ModelCreator::Create(System *system)
     return true;
 }
 
+/*
 
+bool ModelCreator::Model_Properties()
+{
+    //Model Properties
+    const double v_Y_H=0.611;
+    const double v_i_XB=0.058;
+    const double v_mu_H=1.742;
+    const double v_K_S=8.065;
+    const double v_K_OH=0.030;
+    const double v_K_NH=0.014;
 
+    const double v_settling_vel=10000; // X_b : Unit: m/day
+    const double v_S_S_concentration=0;
+    const double v_X_b_concentration=1;
+    const double v_r_storage=1000;
+    const double v_mu=2;
+    const double v_Ks=20;
+    const double v_Y=0.5;
+    const double v_b=0.3;
+    const double v_r_constant_flow=800; // Reactor: Constant flow : Unit: m3/day
+    const double v_s_t_storage=200; // Settling element top: initial storage
+    const double v_s_t_bottom_elevation=1; // Settling element top: bottom elevation
+    const double v_s_b_storage=200; // Settling element bottom: initial storage
+    const double v_s_b_bottom_elevation=0; // Settling element bottom: bottom elevation
+    const double v_r_st_flow=1700; // Link: Reactor to Settling element top: flow
+    const double v_st_c_flow=750; // Link: Settling element top to Clarifier: flow
+    const double v_st_sb_flow=950; // Link: Settling element top to Settling element bottom: flow
+    const double v_st_sb_area=100; // Link: Settling element top to Settling element bottom: area
+    const double v_sb_r_flow=900; // Link: Settling element bottom to Reactor: flow
+    const double v_sb_was_flow=50; // Link: Settling element bottom to WAS: flow
 
+    return true;
+}
 
-
-
-
-
-
+*/
 
 
 
