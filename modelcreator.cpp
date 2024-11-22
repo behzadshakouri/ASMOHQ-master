@@ -21,7 +21,7 @@ bool ModelCreator::Create(System *system)
     system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/mass_transfer.json");
     system->ReadSystemSettingsTemplate("/home/behzad/Projects/OpenHydroQual/resources/settings.json");
 
-    const double Simulation_time=0.2; // Simulation Time in Days
+    const double Simulation_time=1; // Simulation Time in Days
 
     // Model Configuration
 
@@ -378,7 +378,7 @@ bool ModelCreator::Create(System *system)
     DecayH.SetProperty("X_S:stoichiometric_constant","(1-f_p)");
     DecayH.SetProperty("X_p:stoichiometric_constant","(f_p)");
     DecayH.SetProperty("X_ND:stoichiometric_constant","((1-f_p)*i_XB)");
-    DecayH.SetProperty("rate_expression","(b_H*(S_O/(K_OH+S_O)+(eta_h*(S_NO/(K_NOH+S_NO))*(K_OH/(K_OH+S_O)))*X_BH))");
+    DecayH.SetProperty("rate_expression","(b_H*(S_O/(K_OH+S_O)+eta_h*S_NO/(K_NOH+S_NO)*K_OH/(K_OH+S_O))*X_BH)");
     system->AddReaction(DecayH,false);
 
     Reaction DecayM; // Reaction 7
@@ -388,7 +388,7 @@ bool ModelCreator::Create(System *system)
     DecayM.SetProperty("X_S:stoichiometric_constant","(1-f_p)");
     DecayM.SetProperty("X_p:stoichiometric_constant","(f_p)");
     DecayM.SetProperty("X_ND:stoichiometric_constant","((1-f_p)*i_XB)");
-    DecayM.SetProperty("rate_expression","(b_M*(S_O/(K_OM+S_O)+(eta_h*(S_NO/(K_NOM+S_NO))*(K_OM/(K_OM+S_O)))*X_BM))");
+    DecayM.SetProperty("rate_expression","(b_M*(S_O/(K_OM+S_O)+eta_h*S_NO/(K_NOM+S_NO)*K_OM/(K_OM+S_O))*X_BM)");
     system->AddReaction(DecayM,false);
 
     Reaction DecayA; // Reaction 8
@@ -398,7 +398,7 @@ bool ModelCreator::Create(System *system)
     DecayA.SetProperty("X_S:stoichiometric_constant","(1-f_p)");
     DecayA.SetProperty("X_p:stoichiometric_constant","(f_p)");
     DecayA.SetProperty("X_ND:stoichiometric_constant","((1-f_p)*i_XB)");
-    DecayA.SetProperty("rate_expression","(b_A*(S_O/(K_OA+S_O)+(eta_h*(S_NO/(K_NOA+S_NO))*(K_OA/(K_OA+S_O)))*X_BA))");
+    DecayA.SetProperty("rate_expression","(b_A*(S_O/(K_OA+S_O)+eta_h*S_NO/(K_NOA+S_NO)*K_OA/(K_OA+S_O))*X_BA)");
     system->AddReaction(DecayA,false);
 
     Reaction AmmonificationSON; // Reaction 9
