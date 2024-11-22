@@ -21,7 +21,7 @@ bool ModelCreator::Create(System *system)
     system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/mass_transfer.json");
     system->ReadSystemSettingsTemplate("/home/behzad/Projects/OpenHydroQual/resources/settings.json");
 
-    const double Simulation_time=1; // Simulation Time in Days
+    const double Simulation_time=0.2; // Simulation Time in Days
 
     // Model Configuration
 
@@ -312,9 +312,9 @@ bool ModelCreator::Create(System *system)
 
 
     // Sources
-
     Source Aeration;
     Aeration.SetQuantities(system, "atmospheric exchange");
+    Aeration.SetType("atmospheric exchange");
     Aeration.SetName("Aeration");
     Aeration.SetVal("rate_coefficient",v_a_rate_coefficient);
     Aeration.SetVal("saturation",v_a_saturation);
@@ -327,7 +327,7 @@ bool ModelCreator::Create(System *system)
     AerobicGH.SetProperty("S_S:stoichiometric_constant","(0-1/Y_H)");
     AerobicGH.SetProperty("S_O:stoichiometric_constant","(0-(1-Y_H)/Y_H)");
     AerobicGH.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
-    AerobicGH.SetProperty("X_BH:stoichiometric_constant","(X_BH)");
+    AerobicGH.SetProperty("X_BH:stoichiometric_constant","(1)");
     AerobicGH.SetProperty("rate_expression","(mu_H*(S_S/(K_S+S_S))*(S_O/(K_OH+S_O))*(S_NH/(K_NH+S_NH))*X_BH)");
     system->AddReaction(AerobicGH,false);
 
@@ -337,17 +337,17 @@ bool ModelCreator::Create(System *system)
     AerobicGHM.SetProperty("S_M:stoichiometric_constant","(0-1/Y_HM)");
     AerobicGHM.SetProperty("S_O:stoichiometric_constant","(0-(1-Y_H)/Y_H)");
     AerobicGHM.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
-    AerobicGHM.SetProperty("X_BH:stoichiometric_constant","(X_BH)");
+    AerobicGHM.SetProperty("X_BH:stoichiometric_constant","(1)");
     AerobicGHM.SetProperty("rate_expression","(mu_H*(S_M/(K_MH+S_M))*(S_O/(K_OH+S_O))*(S_NH/(K_NH+S_NH))*X_BH)");
     system->AddReaction(AerobicGHM,false);
 
     Reaction AnoxicGH; // Reaction 3
     AnoxicGH.SetQuantities(system,"Reaction");
     AnoxicGH.SetName("AnoxicGH");
-    AnoxicGH.SetProperty("S_M:stoichiometric_constant","(0-1/Y_H)");
+    AnoxicGH.SetProperty("S_S:stoichiometric_constant","(0-1/Y_H)");
     AnoxicGH.SetProperty("S_NO:stoichiometric_constant","(0-(1-Y_H)/(2.86*Y_H))");
     AnoxicGH.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
-    AnoxicGH.SetProperty("X_BH:stoichiometric_constant","(X_BH)");
+    AnoxicGH.SetProperty("X_BH:stoichiometric_constant","(1)");
     AnoxicGH.SetProperty("rate_expression","(mu_H*(S_S/(K_S+S_S))*(K_OH/(K_OH+S_O))*(S_NO/(K_NOH+S_NO))*(S_NH/(K_NH+S_NH))*eta_g*X_BH)");
     system->AddReaction(AnoxicGH,false);
 
@@ -357,16 +357,16 @@ bool ModelCreator::Create(System *system)
     AnoxicGM.SetProperty("S_M:stoichiometric_constant","(0-1/Y_M)");
     AnoxicGM.SetProperty("S_NO:stoichiometric_constant","(0-(1-Y_M)/(2.86*Y_M))");
     AnoxicGM.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
-    AnoxicGM.SetProperty("X_BM:stoichiometric_constant","(X_BM)");
+    AnoxicGM.SetProperty("X_BM:stoichiometric_constant","(1)");
     AnoxicGM.SetProperty("rate_expression","(mu_M*(S_M/(K_MM+S_M))*(K_OM/(K_OM+S_O))*(S_NO/(K_NOM+S_NO))*(S_NH/(K_NH+S_NH))*X_BM)");
     system->AddReaction(AnoxicGM,false);
 
     Reaction AerobicGA; // Reaction 5
     AerobicGA.SetQuantities(system,"Reaction");
     AerobicGA.SetName("AerobicGA");
-    AerobicGA.SetProperty("S_O:stoichiometric_constant","(0-((4.57-Y_A)/Y_A)");
-    AerobicGA.SetProperty("S_NH:stoichiometric_constant","(0-(i_XB+(1/Y_A)))");
-    AerobicGA.SetProperty("X_BA:stoichiometric_constant","(X_BA)");
+    AerobicGA.SetProperty("S_O:stoichiometric_constant","(0-(4.57-Y_A)/Y_A)");
+    AerobicGA.SetProperty("S_NH:stoichiometric_constant","(0-(i_XB+1/Y_A))");
+    AerobicGA.SetProperty("X_BA:stoichiometric_constant","(1)");
     AerobicGA.SetProperty("S_NO:stoichiometric_constant","(1/Y_A)");
     AerobicGA.SetProperty("rate_expression","(mu_A*(S_O/(K_OA+S_O))*(S_NH/(K_NHA+S_NH))*X_BA)");
     system->AddReaction(AerobicGA,false);
@@ -443,8 +443,6 @@ bool ModelCreator::Create(System *system)
     Coag.writefile("/home/behzad/Projects/ASM_Models/coagulant_mfr.csv");
     Stl_element_top.SetProperty("Coagulant:external_mass_flow_timeseries","/home/behzad/Projects/ASM_Models/coagulant_mfr.csv");
 
-    //Stl_element_top.SetProperty("Coagulant:external_mass_flow_timeseries","/home/behzad/Projects/ASM_Models/coagulant_mfr.txt");
-
     Stl_element_top.SetVal("Settled_Particles:concentration",0);
     Stl_element_top.SetVal("Solids:concentration",0);
     Stl_element_top.SetVal("Storage",v_s_t_storage);
@@ -467,8 +465,6 @@ bool ModelCreator::Create(System *system)
     //Reactor.Variable("Coagulant:external_mass_flow_timeseries")->SetTimeSeries(Coag);
     Coag2.writefile("/home/behzad/Projects/ASM_Models/coagulant_mfr.csv");
     Stl_element_bottom.SetProperty("Coagulant:external_mass_flow_timeseries","/home/behzad/Projects/ASM_Models/coagulant_mfr.csv");
-
-    //Stl_element_bottom.SetProperty("Coagulant:external_mass_flow_timeseries","/home/behzad/Projects/ASM_Models/coagulant_mfr.txt");
 
     Stl_element_bottom.SetVal("Settled_Particles:concentration",0);
     Stl_element_bottom.SetVal("Solids:concentration",0);
@@ -508,60 +504,73 @@ bool ModelCreator::Create(System *system)
     Reactor.SetQuantities(system, "Reactor");
     Reactor.SetName("Reactor");
     Reactor.SetType("Reactor");
-    Reactor.SetProperty("S_S:inflow_concentration","/home/behzad/Projects/ASM_Models/ASM GUI Model/Inflow_S.txt");
-    Reactor.SetVal("S_O:external_source","Aeration");
+
     Reactor.SetVal("S_S:concentration",v_S_S_concentration);
     Reactor.SetVal("S_O:concentration",v_S_O_concentration);
+    Reactor.SetVal("S_M:concentration",v_S_M_concentration);
+    Reactor.SetVal("S_NO:concentration",v_S_NO_concentration);
     Reactor.SetVal("S_NH:concentration",v_S_NH_concentration);
+    Reactor.SetVal("S_ND:concentration",v_S_ND_concentration);
+/*
+    Reactor.SetVal("X_S:concentration",v_X_S_concentration);
+    Reactor.SetVal("X_p:concentration",v_X_p_concentration);
     Reactor.SetVal("X_BH:concentration",v_X_BH_concentration);
+    Reactor.SetVal("X_BM:concentration",v_X_BM_concentration);
+    Reactor.SetVal("X_BA:concentration",v_X_BA_concentration);
+    Reactor.SetVal("X_ND:concentration",v_X_ND_concentration);
+*/
     Reactor.SetVal("Storage",v_r_storage);
     Reactor.SetVal("constant_inflow",v_r_constant_flow);
     Reactor.SetVal("x",400);
     Reactor.SetVal("y",800);
 
-    CTimeSeries<double> SolidConcentrationNS;
-    SolidConcentrationNS.CreateOUProcess(0,Simulation_time,0.05,1);
-    SolidConcentrationNS.writefile("/home/behzad/Projects/ASM_Models/inflow_concentration_NS.csv");
-    vector<double> params; params.push_back(3); params.push_back(1);
-    CTimeSeries<double> SolidConcentration = SolidConcentrationNS.MapfromNormalScoreToDistribution("lognormal", params);
-    //Reactor.Variable("Solids:inflow_concentration")->SetTimeSeries(SolidConcentration);
-    SolidConcentration.writefile("/home/behzad/Projects/ASM_Models/inflow_concentration.csv");
-    Reactor.SetProperty("Solids:inflow_concentration","/home/behzad/Projects//inflow_concentration.csv");
-
-    //Reactor.SetProperty("Solids:inflow_concentration","/home/behzad/Projects/ASM_Models/inflow_concentration.txt");
-
-    /*CTimeSeries<double> InflowNS;
-    InflowNS.CreateOUProcess(0,100,0.05,1);
-    vector<double> i_params; i_params.push_back(1.5); i_params.push_back(0.7);
-    CTimeSeries<double> Inflow = InflowNS.MapfromNormalScoreToDistribution("lognormal", i_params);
-    //Reactor.Variable("inflow")->SetTimeSeries(Inflow);
-    Inflow.writefile("/home/behzad/Projects/ASM_Models/inflow.csv");
-    Reactor.SetProperty("inflow","/home/behzad/Projects/ASM_Models/inflow.csv");
-    */
-
-    // ----- Producing Constant Random Inflow -----
-
-    // Seed the random number generator with the current time
-    srand(time(0));
-
-    /*// Generate a random number between 1 and 10
-    int r_inflow = rand() % 10 + 1;*/
-
-    // Generate a random double between 0 and 1
-    double randomValue = (double)rand() / RAND_MAX;
-
-    // Scale the random value to the range 1-10
-    double r_inflow = randomValue * 9 + 1;
-
-    CTimeSeries<double> inflow_timeseries;
-    inflow_timeseries.CreateConstant(0,Simulation_time, r_inflow);
-    inflow_timeseries.writefile("/home/behzad/Projects/ASM_Models/inflow.csv");
-
-    //Reactor.SetVal("constant_inflow",r_inflow);
-
     system->AddBlock(Reactor,false);
 
-    //system->block("Reactor (1)")->SetProperty("inflow","/home/behzad/Projects/ASM_Models/inflow.txt");
+    system->block("Reactor")->SetProperty("S_O:external_source","Aeration"); // Reactor does not have source "Aeration", so we have to call it!
+
+    // Producing Constant Flows and Assining to the system
+
+    CTimeSeries<double> S_S_inflow_concentration;
+    S_S_inflow_concentration.CreateConstant(0,Simulation_time, v_S_S_concentration);
+    S_S_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_S_inflow_concentration.txt");
+
+    system->block("Reactor")->SetProperty("S_S:inflow_concentration","/home/behzad/Projects/ASM_Models/S_S_inflow_concentration.txt");
+
+    CTimeSeries<double> X_S_inflow_concentration;
+    X_S_inflow_concentration.CreateConstant(0,Simulation_time, v_X_S_concentration);
+    X_S_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_S_inflow_concentration.txt");
+
+    system->block("Reactor")->SetProperty("X_S:inflow_concentration","/home/behzad/Projects/ASM_Models/X_S_inflow_concentration.txt");
+
+    CTimeSeries<double> X_p_inflow_concentration;
+    X_p_inflow_concentration.CreateConstant(0,Simulation_time, v_X_p_concentration);
+    X_p_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_p_inflow_concentration.txt");
+
+    system->block("Reactor")->SetProperty("X_p:inflow_concentration","/home/behzad/Projects/ASM_Models/X_p_inflow_concentration.txt");
+
+    CTimeSeries<double> S_NO_inflow_concentration;
+    S_NO_inflow_concentration.CreateConstant(0,Simulation_time, v_S_NO_concentration);
+    S_NO_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_NO_inflow_concentration.txt");
+
+    system->block("Reactor")->SetProperty("S_NO:inflow_concentration","/home/behzad/Projects/ASM_Models/S_NO_inflow_concentration.txt");
+
+    CTimeSeries<double> S_NH_inflow_concentration;
+    S_NH_inflow_concentration.CreateConstant(0,Simulation_time, v_S_NH_concentration);
+    S_NH_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_NH_inflow_concentration.txt");
+
+    system->block("Reactor")->SetProperty("S_NH:inflow_concentration","/home/behzad/Projects/ASM_Models/S_NH_inflow_concentration.txt");
+
+    CTimeSeries<double> S_ND_inflow_concentration;
+    S_ND_inflow_concentration.CreateConstant(0,Simulation_time, v_S_ND_concentration);
+    S_ND_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_ND_inflow_concentration.txt");
+
+    system->block("Reactor")->SetProperty("S_ND:inflow_concentration","/home/behzad/Projects/ASM_Models/S_ND_inflow_concentration.txt");
+
+    CTimeSeries<double> X_ND_inflow_concentration;
+    X_ND_inflow_concentration.CreateConstant(0,Simulation_time, v_X_ND_concentration);
+    X_ND_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_ND_inflow_concentration.txt");
+
+    system->block("Reactor")->SetProperty("X_ND:inflow_concentration","/home/behzad/Projects/ASM_Models/X_ND_inflow_concentration.txt");
 
 
     // Links
@@ -651,6 +660,49 @@ bool ModelCreator::Create(System *system)
 
 
 
+
+// ----- Producing OUProcessed Random Inflow -----
+
+/*
+
+    CTimeSeries<double> SolidConcentrationNS;
+    SolidConcentrationNS.CreateOUProcess(0,Simulation_time,0.05,1);
+    SolidConcentrationNS.writefile("/home/behzad/Projects/ASM_Models/inflow_concentration_NS.csv");
+    vector<double> params; params.push_back(3); params.push_back(1);
+    CTimeSeries<double> SolidConcentration = SolidConcentrationNS.MapfromNormalScoreToDistribution("lognormal", params);
+//Reactor.Variable("Solids:inflow_concentration")->SetTimeSeries(SolidConcentration);
+    SolidConcentration.writefile("/home/behzad/Projects/ASM_Models/inflow_concentration.csv");
+    Reactor.SetProperty("Solids:inflow_concentration","/home/behzad/Projects/ASM_Models/inflow_concentration.csv");
+
+/*
+    CTimeSeries<double> InflowNS;
+    InflowNS.CreateOUProcess(0,100,0.05,1);
+    vector<double> i_params; i_params.push_back(1.5); i_params.push_back(0.7);
+    CTimeSeries<double> Inflow = InflowNS.MapfromNormalScoreToDistribution("lognormal", i_params);
+    //Reactor.Variable("inflow")->SetTimeSeries(Inflow);
+    Inflow.writefile("/home/behzad/Projects/ASM_Models/inflow.csv");
+    Reactor.SetProperty("inflow","/home/behzad/Projects/ASM_Models/inflow.csv");
+    */
+
+/*
+
+// ----- Producing Constant Random Inflow -----
+
+// Seed the random number generator with the current time
+srand(time(0));
+
+/*
+// Generate a random number between 1 and 10
+    int r_inflow = rand() % 10 + 1;*/
+
+// Generate a random double between 0 and 1
+/*
+double randomValue = (double)rand() / RAND_MAX;
+
+// Scale the random value to the range 1-10
+double r_inflow = randomValue * 9 + 1;
+
+*/
 
 
 

@@ -51,18 +51,20 @@ public:
     const double v_k_LO2=190.446;
 
     // Constituents Concentration
-    const double v_S_S_concentration=0.1;
-    const double v_S_O_concentration=0.2;
-    const double v_S_NH_concentration=0.1;
-    const double v_X_BH_concentration=1;
-    const double v_S_M_concentration=0.05;
-    const double v_S_NO_concentration=0.05;
-    const double v_X_BM_concentration=0.2;
-    const double v_X_BA_concentration=0.1;
-    const double v_X_S_concentration=0.05;
-    const double v_X_p_concentration=0.05;
-    const double v_X_ND_concentration=0.06;
-    const double v_S_ND_concentration=0.06;
+    const double v_S_S_concentration=0.5;
+    const double v_S_O_concentration=0.1;
+    const double v_S_NH_concentration=1;
+    const double v_S_M_concentration=0;
+    const double v_S_NO_concentration=1;
+    const double v_S_ND_concentration=1;
+
+    const double v_X_BM_concentration=1450;
+    const double v_X_BH_concentration=460;
+    const double v_X_BA_concentration=180;
+    const double v_X_S_concentration=9;
+    const double v_X_p_concentration=350;
+    const double v_X_ND_concentration=1;
+
     const double v_a_rate_coefficient=10;
     const double v_a_saturation=8.55;
 
