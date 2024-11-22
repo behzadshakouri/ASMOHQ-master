@@ -44,13 +44,6 @@ bool ModelCreator::Create(System *system)
     S_NH.SetType("Constituent");
     system->AddConstituent(S_NH,false);
 
-    Constituent X_BH;
-    X_BH.SetQuantities(system, "Particle");
-    X_BH.SetName("X_BH");
-    X_BH.SetType("Particle");
-    X_BH.SetVal("settling_velocity",v_settling_vel);
-    system->AddConstituent(X_BH,false);
-
     Constituent S_M;
     S_M.SetQuantities(system, "Constituent");
     S_M.SetName("S_M");
@@ -63,12 +56,25 @@ bool ModelCreator::Create(System *system)
     S_NO.SetType("Constituent");
     system->AddConstituent(S_NO,false);
 
+    Constituent S_ND;
+    S_ND.SetQuantities(system, "Constituent");
+    S_ND.SetName("S_ND");
+    S_ND.SetType("Constituent");
+    system->AddConstituent(S_ND,false);
+
     Constituent X_BM;
     X_BM.SetQuantities(system, "Particle");
     X_BM.SetName("X_BM");
     X_BM.SetType("Particle");
     X_BM.SetVal("settling_velocity",v_settling_vel);
     system->AddConstituent(X_BM,false);
+
+    Constituent X_BH;
+    X_BH.SetQuantities(system, "Particle");
+    X_BH.SetName("X_BH");
+    X_BH.SetType("Particle");
+    X_BH.SetVal("settling_velocity",v_settling_vel);
+    system->AddConstituent(X_BH,false);
 
     Constituent X_BA;
     X_BA.SetQuantities(system, "Particle");
@@ -97,12 +103,6 @@ bool ModelCreator::Create(System *system)
     X_ND.SetType("Particle");
     X_ND.SetVal("settling_velocity",v_settling_vel);
     system->AddConstituent(X_ND,false);
-
-    Constituent S_ND;
-    S_ND.SetQuantities(system, "Constituent");
-    S_ND.SetName("S_ND");
-    S_ND.SetType("Constituent");
-    system->AddConstituent(S_ND,false);
 
 
     // Reaction Parameters
@@ -311,12 +311,21 @@ bool ModelCreator::Create(System *system)
     system->AddReactionParameter(k_LO2, false);
 
 
+    // Sources
+
+    Source Aeration;
+    Aeration.SetQuantities(system, "atmospheric exchange");
+    Aeration.SetName("Aeration");
+    Aeration.SetVal("rate_coefficient",v_a_rate_coefficient);
+    Aeration.SetVal("saturation",v_a_saturation);
+    system->AddSource(Aeration, false);
+
     // Reactions
     Reaction AerobicGH; // Reaction 1
     AerobicGH.SetQuantities(system,"Reaction");
     AerobicGH.SetName("AerobicGH");
     AerobicGH.SetProperty("S_S:stoichiometric_constant","(0-1/Y_H)");
-    AerobicGH.SetProperty("S_O:stoichiometric_constant","(0-(1-1/Y_H)/Y_H)");
+    AerobicGH.SetProperty("S_O:stoichiometric_constant","(0-(1-Y_H)/Y_H)");
     AerobicGH.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
     AerobicGH.SetProperty("X_BH:stoichiometric_constant","(X_BH)");
     AerobicGH.SetProperty("rate_expression","(mu_H*(S_S/(K_S+S_S))*(S_O/(K_OH+S_O))*(S_NH/(K_NH+S_NH))*X_BH)");
@@ -326,7 +335,7 @@ bool ModelCreator::Create(System *system)
     AerobicGHM.SetQuantities(system,"Reaction");
     AerobicGHM.SetName("AerobicGHM");
     AerobicGHM.SetProperty("S_M:stoichiometric_constant","(0-1/Y_HM)");
-    AerobicGHM.SetProperty("S_O:stoichiometric_constant","(0-(1-1/Y_H)/Y_H)");
+    AerobicGHM.SetProperty("S_O:stoichiometric_constant","(0-(1-Y_H)/Y_H)");
     AerobicGHM.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
     AerobicGHM.SetProperty("X_BH:stoichiometric_constant","(X_BH)");
     AerobicGHM.SetProperty("rate_expression","(mu_H*(S_M/(K_MH+S_M))*(S_O/(K_OH+S_O))*(S_NH/(K_NH+S_NH))*X_BH)");
@@ -336,7 +345,7 @@ bool ModelCreator::Create(System *system)
     AnoxicGH.SetQuantities(system,"Reaction");
     AnoxicGH.SetName("AnoxicGH");
     AnoxicGH.SetProperty("S_M:stoichiometric_constant","(0-1/Y_H)");
-    AnoxicGH.SetProperty("S_NO:stoichiometric_constant","(0-(1-1/Y_H)/(2.86*Y_H))");
+    AnoxicGH.SetProperty("S_NO:stoichiometric_constant","(0-(1-Y_H)/(2.86*Y_H))");
     AnoxicGH.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
     AnoxicGH.SetProperty("X_BH:stoichiometric_constant","(X_BH)");
     AnoxicGH.SetProperty("rate_expression","(mu_H*(S_S/(K_S+S_S))*(K_OH/(K_OH+S_O))*(S_NO/(K_NOH+S_NO))*(S_NH/(K_NH+S_NH))*eta_g*X_BH)");
@@ -346,7 +355,7 @@ bool ModelCreator::Create(System *system)
     AnoxicGM.SetQuantities(system,"Reaction");
     AnoxicGM.SetName("AnoxicGM");
     AnoxicGM.SetProperty("S_M:stoichiometric_constant","(0-1/Y_M)");
-    AnoxicGM.SetProperty("S_NO:stoichiometric_constant","(0-(1-1/Y_M)/(2.86*Y_M))");
+    AnoxicGM.SetProperty("S_NO:stoichiometric_constant","(0-(1-Y_M)/(2.86*Y_M))");
     AnoxicGM.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
     AnoxicGM.SetProperty("X_BM:stoichiometric_constant","(X_BM)");
     AnoxicGM.SetProperty("rate_expression","(mu_M*(S_M/(K_MM+S_M))*(K_OM/(K_OM+S_O))*(S_NO/(K_NOM+S_NO))*(S_NH/(K_NH+S_NH))*X_BM)");
@@ -358,7 +367,7 @@ bool ModelCreator::Create(System *system)
     AerobicGA.SetProperty("S_O:stoichiometric_constant","(0-((4.57-Y_A)/Y_A)");
     AerobicGA.SetProperty("S_NH:stoichiometric_constant","(0-(i_XB+(1/Y_A)))");
     AerobicGA.SetProperty("X_BA:stoichiometric_constant","(X_BA)");
-    AerobicGA.SetProperty("S_O:stoichiometric_constant","(1/Y_A)");
+    AerobicGA.SetProperty("S_NO:stoichiometric_constant","(1/Y_A)");
     AerobicGA.SetProperty("rate_expression","(mu_A*(S_O/(K_OA+S_O))*(S_NH/(K_NHA+S_NH))*X_BA)");
     system->AddReaction(AerobicGA,false);
 
@@ -500,6 +509,7 @@ bool ModelCreator::Create(System *system)
     Reactor.SetName("Reactor");
     Reactor.SetType("Reactor");
     Reactor.SetProperty("S_S:inflow_concentration","/home/behzad/Projects/ASM_Models/ASM GUI Model/Inflow_S.txt");
+    Reactor.SetVal("S_O:external_source","Aeration");
     Reactor.SetVal("S_S:concentration",v_S_S_concentration);
     Reactor.SetVal("S_O:concentration",v_S_O_concentration);
     Reactor.SetVal("S_NH:concentration",v_S_NH_concentration);
@@ -638,42 +648,6 @@ bool ModelCreator::Create(System *system)
     return true;
 }
 
-/*
-
-bool ModelCreator::Model_Properties()
-{
-    //Model Properties
-    const double v_Y_H=0.611;
-    const double v_i_XB=0.058;
-    const double v_mu_H=1.742;
-    const double v_K_S=8.065;
-    const double v_K_OH=0.030;
-    const double v_K_NH=0.014;
-
-    const double v_settling_vel=10000; // X_b : Unit: m/day
-    const double v_S_S_concentration=0;
-    const double v_X_b_concentration=1;
-    const double v_r_storage=1000;
-    const double v_mu=2;
-    const double v_Ks=20;
-    const double v_Y=0.5;
-    const double v_b=0.3;
-    const double v_r_constant_flow=800; // Reactor: Constant flow : Unit: m3/day
-    const double v_s_t_storage=200; // Settling element top: initial storage
-    const double v_s_t_bottom_elevation=1; // Settling element top: bottom elevation
-    const double v_s_b_storage=200; // Settling element bottom: initial storage
-    const double v_s_b_bottom_elevation=0; // Settling element bottom: bottom elevation
-    const double v_r_st_flow=1700; // Link: Reactor to Settling element top: flow
-    const double v_st_c_flow=750; // Link: Settling element top to Clarifier: flow
-    const double v_st_sb_flow=950; // Link: Settling element top to Settling element bottom: flow
-    const double v_st_sb_area=100; // Link: Settling element top to Settling element bottom: area
-    const double v_sb_r_flow=900; // Link: Settling element bottom to Reactor: flow
-    const double v_sb_was_flow=50; // Link: Settling element bottom to WAS: flow
-
-    return true;
-}
-
-*/
 
 
 

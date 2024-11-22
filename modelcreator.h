@@ -5,57 +5,7 @@ class System;
 
 struct model_parameters
 {
-    /*
-public:
 
-    //Model Properties
-    const double v_Y_H=0.611;
-    const double v_i_XB=0.058;
-    const double v_mu_H=1.742;
-    const double v_K_S=8.065;
-    const double v_K_OH=0.030;
-    const double v_K_NH=0.014;
-
-
-    const double v_settling_vel=10000; // X_b : Unit: m/day
-    const double v_S_S_concentration=0;
-    const double v_X_b_concentration=1;
-    const double v_r_storage=1000;
-    const double v_mu=2;
-    const double v_Ks=20;
-    const double v_Y=0.5;
-    const double v_b=0.3;
-    const double v_r_constant_flow=800; // Reactor: Constant flow : Unit: m3/day
-    const double v_s_t_storage=200; // Settling element top: initial storage
-    const double v_s_t_bottom_elevation=1; // Settling element top: bottom elevation
-    const double v_s_b_storage=200; // Settling element bottom: initial storage
-    const double v_s_b_bottom_elevation=0; // Settling element bottom: bottom elevation
-    const double v_r_st_flow=1700; // Link: Reactor to Settling element top: flow
-    const double v_st_c_flow=750; // Link: Settling element top to Clarifier: flow
-    const double v_st_sb_flow=950; // Link: Settling element top to Settling element bottom: flow
-    const double v_st_sb_area=100; // Link: Settling element top to Settling element bottom: area
-    const double v_sb_r_flow=900; // Link: Settling element bottom to Reactor: flow
-    const double v_sb_was_flow=50; // Link: Settling element bottom to WAS: flow
-
-*/
-    /*
-    double concentration;
-    double diffusion_coefficient;
-    double stoichiometric_constant;
-
-    double DepthtoGroundWater = 2;
-    double DepthofWell = 1;
-    double RadiousOfInfluence = 1.5;
-    int nr = 10;
-    int nz = 10;
-    double K_sat;
-    double alpha;
-    double n;
-    double rw;
-    double theta_sat;
-    double theta_r;
-    double initial_theta;
-*/
 };
 
 class ModelCreator
@@ -113,6 +63,8 @@ public:
     const double v_X_p_concentration=0.05;
     const double v_X_ND_concentration=0.06;
     const double v_S_ND_concentration=0.06;
+    const double v_a_rate_coefficient=10;
+    const double v_a_saturation=8.55;
 
     // OHQ Model properties
     const double v_settling_vel=10000; // X_b : Unit: m/day
