@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
 
     string Workingfolder="/home/behzad/Projects/ASM_Models/";
     ModelCreator ModCreate;
+
     for (int i=0; i<1; i++)
     {
         System *system=new System();

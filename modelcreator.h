@@ -68,6 +68,12 @@ public:
     const double v_a_rate_coefficient=10;
     const double v_a_saturation=8.55;
 
+    const double p_31=0.57;
+    const double p_32=1.42;
+    const double p_2=0.08;
+    const double p_36=0.05;
+    const double p_3=0.075;
+
     // OHQ Model properties
     const double v_settling_vel=10000; // X_b : Unit: m/day
     const double v_r_storage=1000;
