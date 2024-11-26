@@ -23,39 +23,6 @@ bool ModelCreator::Create(System *system)
 
     const double Simulation_time=1; // Simulation Time in Days
 
-    // Inflow Calculations
-
-    CTimeSeriesSet<double> Inflow_DeNit("/home/behzad/Projects/ASM_Models/Data/DeNit_Influent_Lump.txt",true);
-
-    // Determining coefficients
-
-    const double c_S_i=p_31; // S_i, 8
-    const double c_S_S=1-p_31; // S_S, 8
-    const double c_X_S=0.71*p_32*(1-p_2); // X_S, 2
-    const double c_X_p=0.71*p_32*p_2; // X_p, 2
-    const double c_S_NO=1; // S_NO, 10
-    const double c_S_NH=1; // S_NH, 9
-    const double c_S_ND=p_36*(1-p_31); // S_ND, 8
-    const double c_X_ND=p_3*p_32; // X_ND, 2
-
-    CTimeSeriesSet<double> Inflow_S_i;
-    CTimeSeriesSet<double> Inflow_S_S;
-    CTimeSeriesSet<double> Inflow_X_S;
-    CTimeSeriesSet<double> Inflow_X_p;
-    CTimeSeriesSet<double> Inflow_S_NO;
-    CTimeSeriesSet<double> Inflow_S_NH;
-    CTimeSeriesSet<double> Inflow_S_ND;
-    CTimeSeriesSet<double> Inflow_X_ND;
-
-    Inflow_S_i=c_S_i*Inflow_DeNit.BTC[8];
-    Inflow_S_S=c_S_S*Inflow_DeNit.BTC[8];
-    Inflow_X_S=c_X_S*Inflow_DeNit.BTC[2];
-    Inflow_X_p=c_X_p*Inflow_DeNit.BTC[2];
-    Inflow_S_NO=c_S_NO*Inflow_DeNit.BTC[10];
-    Inflow_S_NH=c_S_NH*Inflow_DeNit.BTC[9];
-    Inflow_S_ND=c_S_ND*Inflow_DeNit.BTC[8];
-    Inflow_X_ND=c_X_ND*Inflow_DeNit.BTC[2];
-
     // Model Configuration
 
     // Consistuents
@@ -561,49 +528,106 @@ bool ModelCreator::Create(System *system)
 
     system->block("Reactor")->SetProperty("S_O:external_source","Aeration"); // Reactor does not have source "Aeration", so we have to call it!
 
-    // Producing Constant Flows and Assining to the system
+    // Producing Constant Inflows
 
     CTimeSeries<double> S_S_inflow_concentration;
     S_S_inflow_concentration.CreateConstant(0,Simulation_time, v_S_S_concentration);
-    S_S_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_S_inflow_concentration.txt");
-
-    system->block("Reactor")->SetProperty("S_S:inflow_concentration","/home/behzad/Projects/ASM_Models/S_S_inflow_concentration.txt");
+    S_S_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_S_constant_inflow_concentration.txt");
 
     CTimeSeries<double> X_S_inflow_concentration;
     X_S_inflow_concentration.CreateConstant(0,Simulation_time, v_X_S_concentration);
-    X_S_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_S_inflow_concentration.txt");
-
-    system->block("Reactor")->SetProperty("X_S:inflow_concentration","/home/behzad/Projects/ASM_Models/X_S_inflow_concentration.txt");
+    X_S_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_S_constant_inflow_concentration.txt");
 
     CTimeSeries<double> X_p_inflow_concentration;
     X_p_inflow_concentration.CreateConstant(0,Simulation_time, v_X_p_concentration);
-    X_p_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_p_inflow_concentration.txt");
-
-    system->block("Reactor")->SetProperty("X_p:inflow_concentration","/home/behzad/Projects/ASM_Models/X_p_inflow_concentration.txt");
+    X_p_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_p_constant_inflow_concentration.txt");
 
     CTimeSeries<double> S_NO_inflow_concentration;
     S_NO_inflow_concentration.CreateConstant(0,Simulation_time, v_S_NO_concentration);
-    S_NO_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_NO_inflow_concentration.txt");
-
-    system->block("Reactor")->SetProperty("S_NO:inflow_concentration","/home/behzad/Projects/ASM_Models/S_NO_inflow_concentration.txt");
+    S_NO_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_NO_constant_inflow_concentration.txt");
 
     CTimeSeries<double> S_NH_inflow_concentration;
     S_NH_inflow_concentration.CreateConstant(0,Simulation_time, v_S_NH_concentration);
-    S_NH_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_NH_inflow_concentration.txt");
-
-    system->block("Reactor")->SetProperty("S_NH:inflow_concentration","/home/behzad/Projects/ASM_Models/S_NH_inflow_concentration.txt");
+    S_NH_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_NH_constant_inflow_concentration.txt");
 
     CTimeSeries<double> S_ND_inflow_concentration;
     S_ND_inflow_concentration.CreateConstant(0,Simulation_time, v_S_ND_concentration);
-    S_ND_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_ND_inflow_concentration.txt");
-
-    system->block("Reactor")->SetProperty("S_ND:inflow_concentration","/home/behzad/Projects/ASM_Models/S_ND_inflow_concentration.txt");
+    S_ND_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_ND_constant_inflow_concentration.txt");
 
     CTimeSeries<double> X_ND_inflow_concentration;
     X_ND_inflow_concentration.CreateConstant(0,Simulation_time, v_X_ND_concentration);
-    X_ND_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_ND_inflow_concentration.txt");
+    X_ND_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_ND_constant_inflow_concentration.txt");
 
-    system->block("Reactor")->SetProperty("X_ND:inflow_concentration","/home/behzad/Projects/ASM_Models/X_ND_inflow_concentration.txt");
+    // Constituents Inflow Calculations from Data
+
+    CTimeSeriesSet<double> Inflow_DeNit("/home/behzad/Projects/ASM_Models/Data/DeNit_Influent_Lump.txt",true);
+
+    // Determining Coefficients
+
+    const double c_S_i=p_31; // S_i, 8 //--
+    const double c_S_S=1-p_31; // S_S, 8
+    const double c_X_S=0.71*p_32*(1-p_2); // X_S, 2
+    const double c_X_p=0.71*p_32*p_2; // X_p, 2
+    const double c_S_NO=1; // S_NO, 10
+    const double c_S_NH=1; // S_NH, 9
+    const double c_S_ND=p_36*(1-p_31); // S_ND, 8
+    const double c_X_ND=p_3*p_32; // X_ND, 2
+
+    // Defining Constituents Inflows
+
+    CTimeSeries<double> Inflow_S_i; //--
+    CTimeSeries<double> Inflow_S_S;
+    CTimeSeries<double> Inflow_X_S;
+    CTimeSeries<double> Inflow_X_p;
+    CTimeSeries<double> Inflow_S_NO;
+    CTimeSeries<double> Inflow_S_NH;
+    CTimeSeries<double> Inflow_S_ND;
+    CTimeSeries<double> Inflow_X_ND;
+
+    // Calculating Inflows
+
+    Inflow_S_i=c_S_i*Inflow_DeNit.BTC[8]; //--
+    Inflow_S_S=c_S_S*Inflow_DeNit.BTC[8];
+    Inflow_X_S=c_X_S*Inflow_DeNit.BTC[2];
+    Inflow_X_p=c_X_p*Inflow_DeNit.BTC[2];
+    Inflow_S_NO=c_S_NO*Inflow_DeNit.BTC[10];
+    Inflow_S_NH=c_S_NH*Inflow_DeNit.BTC[9];
+    Inflow_S_ND=c_S_ND*Inflow_DeNit.BTC[8];
+    Inflow_X_ND=c_X_ND*Inflow_DeNit.BTC[2];
+
+    // Writing to File
+
+    Inflow_S_i.writefile("/home/behzad/Projects/ASM_Models/S_i_Inflow_concentration.txt");
+    Inflow_S_S.writefile("/home/behzad/Projects/ASM_Models/S_S_Inflow_concentration.txt");
+    Inflow_X_S.writefile("/home/behzad/Projects/ASM_Models/X_S_Inflow_concentration.txt");
+    Inflow_X_p.writefile("/home/behzad/Projects/ASM_Models/X_p_Inflow_concentration.txt");
+    Inflow_S_NO.writefile("/home/behzad/Projects/ASM_Models/S_NO_Inflow_concentration.txt");
+    Inflow_S_NH.writefile("/home/behzad/Projects/ASM_Models/S_NH_Inflow_concentration.txt");
+    Inflow_S_ND.writefile("/home/behzad/Projects/ASM_Models/S_ND_Inflow_concentration.txt");
+    Inflow_X_ND.writefile("/home/behzad/Projects/ASM_Models/X_ND_Inflow_concentration.txt");
+
+    // Assigning Constituents Inflows to the system (Reactor)
+
+    // Constant
+/*
+    system->block("Reactor")->SetProperty("S_S:inflow_concentration","/home/behzad/Projects/ASM_Models/S_S_constant_inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("X_S:inflow_concentration","/home/behzad/Projects/ASM_Models/X_S_constant_inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("X_p:inflow_concentration","/home/behzad/Projects/ASM_Models/X_p_constant_inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("S_NO:inflow_concentration","/home/behzad/Projects/ASM_Models/S_NO_constant_inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("S_NH:inflow_concentration","/home/behzad/Projects/ASM_Models/S_NH_constant_inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("S_ND:inflow_concentration","/home/behzad/Projects/ASM_Models/S_ND_constant_inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("X_ND:inflow_concentration","/home/behzad/Projects/ASM_Models/X_ND_constant_inflow_concentration.txt");
+*/
+
+    // Time Varible according Data
+
+    system->block("Reactor")->SetProperty("S_S:inflow_concentration","/home/behzad/Projects/ASM_Models/S_S_Inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("X_S:inflow_concentration","/home/behzad/Projects/ASM_Models/X_S_Inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("X_p:inflow_concentration","/home/behzad/Projects/ASM_Models/X_p_Inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("S_NO:inflow_concentration","/home/behzad/Projects/ASM_Models/S_NO_Inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("S_NH:inflow_concentration","/home/behzad/Projects/ASM_Models/S_NH_Inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("S_ND:inflow_concentration","/home/behzad/Projects/ASM_Models/S_ND_Inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("X_ND:inflow_concentration","/home/behzad/Projects/ASM_Models/X_ND_Inflow_concentration.txt");
 
 
     // Links
@@ -689,35 +713,6 @@ bool ModelCreator::Create(System *system)
     system->SetVariableParents();
     return true;
 }
-
-
-
-
-
-
-/*
- *
-inflow_aggregate, DeNit_Influent_Lump.txt
-                      nconstituents,15
-
-    //  Type     Constituents No.      Influent_Lump_Column      Coefficients
-    // -----------------------------------------------------------------------
-    aggregate,         0, Si                  8,                    p[31]
-    aggregate,         1, Ss                  8,                    1-p[31]
-    aggregate,         4, Xs                  2,                    0.71*p[32]*(1-p[2])
-    aggregate,         8, Xp                  2,                    0.71*p[32]*p[2]
-    aggregate,         10, Sno                10,                   1
-    aggregate,         11, Snh                9,                    1
-    aggregate,         12, Snd                8,                    p[36]*(1-p[31])
-    aggregate,         13, Xnd                2,                    p[3]*p[32]
-    // -----------------------------------------------------------------------
-
-
-p[31]=0.57
-p[32]=1.42
-p[2]=0.08
-p[36]=0.05
-p[3]=0.075
 
 
 
