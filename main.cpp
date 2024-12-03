@@ -59,7 +59,22 @@ int main(int argc, char *argv[])
     PDFs.writetofile(Workingfolder + "Data/PDFs.txt");
 
     CMatrix correlation_matrix = normal_scores.correlation(0,normal_scores.nvars);
-    correlation_matrix.writetofile("correlation_matrix.txt");
+    correlation_matrix.writetofile(Workingfolder + "Data/correlation_matrix.txt");
+
+    vector<double> means = Inflow_DeNit.mean(0);
+    vector<double> stds = Inflow_DeNit.std(0);
+
+    vector<double> logmeans = Inflow_DeNit.Log().mean(0);
+    vector<double> logstds = Inflow_DeNit.Log().std(0);
+
+    CTimeSeries<double> means2 = means;
+    means2.writefile(Workingfolder + "Data/means.txt");
+    CTimeSeries<double> stds2 = stds;
+    stds2.writefile(Workingfolder + "Data/stds.txt");
+    CTimeSeries<double> logmeans2 = logmeans;
+    logmeans2.writefile(Workingfolder + "Data/logmeans.txt");
+    CTimeSeries<double> logstds2 = logstds;
+    logstds2.writefile(Workingfolder + "Data/logstds.txt");
 
     ModelCreator ModCreate;
 

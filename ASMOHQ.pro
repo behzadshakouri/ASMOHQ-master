@@ -11,12 +11,12 @@ CONFIG += c++14
 
 DEFINES += GSL
 
-#CONFIG += Behzad
-#DEFINES += Behzad
+CONFIG += Behzad
+DEFINES += Behzad
 
 
-CONFIG += Arash
-DEFINES += Arash
+#CONFIG += Arash
+#DEFINES += Arash
 
 Behzad {
     OHQPATH = /home/behzad/Projects/OpenHydroQual/aquifolium
