@@ -11,12 +11,12 @@ CONFIG += c++14
 
 DEFINES += GSL
 
-CONFIG += Behzad
-DEFINES += Behzad
+#CONFIG += Behzad
+#DEFINES += Behzad
 
 
-#CONFIG += Arash
-#DEFINES += Arash
+CONFIG += Arash
+DEFINES += Arash
 
 Behzad {
     OHQPATH = /home/behzad/Projects/OpenHydroQual/aquifolium
@@ -25,12 +25,12 @@ Behzad {
     VTK_V = -9.3
 }
 
-#Arash {
-    #OHQPATH = /home/arash/Projects/QAquifolium/aquifolium
-    #VTKBUILDPATH = /home/arash/Projects/VTK/VTK-build
-    #VTKHEADERPATH = /home/arash/Projects/VTK
-    #VTK_V = -9.0
-#}
+Arash {
+    OHQPATH = /home/arash/Projects/QAquifolium/aquifolium
+    VTKBUILDPATH = /home/arash/Projects/VTK/VTK-build
+    VTKHEADERPATH = /home/arash/Projects/VTK
+    VTK_V = -9.0
+}
 
 DEFINES += use_VTK ARMA_USE_SUPERLU _ARMA
 CONFIG += use_VTK

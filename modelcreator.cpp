@@ -560,7 +560,11 @@ bool ModelCreator::Create(System *system)
 
     // Constituents Inflow Calculations from Data
 
+#ifdef Behzad
     CTimeSeriesSet<double> Inflow_DeNit("/home/behzad/Projects/ASM_Models/Data/DeNit_Influent_Lump.txt",true);
+#else
+    CTimeSeriesSet<double> Inflow_DeNit("/home/arash/Projects/ASM_Models/Data/DeNit_Influent_Lump.txt",true);
+#endif
 
     // Determining Coefficients
 

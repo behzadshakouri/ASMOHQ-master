@@ -9,7 +9,58 @@
 int main(int argc, char *argv[])
 {
 
+#ifdef Behzad
     string Workingfolder="/home/behzad/Projects/ASM_Models/";
+#else
+    string Workingfolder="/home/arash/Projects/ASM_Models/";
+#endif
+
+//Data analysis
+
+    CTimeSeriesSet<double> Inflow_DeNit( Workingfolder + "Data/DeNit_Influent_Lump.txt",true);
+
+//Flow
+    CTimeSeries<double> flow_normal_score = Inflow_DeNit.BTC[0].ConverttoNormalScore();
+    flow_normal_score.writefile(Workingfolder + "Data/flow_normal_score.txt");
+
+    CTimeSeries<double> flow_autocorrelation = flow_normal_score.AutoCorrelation(10,0.5);
+    flow_autocorrelation.writefile(Workingfolder + "Data/flow_autocorrelation.txt");
+
+    CTimeSeries<double> flow_CDF = Inflow_DeNit.BTC[0].GetCummulativeDistribution();
+    flow_CDF.writefile(Workingfolder + "Data/flow_CDF.txt");
+
+    CTimeSeries<double> flow_PDF = Inflow_DeNit.BTC[0].distribution(50,0);
+    flow_PDF.writefile(Workingfolder + "Data/flow_PDF.txt");
+
+//TSS
+    CTimeSeries<double> TSS_normal_score = Inflow_DeNit.BTC[1].ConverttoNormalScore();
+    TSS_normal_score.writefile(Workingfolder + "Data/TSS_normal_score.txt");
+
+    CTimeSeries<double> TSS_autocorrelation = TSS_normal_score.AutoCorrelation(10,0.5);
+    TSS_autocorrelation.writefile(Workingfolder + "Data/TSS_autocorrelation.txt");
+
+    CTimeSeries<double> TSS_CDF = Inflow_DeNit.BTC[1].GetCummulativeDistribution();
+    TSS_CDF.writefile(Workingfolder + "Data/TSS_CDF.txt");
+
+    CTimeSeries<double> TSS_PDF = Inflow_DeNit.BTC[1].distribution(50,0);
+    TSS_PDF.writefile(Workingfolder + "Data/TSS_PDF.txt");
+
+    //everything
+    CTimeSeriesSet<double> normal_scores = Inflow_DeNit.ConverttoNormalScore();
+    normal_scores.writetofile(Workingfolder + "Data/Normal_Scores.txt");
+
+    CTimeSeriesSet<double> autocorrelations = normal_scores.AutoCorrelation(10,0.5);
+    autocorrelations.writetofile(Workingfolder + "Data/autocorrelations.txt");
+
+    CTimeSeriesSet<double> CDFs = Inflow_DeNit.GetCummulativeDistribution();
+    CDFs.writetofile(Workingfolder + "Data/CDFs.txt");
+
+    CTimeSeriesSet<double> PDFs = Inflow_DeNit.distribution(50,Inflow_DeNit.nvars, 0);
+    PDFs.writetofile(Workingfolder + "Data/PDFs.txt");
+
+    CMatrix correlation_matrix = normal_scores.correlation(0,normal_scores.nvars);
+    correlation_matrix.writetofile("correlation_matrix.txt");
+
     ModelCreator ModCreate;
 
     for (int i=0; i<1; i++)
