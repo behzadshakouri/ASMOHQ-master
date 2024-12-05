@@ -80,7 +80,7 @@ public:
 
     // OHQ Model properties
     const double v_settling_vel=10000; // X_b : Unit: m/day
-    const double v_r_storage=10000; // Reactor: Intial Storage : Unit: m3
+    const double v_r_storage=1000; // Reactor: Intial Storage : Unit: m3
     const double v_r_constant_flow=800; // Reactor: Constant flow : Unit: m3/day
     const double v_s_t_storage=200; // Settling element top: initial storage
     const double v_s_t_bottom_elevation=1; // Settling element top: bottom elevation
@@ -88,7 +88,7 @@ public:
     const double v_s_b_bottom_elevation=0; // Settling element bottom: bottom elevation
     const double v_r_st_flow=1700; // Link: Reactor to Settling element top: flow
     const double v_st_c_flow=750; // Link: Settling element top to Clarifier: flow
-    const double v_st_sb_flow=950; // Link: Settling element top to Settling element bottom: flow
+    const double v_st_sb_flow=900; // Link: Settling element top to Settling element bottom: flow
     const double v_st_sb_area=100; // Link: Settling element top to Settling element bottom: area
     const double v_sb_r_flow=900; // Link: Settling element bottom to Reactor: flow
     const double v_sb_was_flow=50; // Link: Settling element bottom to WAS: flow
