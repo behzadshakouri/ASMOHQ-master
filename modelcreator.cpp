@@ -22,6 +22,8 @@ bool ModelCreator::Create(System *system)
     system->ReadSystemSettingsTemplate("/home/behzad/Projects/OpenHydroQual/resources/settings.json");
 
     const double Simulation_time=1; // Simulation Time in Days
+    const double Simulation_start_time=40210; // Simulation Start Date
+    const double Simulation_end_time=40359; // Simulation End Date
 
     // Model Configuration
 
@@ -500,33 +502,48 @@ bool ModelCreator::Create(System *system)
 
 
     // Reactor Block
-    Block Reactor;
-    Reactor.SetQuantities(system, "Reactor");
-    Reactor.SetName("Reactor");
-    Reactor.SetType("Reactor");
+    for (int i=0; i<n_tanks; i++)
+    {
+        Block Reactor;
+        Reactor.SetQuantities(system, "Reactor");
+        Reactor.SetName("Reactor(" + aquiutils::numbertostring(i+1)+")");
+        Reactor.SetType("Reactor");
 
-    Reactor.SetVal("S_S:concentration",v_S_S_concentration);
-    Reactor.SetVal("S_O:concentration",v_S_O_concentration);
-    Reactor.SetVal("S_M:concentration",v_S_M_concentration);
-    Reactor.SetVal("S_NO:concentration",v_S_NO_concentration);
-    Reactor.SetVal("S_NH:concentration",v_S_NH_concentration);
-    Reactor.SetVal("S_ND:concentration",v_S_ND_concentration);
-/*
-    Reactor.SetVal("X_S:concentration",v_X_S_concentration);
-    Reactor.SetVal("X_p:concentration",v_X_p_concentration);
-    Reactor.SetVal("X_BH:concentration",v_X_BH_concentration);
-    Reactor.SetVal("X_BM:concentration",v_X_BM_concentration);
-    Reactor.SetVal("X_BA:concentration",v_X_BA_concentration);
-    Reactor.SetVal("X_ND:concentration",v_X_ND_concentration);
-*/
-    Reactor.SetVal("Storage",v_r_storage);
-    Reactor.SetVal("constant_inflow",v_r_constant_flow);
-    Reactor.SetVal("x",400);
-    Reactor.SetVal("y",800);
+        Reactor.SetVal("S_S:concentration",v_S_S_concentration);
+        Reactor.SetVal("S_O:concentration",v_S_O_concentration);
+        Reactor.SetVal("S_M:concentration",v_S_M_concentration);
+        Reactor.SetVal("S_NO:concentration",v_S_NO_concentration);
+        Reactor.SetVal("S_NH:concentration",v_S_NH_concentration);
+        Reactor.SetVal("S_ND:concentration",v_S_ND_concentration);
 
-    system->AddBlock(Reactor,false);
+        Reactor.SetVal("X_S:concentration",v_X_S_concentration);
+        Reactor.SetVal("X_p:concentration",v_X_p_concentration);
+        Reactor.SetVal("X_BH:concentration",v_X_BH_concentration);
+        Reactor.SetVal("X_BM:concentration",v_X_BM_concentration);
+        Reactor.SetVal("X_BA:concentration",v_X_BA_concentration);
+        Reactor.SetVal("X_ND:concentration",v_X_ND_concentration);
 
-    system->block("Reactor")->SetProperty("S_O:external_source","Aeration"); // Reactor does not have source "Aeration", so we have to call it!
+        Reactor.SetVal("Storage",v_r_storage);
+        Reactor.SetVal("constant_inflow",v_r_constant_flow);
+        Reactor.SetVal("x",400*(i-n_tanks));
+        Reactor.SetVal("y",800);
+
+        system->AddBlock(Reactor,false);
+
+        system->block("Reactor(" + aquiutils::numbertostring(i+1)+")")->SetProperty("S_O:external_source","Aeration"); // Reactor does not have source "Aeration", so we have to call it!
+
+        //if (aeration[i]) system->block("Reactor(" + aquiutils::numbertostring(i+1)+")")->SetProperty("S_O:external_source","Aeration"); // Reactor does not have source "Aeration", so we have to call it!
+    }
+
+    // Links
+    for (int i=0; i<n_tanks-1; i++)
+    {   Link l_r_st;
+        l_r_st.SetQuantities(system, "Fixed flow");
+        l_r_st.SetName("Reactor(" + aquiutils::numbertostring(i+1)+"_" + aquiutils::numbertostring(i+2) + ")");
+        l_r_st.SetType("Fixed flow");
+        l_r_st.SetVal("flow", v_r_st_flow);
+        system->AddLink(l_r_st, "Reactor(" + aquiutils::numbertostring(i+1)+")", "Reactor(" + aquiutils::numbertostring(i+2)+")", false);
+    }
 
     // Producing Constant Inflows
 
@@ -625,22 +642,22 @@ bool ModelCreator::Create(System *system)
 
     // Time Varible according Data
 
-    system->block("Reactor")->SetProperty("S_S:inflow_concentration","/home/behzad/Projects/ASM_Models/S_S_Inflow_concentration.txt");
-    system->block("Reactor")->SetProperty("X_S:inflow_concentration","/home/behzad/Projects/ASM_Models/X_S_Inflow_concentration.txt");
-    system->block("Reactor")->SetProperty("X_p:inflow_concentration","/home/behzad/Projects/ASM_Models/X_p_Inflow_concentration.txt");
-    system->block("Reactor")->SetProperty("S_NO:inflow_concentration","/home/behzad/Projects/ASM_Models/S_NO_Inflow_concentration.txt");
-    system->block("Reactor")->SetProperty("S_NH:inflow_concentration","/home/behzad/Projects/ASM_Models/S_NH_Inflow_concentration.txt");
-    system->block("Reactor")->SetProperty("S_ND:inflow_concentration","/home/behzad/Projects/ASM_Models/S_ND_Inflow_concentration.txt");
-    system->block("Reactor")->SetProperty("X_ND:inflow_concentration","/home/behzad/Projects/ASM_Models/X_ND_Inflow_concentration.txt");
+    system->block("Reactor(1)")->SetProperty("S_S:inflow_concentration","/home/behzad/Projects/ASM_Models/S_S_Inflow_concentration.txt");
+    system->block("Reactor(1)")->SetProperty("X_S:inflow_concentration","/home/behzad/Projects/ASM_Models/X_S_Inflow_concentration.txt");
+    system->block("Reactor(1)")->SetProperty("X_p:inflow_concentration","/home/behzad/Projects/ASM_Models/X_p_Inflow_concentration.txt");
+    system->block("Reactor(1)")->SetProperty("S_NO:inflow_concentration","/home/behzad/Projects/ASM_Models/S_NO_Inflow_concentration.txt");
+    system->block("Reactor(1)")->SetProperty("S_NH:inflow_concentration","/home/behzad/Projects/ASM_Models/S_NH_Inflow_concentration.txt");
+    system->block("Reactor(1)")->SetProperty("S_ND:inflow_concentration","/home/behzad/Projects/ASM_Models/S_ND_Inflow_concentration.txt");
+    system->block("Reactor(1)")->SetProperty("X_ND:inflow_concentration","/home/behzad/Projects/ASM_Models/X_ND_Inflow_concentration.txt");
 
 
     // Links
     Link l_r_st;
     l_r_st.SetQuantities(system, "Fixed flow");
-    l_r_st.SetName("Reactor - Settling element top");
+    l_r_st.SetName("Reactor(" + aquiutils::numbertostring(n_tanks) + ")-Settling element top");
     l_r_st.SetType("Fixed flow");
     l_r_st.SetVal("flow", v_r_st_flow);
-    system->AddLink(l_r_st, "Reactor", "Settling element top", false);
+    system->AddLink(l_r_st, "Reactor(" + aquiutils::numbertostring(n_tanks) + ")", "Settling element top", false);
 
     Link l_st_c;
     l_st_c.SetQuantities(system, "Fixed flow");
@@ -659,10 +676,10 @@ bool ModelCreator::Create(System *system)
 
     Link l_sb_r;
     l_sb_r.SetQuantities(system, "Fixed flow");
-    l_sb_r.SetName("Settling element bottom - Reactor");
+    l_sb_r.SetName("Settling element bottom - Reactor(1)");
     l_sb_r.SetType("Fixed flow");
     l_sb_r.SetVal("flow", v_sb_r_flow);
-    system->AddLink(l_sb_r, "Settling element bottom", "Reactor", false);
+    system->AddLink(l_sb_r, "Settling element bottom", "Reactor(1)", false);
 
     Link l_sb_was;
     l_sb_was.SetQuantities(system, "Fixed flow");
@@ -709,7 +726,11 @@ bool ModelCreator::Create(System *system)
     solids_concentration.SetType("Observation");
     system->AddObservation(solids_concentration,false);
 
-    system->SetSettingsParameter("simulation_end_time",Simulation_time);
+    system->SetSettingsParameter("simulation_start_time",Simulation_start_time);
+    system->SetSettingsParameter("simulation_end_time",Simulation_end_time);
+
+    //system->SetSettingsParameter("simulation_end_time",Simulation_time);
+
     system->SetSystemSettings();
     cout<<"Populate functions"<<endl;
     system->PopulateOperatorsFunctions();
@@ -773,54 +794,6 @@ double r_inflow = randomValue * 9 + 1;
 
 
 /*
-// Simple Model
-
-#include "modelcreator.h"
-#include "System.h"
-#include "QString"
-#include <iostream>
-#include <fstream>
-#include <vector>
-
-using namespace std;
-
-ModelCreator::ModelCreator()
-{
-}
-
-
-bool ModelCreator::Create(System *system)
-{
-    system->GetQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/main_components.json");
-    //system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/unsaturated_soil.json");
-    //system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/Well.json");
-    system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/wastewater.json");
-    system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/mass_transfer.json");
-    system->ReadSystemSettingsTemplate("/home/behzad/Projects/OpenHydroQual/resources/settings.json");
-
-    const double Simulation_time=100; // Simulation Time in Days
-
-    //Model Properties
-    const double v_settling_vel=10000; // Unit: m/day
-    const double v_S_s_concentration=0;
-    const double v_X_b_concentration=1;
-    const double v_r_storage=1000;
-    const double v_mu=2;
-    const double v_Ks=20;
-    const double v_Y=0.5;
-    const double v_b=0.3;
-    const double v_r_constant_flow=800; //Unit: m3/day
-    const double v_s_t_storage=200; //Settling element top: initial storage
-    const double v_s_t_bottom_elevation=1; //Settling element top: bottom elevation
-    const double v_s_b_storage=200; //Settling element bottom: initial storage
-    const double v_s_b_bottom_elevation=0; //Settling element bottom: bottom elevation
-    const double v_r_st_flow=1700; //Link: Reactor to Settling element top: flow
-    const double v_st_c_flow=750; //Link: Settling element top to Clarifier: flow
-    const double v_st_sb_flow=950; //Link: Settling element top to Settling element bottom: flow
-    const double v_st_sb_area=100; //Link: Settling element top to Settling element bottom: area
-    const double v_sb_r_flow=900; //Link: Settling element bottom to Reactor: flow
-    const double v_sb_was_flow=50; //Link: Settling element bottom to WAS: flow
-
 
 
     //Model Configuration

@@ -1,5 +1,9 @@
+
 #ifndef MODELCREATOR_H
 #define MODELCREATOR_H
+
+#include <BTCSet.h>
+#include <Vector.h>
 
 class System;
 
@@ -76,7 +80,7 @@ public:
 
     // OHQ Model properties
     const double v_settling_vel=10000; // X_b : Unit: m/day
-    const double v_r_storage=1000;
+    const double v_r_storage=10000; // Reactor: Intial Storage : Unit: m3
     const double v_r_constant_flow=800; // Reactor: Constant flow : Unit: m3/day
     const double v_s_t_storage=200; // Settling element top: initial storage
     const double v_s_t_bottom_elevation=1; // Settling element top: bottom elevation
@@ -88,6 +92,11 @@ public:
     const double v_st_sb_area=100; // Link: Settling element top to Settling element bottom: area
     const double v_sb_r_flow=900; // Link: Settling element bottom to Reactor: flow
     const double v_sb_was_flow=50; // Link: Settling element bottom to WAS: flow
+
+    int n_tanks = 8;
+    //vector<bool> aeration(n_tanks) = {0,0,1,1,1,0,0,0};
+
+
 
 private:
     const double pi = 3.141521;
