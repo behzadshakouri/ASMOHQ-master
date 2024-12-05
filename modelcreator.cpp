@@ -22,6 +22,7 @@ bool ModelCreator::Create(System *system)
     system->ReadSystemSettingsTemplate("/home/behzad/Projects/OpenHydroQual/resources/settings.json");
 
     const double Simulation_time=1; // Simulation Time in Days
+
     const double Simulation_start_time=40210; // Simulation Start Date
     const double Simulation_end_time=40359; // Simulation End Date
 
@@ -330,7 +331,7 @@ bool ModelCreator::Create(System *system)
     AerobicGH.SetProperty("S_O:stoichiometric_constant","(0-(1-Y_H)/Y_H)");
     AerobicGH.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
     AerobicGH.SetProperty("X_BH:stoichiometric_constant","(1)");
-    AerobicGH.SetProperty("rate_expression","(mu_H*(S_S/(K_S+S_S))*(S_O/(K_OH+S_O))*(S_NH/(K_NH+S_NH))*X_BH)");
+    AerobicGH.SetProperty("rate_expression","(mu_H*S_S/(K_S+S_S)*S_O/(K_OH+S_O)*S_NH/(K_NH+S_NH)*X_BH)");
     system->AddReaction(AerobicGH,false);
 
     Reaction AerobicGHM; // Reaction 2
@@ -340,7 +341,7 @@ bool ModelCreator::Create(System *system)
     AerobicGHM.SetProperty("S_O:stoichiometric_constant","(0-(1-Y_H)/Y_H)");
     AerobicGHM.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
     AerobicGHM.SetProperty("X_BH:stoichiometric_constant","(1)");
-    AerobicGHM.SetProperty("rate_expression","(mu_H*(S_M/(K_MH+S_M))*(S_O/(K_OH+S_O))*(S_NH/(K_NH+S_NH))*X_BH)");
+    AerobicGHM.SetProperty("rate_expression","(mu_H*S_M/(K_MH+S_M)*S_O/(K_OH+S_O)*(S_NH/K_NH+S_NH)*X_BH)");
     system->AddReaction(AerobicGHM,false);
 
     Reaction AnoxicGH; // Reaction 3
@@ -350,7 +351,7 @@ bool ModelCreator::Create(System *system)
     AnoxicGH.SetProperty("S_NO:stoichiometric_constant","(0-(1-Y_H)/(2.86*Y_H))");
     AnoxicGH.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
     AnoxicGH.SetProperty("X_BH:stoichiometric_constant","(1)");
-    AnoxicGH.SetProperty("rate_expression","(mu_H*(S_S/(K_S+S_S))*(K_OH/(K_OH+S_O))*(S_NO/(K_NOH+S_NO))*(S_NH/(K_NH+S_NH))*eta_g*X_BH)");
+    AnoxicGH.SetProperty("rate_expression","(mu_H*S_S/(K_S+S_S)*K_OH/(K_OH+S_O)*S_NO/(K_NOH+S_NO)*S_NH/(K_NH+S_NH)*eta_g*X_BH)");
     system->AddReaction(AnoxicGH,false);
 
     Reaction AnoxicGM; // Reaction 4
@@ -360,7 +361,7 @@ bool ModelCreator::Create(System *system)
     AnoxicGM.SetProperty("S_NO:stoichiometric_constant","(0-(1-Y_M)/(2.86*Y_M))");
     AnoxicGM.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
     AnoxicGM.SetProperty("X_BM:stoichiometric_constant","(1)");
-    AnoxicGM.SetProperty("rate_expression","(mu_M*(S_M/(K_MM+S_M))*(K_OM/(K_OM+S_O))*(S_NO/(K_NOM+S_NO))*(S_NH/(K_NH+S_NH))*X_BM)");
+    AnoxicGM.SetProperty("rate_expression","(mu_M*S_M/(K_MM+S_M)*K_OM/(K_OM+S_O)*S_NO/(K_NOM+S_NO)*S_NH/(K_NH+S_NH)*X_BM)");
     system->AddReaction(AnoxicGM,false);
 
     Reaction AerobicGA; // Reaction 5
@@ -370,7 +371,7 @@ bool ModelCreator::Create(System *system)
     AerobicGA.SetProperty("S_NH:stoichiometric_constant","(0-(i_XB+1/Y_A))");
     AerobicGA.SetProperty("X_BA:stoichiometric_constant","(1)");
     AerobicGA.SetProperty("S_NO:stoichiometric_constant","(1/Y_A)");
-    AerobicGA.SetProperty("rate_expression","(mu_A*(S_O/(K_OA+S_O))*(S_NH/(K_NHA+S_NH))*X_BA)");
+    AerobicGA.SetProperty("rate_expression","(mu_A*S_O/(K_OA+S_O)*S_NH/(K_NHA+S_NH)*X_BA)");
     system->AddReaction(AerobicGA,false);
 
     Reaction DecayH; // Reaction 6
