@@ -80,23 +80,32 @@ public:
 
     // OHQ Model properties
     const double v_settling_vel=10000; // X_b : Unit: m/day
-    const double v_r_storage=1000; // Reactor: Intial Storage : Unit: m3
-    const double v_r_constant_flow=800; // Reactor: Constant flow : Unit: m3/day
+    const double v_r_storage=17500; // Reactor: Intial Storage : Unit: m3
+
     const double v_s_t_storage=200; // Settling element top: initial storage
     const double v_s_t_bottom_elevation=1; // Settling element top: bottom elevation
     const double v_s_b_storage=200; // Settling element bottom: initial storage
     const double v_s_b_bottom_elevation=0; // Settling element bottom: bottom elevation
-    const double v_r_st_flow=1700; // Link: Reactor to Settling element top: flow
-    const double v_st_c_flow=750; // Link: Settling element top to Clarifier: flow
-    const double v_st_sb_flow=950; // Link: Settling element top to Settling element bottom: flow
     const double v_st_sb_area=100; // Link: Settling element top to Settling element bottom: area
-    const double v_sb_r_flow=900; // Link: Settling element bottom to Reactor: flow
-    const double v_sb_was_flow=50; // Link: Settling element bottom to WAS: flow
+
+    const double v_c_bottom_elevation=1; // Clarifer: bottom elevation (head)
+    const double v_was_bottom_elevation=0; // WAS: bottom elevation(head)
+
+    //Water Balance (Constant)
+    const double v_r_constant_flow=800; // Reactor: Constant flow : Unit: m3/day
+    const double v_r_st_constant_flow=1700; // Link: Reactor to Settling element top: flow
+    const double v_st_c_constant_flow=750; // Link: Settling element top to Clarifier: flow
+    const double v_st_sb_constant_flow=950; // Link: Settling element top to Settling element bottom: flow
+    const double v_sb_r_constant_flow=900; // Link: Settling element bottom to Reactor: flow
+    const double v_sb_was_constant_flow=50; // Link: Settling element bottom to WAS: flow
 
     int n_tanks = 8;
     //vector<bool> aeration(n_tanks) = {0,0,1,1,1,0,0,0};
 
-
+    const double v_t_storage=v_r_storage/n_tanks; // Tank: Intial Storage : Unit: m3
+    const double v_t_constant_flow=v_r_constant_flow; // Tank: Constant flow : Unit: m3/day
+    const double v_t_t_st_constant_flow=v_r_st_constant_flow; // Link: Tank to Tank or Tank to Settling element top: flow
+    const double v_sb_t_constant_flow=v_sb_r_constant_flow; // Link: Settling element bottom to Tank: flow
 
 private:
     const double pi = 3.141521;
