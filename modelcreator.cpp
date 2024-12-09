@@ -21,6 +21,8 @@ bool ModelCreator::Create(System *system)
     system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/mass_transfer.json");
     system->ReadSystemSettingsTemplate("/home/behzad/Projects/OpenHydroQual/resources/settings.json");
 
+    bool St=true;
+
     const double Simulation_time=1; // Simulation Time in Days
 
     const double Simulation_start_time=40210; // Simulation Start Date
@@ -481,7 +483,7 @@ bool ModelCreator::Create(System *system)
     Stl_element_bottom.SetVal("y",1000);
     system->AddBlock(Stl_element_bottom,false);
 
-
+/*
     // Fixed Head Blocks
     Block fh_clarifier;
     fh_clarifier.SetQuantities(system, "fixed_head");
@@ -499,6 +501,32 @@ bool ModelCreator::Create(System *system)
     fh_WAS.SetQuantities(system, "fixed_head");
     fh_WAS.SetName("WAS");
     fh_WAS.SetType("fixed_head");
+    fh_WAS.SetVal("head",v_was_bottom_elevation);
+    fh_WAS.SetVal("S_S:concentration",0);
+    fh_WAS.SetVal("X_b:concentration",0);
+    fh_WAS.SetVal("Storage",100000);
+    fh_WAS.SetVal("x",1200);
+    fh_WAS.SetVal("y",1000);
+    system->AddBlock(fh_WAS,false);
+*/
+
+    // Time-variable Fixed Head Blocks
+    Block fh_clarifier;
+    fh_clarifier.SetQuantities(system, "time_variable_fixed_head");
+    fh_clarifier.SetName("Clarifier");
+    fh_clarifier.SetType("time_variable_fixed_head");
+    fh_clarifier.SetVal("head",v_c_bottom_elevation);
+    fh_clarifier.SetVal("S_S:concentration",0);
+    fh_clarifier.SetVal("X_b:concentration",0);
+    fh_clarifier.SetVal("Storage",100000);
+    fh_clarifier.SetVal("x",1200);
+    fh_clarifier.SetVal("y",600);
+    system->AddBlock(fh_clarifier,false);
+
+    Block fh_WAS;
+    fh_WAS.SetQuantities(system, "time_variable_fixed_head");
+    fh_WAS.SetName("WAS");
+    fh_WAS.SetType("time_variable_fixed_head");
     fh_WAS.SetVal("head",v_was_bottom_elevation);
     fh_WAS.SetVal("S_S:concentration",0);
     fh_WAS.SetVal("X_b:concentration",0);
@@ -547,7 +575,8 @@ bool ModelCreator::Create(System *system)
 
 
     // Producing Constant Inflows
-
+    if (St)
+    {
     CTimeSeries<double> S_S_inflow_concentration;
     S_S_inflow_concentration.CreateConstant(0,Simulation_time, v_S_S_concentration);
     S_S_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_S_constant_inflow_concentration.txt");
@@ -575,7 +604,7 @@ bool ModelCreator::Create(System *system)
     CTimeSeries<double> X_ND_inflow_concentration;
     X_ND_inflow_concentration.CreateConstant(0,Simulation_time, v_X_ND_concentration);
     X_ND_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_ND_constant_inflow_concentration.txt");
-
+    }
     // Constituents Inflow Calculations from Data
 
 #ifdef Behzad
@@ -652,6 +681,7 @@ bool ModelCreator::Create(System *system)
     // Writing to File
 
     Inflow_Q.writefile("/home/behzad/Projects/ASM_Models/Q_time_variable_inflow.txt"); //
+
     Inflow_WAS.writefile("/home/behzad/Projects/ASM_Models/WAS_time_variable_inflow.txt"); //
     Inflow_RAS.writefile("/home/behzad/Projects/ASM_Models/RAS_time_variable_inflow.txt"); //
 
@@ -753,7 +783,7 @@ bool ModelCreator::Create(System *system)
         l_r_st.SetQuantities(system, "Time-Dependent flow");
         l_r_st.SetName("Reactor(" + aquiutils::numbertostring(i+1)+"_" + aquiutils::numbertostring(i+2) + ")");
         l_r_st.SetType("Time-Dependent flow");
-        l_r_st.SetProperty("time_variable_inflow", "/home/behzad/Projects/ASM_Models/r_r_st_time_variable_inflow.txt");
+        l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/r_r_st_time_variable_inflow.txt");
         system->AddLink(l_r_st, "Reactor(" + aquiutils::numbertostring(i+1)+")", "Reactor(" + aquiutils::numbertostring(i+2)+")", false);
     }
 
@@ -762,21 +792,21 @@ bool ModelCreator::Create(System *system)
     l_r_st.SetQuantities(system, "Time-Dependent flow");
     l_r_st.SetName("Reactor(" + aquiutils::numbertostring(n_tanks) + ")-Settling element top");
     l_r_st.SetType("Time-Dependent flow");
-    l_r_st.SetProperty("time_variable_inflow", "time_variable_inflow", "/home/behzad/Projects/ASM_Models/r_r_st_time_variable_inflow.txt");
+    l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/r_r_st_time_variable_inflow.txt");
     system->AddLink(l_r_st, "Reactor(" + aquiutils::numbertostring(n_tanks) + ")", "Settling element top", false);
 
     Link l_st_c;
     l_st_c.SetQuantities(system, "Time-Dependent flow");
     l_st_c.SetName("Settling element top - Clarifier");
     l_st_c.SetType("Time-Dependent flow");
-    l_st_c.SetProperty("time_variable_inflow", "/home/behzad/Projects/ASM_Models/st_c_time_variable_inflow.txt");
+    l_st_c.SetProperty("flow", "/home/behzad/Projects/ASM_Models/st_c_time_variable_inflow.txt");
     system->AddLink(l_st_c, "Settling element top", "Clarifier", false);
 
     Link l_st_sb;
-    l_st_sb.SetQuantities(system, "Settling element interface");
+    l_st_sb.SetQuantities(system, "Settling element interface (time variable)");
     l_st_sb.SetName("Settling element top - Settling element bottom");
-    l_st_sb.SetType("Settling element interface");
-    l_st_sb.SetProperty("time_variable_inflow", "/home/behzad/Projects/ASM_Models/st_sb_time_variable_inflow.txt");
+    l_st_sb.SetType("Settling element interface (time variable)");
+    l_st_sb.SetProperty("flow", "/home/behzad/Projects/ASM_Models/st_sb_time_variable_inflow.txt");
     l_st_sb.SetVal("area", v_st_sb_area);
     system->AddLink(l_st_sb, "Settling element top", "Settling element bottom", false);
 
@@ -784,14 +814,14 @@ bool ModelCreator::Create(System *system)
     l_sb_r.SetQuantities(system, "Time-Dependent flow");
     l_sb_r.SetName("Settling element bottom - Reactor(1)");
     l_sb_r.SetType("Time-Dependent flow");
-    l_sb_r.SetProperty("time_variable_inflow", "/home/behzad/Projects/ASM_Models/RAS_time_variable_inflow.txt");
+    l_sb_r.SetProperty("flow", "/home/behzad/Projects/ASM_Models/RAS_time_variable_inflow.txt");
     system->AddLink(l_sb_r, "Settling element bottom", "Reactor(1)", false);
 
     Link l_sb_was;
     l_sb_was.SetQuantities(system, "Time-Dependent flow");
     l_sb_was.SetName("Settling element bottom - WAS");
     l_sb_was.SetType("Time-Dependent flow");
-    l_sb_was.SetProperty("time_variable_inflow", "/home/behzad/Projects/ASM_Models/WAS_time_variable_inflow.txt");
+    l_sb_was.SetProperty("flow", "/home/behzad/Projects/ASM_Models/WAS_time_variable_inflow.txt");
     system->AddLink(l_sb_was, "Settling element bottom", "WAS", false);
 
     /*
@@ -834,10 +864,16 @@ bool ModelCreator::Create(System *system)
     system->AddObservation(solids_concentration,false);
     */
 
-    //system->SetSettingsParameter("simulation_start_time",Simulation_start_time);
-    //system->SetSettingsParameter("simulation_end_time",Simulation_end_time);
+    if (St)
+    {
+        system->SetSettingsParameter("simulation_end_time",Simulation_time);
+    }
 
-    system->SetSettingsParameter("simulation_end_time",Simulation_time);
+    else if (!St)
+    {
+    system->SetSettingsParameter("simulation_start_time",Simulation_start_time);
+    system->SetSettingsParameter("simulation_end_time",Simulation_end_time);
+    }
 
     system->SetSystemSettings();
     cout<<"Populate functions"<<endl;
