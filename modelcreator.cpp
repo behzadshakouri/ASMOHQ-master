@@ -21,7 +21,7 @@ bool ModelCreator::Create(System *system)
     system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/mass_transfer.json");
     system->ReadSystemSettingsTemplate("/home/behzad/Projects/OpenHydroQual/resources/settings.json");
 
-    bool St=true; // True for using Simulation Time is Days, False for using Start and End Date
+    bool St=false; // True for using Simulation Time is Days, False for using Start and End Date
 
     const double Simulation_time=1; // Simulation Time in Days
 

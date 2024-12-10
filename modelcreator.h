@@ -69,7 +69,7 @@ public:
     const double v_X_p_concentration=350;
     const double v_X_ND_concentration=1;
 
-    const double v_a_rate_coefficient=10;
+    const double v_a_rate_coefficient=5; // 5 to 10
     const double v_a_saturation=8.55;
 
     const double p_31=0.57;
