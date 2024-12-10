@@ -100,7 +100,7 @@ public:
     const double v_sb_was_constant_flow=50; // Link: Settling element bottom to WAS: flow
 
     int n_tanks = 8;
-    //vector<bool> aeration(n_tanks) = {0,0,1,1,1,0,0,0};
+    vector<bool> aeration_v = {true,true,true,false,false,false,true,false}; // (n_tanks)
 
     const double v_t_storage=v_r_storage/n_tanks; // Tank: Intial Storage : Unit: m3
     const double v_t_constant_flow=v_r_constant_flow; // Tank: Constant flow : Unit: m3/day
