@@ -79,7 +79,7 @@ public:
     const double p_3=0.075;
 
     // OHQ Model properties
-    const double v_settling_vel=10000; // X_b : Unit: m/day
+    const double v_settling_vel=1000; // X_b : Unit: m/day
     const double v_r_storage=17500; // Reactor: Intial Storage : Unit: m3
 
     const double v_s_t_storage=200; // Settling element top: initial storage
