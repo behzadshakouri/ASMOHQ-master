@@ -577,8 +577,7 @@ bool ModelCreator::Create(System *system)
 
 
     // Producing Constant Inflows
-    if (St)
-    {
+
     CTimeSeries<double> S_S_inflow_concentration;
     S_S_inflow_concentration.CreateConstant(0,Simulation_time, v_S_S_concentration);
     S_S_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_S_constant_inflow_concentration.txt");
@@ -606,10 +605,9 @@ bool ModelCreator::Create(System *system)
     CTimeSeries<double> X_ND_inflow_concentration;
     X_ND_inflow_concentration.CreateConstant(0,Simulation_time, v_X_ND_concentration);
     X_ND_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_ND_constant_inflow_concentration.txt");
-    }
 
 
-    // Constituents Inflow Calculations from Data
+    // Constituents Inflow Calculations from Data (Time Variable)
 
 #ifdef Behzad
     CTimeSeriesSet<double> Inflow_DeNit("/home/behzad/Projects/ASM_Models/Data/DeNit_Influent_Lump.txt",true); // Inflow (Q)
@@ -647,7 +645,6 @@ bool ModelCreator::Create(System *system)
     CTimeSeries<double> Flow_st_sb; // Settling element top to Settling element bottom flow (m3/day)
     CTimeSeries<double> Flow_st_c; // Settling element top to Clarifier flow (m3/day)
 
-
     // Defining Constituents Inflows
 
     CTimeSeries<double> Inflow_S_i; //--
@@ -661,7 +658,7 @@ bool ModelCreator::Create(System *system)
 
     CTimeSeries<double> Inflow_MeOH; // Methanol
 
-    // Calculating Inflows
+    // Calculating Inflows according DeNite data (Time Variable)
 
     Inflow_Q=Inflow_DeNit.BTC[0]; // Discharge (m3/day)
     Inflow_WAS=Inflow_DeNit_wasteflow.BTC[0]; // Wasteflow (WAS) (m3/day)
@@ -706,7 +703,7 @@ bool ModelCreator::Create(System *system)
 
     // Assigning Constituents Inflow concentrations to the system (Reactor)
 
-    // Constant
+    // Constant inflows by given concentration
 /*
     system->block("Reactor")->SetProperty("S_S:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/S_S_constant_inflow_concentration.txt");
     system->block("Reactor")->SetProperty("X_S:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/X_S_constant_inflow_concentration.txt");
@@ -717,7 +714,7 @@ bool ModelCreator::Create(System *system)
     system->block("Reactor")->SetProperty("X_ND:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/X_ND_constant_inflow_concentration.txt");
 */
 
-    // Time Variable according Data
+    // Time Variable inflows according DeNite data
 
     system->block("Reactor(1)")->SetProperty("time_variable_inflow","/home/behzad/Projects/ASM_Models/Q_time_variable_inflow.txt"); // Discharge (m3/day)
 
@@ -781,7 +778,7 @@ bool ModelCreator::Create(System *system)
     system->AddLink(l_sb_was, "Settling element bottom", "WAS", false);
     */
 
-    //Time-Dependent flow Links for Reactor
+    // Time-Dependent flow Links for Reactor
     for (int i=0; i<n_tanks-1; i++)
     {   Link l_r_st;
         l_r_st.SetQuantities(system, "Time-Dependent flow");
@@ -791,7 +788,7 @@ bool ModelCreator::Create(System *system)
         system->AddLink(l_r_st, "Reactor(" + aquiutils::numbertostring(i+1)+")", "Reactor(" + aquiutils::numbertostring(i+2)+")", false);
     }
 
-    // Links
+    // Time-Dependent flow Links
     Link l_r_st;
     l_r_st.SetQuantities(system, "Time-Dependent flow");
     l_r_st.SetName("Reactor(" + aquiutils::numbertostring(n_tanks) + ")-Settling element top");
