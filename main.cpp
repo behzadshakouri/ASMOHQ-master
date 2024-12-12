@@ -2,6 +2,7 @@
 #include "Script.h"
 #include "qfileinfo.h"
 #include "modelcreator.h"
+#include "modelcreator_flex.h"
 #include "resultgrid.h"
 #include "vtk.h"
 
@@ -9,10 +10,14 @@
 int main(int argc, char *argv[])
 {
 
+bool Flex = true;
+
 #ifdef Behzad
     string Workingfolder="/home/behzad/Projects/ASM_Models/";
+    string Workingfolder_Flex="/home/behzad/Projects/ASM_Models/Flex/";
 #else
     string Workingfolder="/home/arash/Projects/ASM_Models/";
+    string Workingfolder_Flex="/home/arash/Projects/ASM_Models/Flex/";
 #endif
 
 //Data analysis
@@ -76,8 +81,48 @@ int main(int argc, char *argv[])
     CTimeSeries<double> logstds2 = logstds;
     logstds2.writefile(Workingfolder + "Data/logstds.txt");
 
+    ModelCreator_Flex ModCreate_Flex;
+
+    if (Flex)
+    {
+    for (int i=0; i<1; i++)
+    {
+        System *system=new System();
+        system->Clear();
+        cout<<"Creating model "<< i << " ..." <<endl;
+        ModCreate_Flex.Create_Flex(system);
+        cout<<"Creating model done..." <<endl;
+
+        system->SetWorkingFolder(Workingfolder_Flex);
+        system->SetSilent(false);
+        cout<<"Saving"<<endl;
+        system->SavetoScriptFile(Workingfolder_Flex + "CreatedModel_Flex.ohq");
+
+        cout<<"Solving ..."<<endl;
+        system->Solve();
+
+        cout<<"Writing outputs in '"<< system->GetWorkingFolder() + system->OutputFileName() +"'"<<endl;
+        CTimeSeriesSet<double> output = system->GetOutputs();
+        QString outputfilename = QString::fromStdString(system->OutputFileName()).split(".")[0] +"_" + QString::number(i) + ".txt";
+        output.writetofile(system->GetWorkingFolder() + outputfilename.toStdString());
+
+        cout<<"Writing outputs in '"<< system->GetWorkingFolder() + system->ObservedOutputFileName() +"'"<<endl;
+        CTimeSeriesSet<double> selectedoutput = system->GetObservedOutputs();
+        QString selectedoutputfilename = QString::fromStdString(system->ObservedOutputFileName()).split(".")[0] +"_" + QString::number(i) + ".txt";
+        selectedoutput.writetofile(system->GetWorkingFolder() + selectedoutputfilename.toStdString());
+
+        cout<<"Getting results into grid"<<endl;
+        ResultGrid resgrid(output,"theta",system);
+        //cout<<"Writing VTPs"<<endl;
+        //resgrid.WriteToVTP("Moisture_content",system->GetWorkingFolder()+"moisture.vtp");
+        delete system;
+    }
+    }
+
     ModelCreator ModCreate;
 
+    if (!Flex)
+    {
     for (int i=0; i<1; i++)
     {
         System *system=new System();
@@ -109,6 +154,7 @@ int main(int argc, char *argv[])
         //cout<<"Writing VTPs"<<endl;
         //resgrid.WriteToVTP("Moisture_content",system->GetWorkingFolder()+"moisture.vtp");
         delete system;
+    }
     }
 
     return 0;
