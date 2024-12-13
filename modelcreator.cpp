@@ -566,7 +566,8 @@ bool ModelCreator::Create(System *system)
         //Reactor.SetVal("constant_inflow",v_r_constant_flow);
         //if (i==4) Reactor.SetVal("S_M:External mass flow time-series","/home/behzad/Projects/ASM_Models/S_M_mfr.csv");
         Reactor.SetVal("x",400*(i-n_tanks));
-        Reactor.SetVal("y",800-(i-n_tanks)*50);
+        if (i==0) Reactor.SetVal("y",1200);
+        else if (i>0) Reactor.SetVal("y",800);
 
         system->AddBlock(Reactor,false);
 
@@ -793,7 +794,7 @@ bool ModelCreator::Create(System *system)
     // Time-Dependent flow Links
     Link l_r_st;
     l_r_st.SetQuantities(system, "Time-Dependent flow");
-    l_r_st.SetName("Reactor(" + aquiutils::numbertostring(n_tanks) + ")-Settling element top");
+    l_r_st.SetName("Reactor(" + aquiutils::numbertostring(n_tanks) + ") - Settling element top");
     l_r_st.SetType("Time-Dependent flow");
     l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/r_r_st_time_variable_flow.txt");
     system->AddLink(l_r_st, "Reactor(" + aquiutils::numbertostring(n_tanks) + ")", "Settling element top", false);

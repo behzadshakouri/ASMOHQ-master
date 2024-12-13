@@ -567,8 +567,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         //if (i==4) Reactor_Flex.SetVal("S_M:External mass flow time-series","/home/behzad/Projects/ASM_Models/S_M_mfr.csv");
         Reactor_Flex.SetVal("Volume",v_t_volume);
         Reactor_Flex.SetVal("x",400*(i-n_tanks));
-        Reactor_Flex.SetVal("y",800-(i-n_tanks)*50);
-
+        if (i==0) Reactor_Flex.SetVal("y",1200);
+        else if (i>0) Reactor_Flex.SetVal("y",800);
         system->AddBlock(Reactor_Flex,false);
 
         // Aeration to all tanks
@@ -747,7 +747,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     // Flex_flow Links
     Link l_r_st;
     l_r_st.SetQuantities(system, "Flex_flow");
-    l_r_st.SetName("Reactor_Flex(" + aquiutils::numbertostring(n_tanks) + ")-Settling element top");
+    l_r_st.SetName("Reactor_Flex(" + aquiutils::numbertostring(n_tanks) + ") - Settling element top");
     l_r_st.SetType("Flex_flow");
     //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/r_r_st_time_variable_flow.txt");
     l_r_st.SetVal("flow_factor",v_flow_factor);
