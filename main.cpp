@@ -10,7 +10,7 @@
 int main(int argc, char *argv[])
 {
 
-bool Flex = true;
+bool Flex = true; // Flex or normal reactor usage
 
 #ifdef Behzad
     string Workingfolder="/home/behzad/Projects/ASM_Models/";
@@ -81,6 +81,9 @@ bool Flex = true;
     CTimeSeries<double> logstds2 = logstds;
     logstds2.writefile(Workingfolder + "Data/logstds.txt");
 
+
+    for (int i=0; i<1; i++) // Realization
+    {
     ModelCreator_Flex ModCreate_Flex;
 
     if (Flex)
@@ -154,6 +157,7 @@ bool Flex = true;
         //cout<<"Writing VTPs"<<endl;
         //resgrid.WriteToVTP("Moisture_content",system->GetWorkingFolder()+"moisture.vtp");
         delete system;
+    }
     }
     }
 
