@@ -607,6 +607,10 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
 #endif
 
+
+    if (!OUP)
+
+    {
     // Determining Coefficients
 
     const double c_S_i=p_31; // S_i, 8 //--
@@ -618,11 +622,12 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     const double c_S_ND=p_36*(1-p_31); // S_ND, 8
     const double c_X_ND=p_3*p_32; // X_ND, 2
 
-    // Inflows
+    // Inflows and Flows
 
     CTimeSeries<double> Inflow_Q; // Discharge (m3/day)
-    CTimeSeries<double> Inflow_WAS; // Wasteflow (WAS) (m3/day)
-    CTimeSeries<double> Inflow_RAS; // Returnflow (RAS) (m3/day)
+
+    CTimeSeries<double> Flow_WAS; // Wasteflow (WAS) (m3/day)
+    CTimeSeries<double> Flow_RAS; // Returnflow (RAS) (m3/day)
 
     CTimeSeries<double> Flow_r_r_st; // Reactor_Flex to Reactor_Flex + Reactor_Flex to Settling element top flow (m3/day)
     CTimeSeries<double> Flow_st_sb; // Settling element top to Settling element bottom flow (m3/day)
@@ -644,12 +649,13 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     // Calculating Inflows according DeNite data (Time Variable)
 
     Inflow_Q=Inflow_DeNit.BTC[0]; // Discharge (m3/day)
-    Inflow_WAS=Inflow_DeNit_wasteflow.BTC[0]; // Wasteflow (WAS) (m3/day)
-    Inflow_RAS=Inflow_DeNit_returnflow.BTC[0]; // Returnflow (RAS) (m3/day)
 
-    Flow_r_r_st=Inflow_Q+Inflow_RAS;
-    Flow_st_sb=Inflow_RAS+Inflow_WAS;
-    Flow_st_c=Inflow_Q-Inflow_WAS;
+    Flow_WAS=Inflow_DeNit_wasteflow.BTC[0]; // Wasteflow (WAS) (m3/day)
+    Flow_RAS=Inflow_DeNit_returnflow.BTC[0]; // Returnflow (RAS) (m3/day)
+
+    Flow_r_r_st=Inflow_Q+Flow_RAS;
+    Flow_st_sb=Flow_RAS+Flow_WAS;
+    Flow_st_c=Inflow_Q-Flow_WAS;
 
     Inflow_S_i=c_S_i*Inflow_DeNit.BTC[8]; //--
     Inflow_S_S=c_S_S*Inflow_DeNit.BTC[8];
@@ -664,14 +670,14 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
     // Writing to File
 
-    Inflow_Q.writefile("/home/behzad/Projects/ASM_Models/Q_time_variable_inflow.txt"); //
+    Inflow_Q.writefile("/home/behzad/Projects/ASM_Models/Q_tvif.txt"); //
 
-    Inflow_WAS.writefile("/home/behzad/Projects/ASM_Models/WAS_time_variable_flow.txt"); //
-    Inflow_RAS.writefile("/home/behzad/Projects/ASM_Models/RAS_time_variable_flow.txt"); //
+    Flow_WAS.writefile("/home/behzad/Projects/ASM_Models/WAS_tvf.txt"); //
+    Flow_RAS.writefile("/home/behzad/Projects/ASM_Models/RAS_tvf.txt"); //
 
-    Flow_r_r_st.writefile("/home/behzad/Projects/ASM_Models/r_r_st_time_variable_flow.txt"); //
-    Flow_st_sb.writefile("/home/behzad/Projects/ASM_Models/st_sb_time_variable_flow.txt"); //
-    Flow_st_c.writefile("/home/behzad/Projects/ASM_Models/st_c_time_variable_flow.txt"); //
+    Flow_r_r_st.writefile("/home/behzad/Projects/ASM_Models/r_r_st_tvf.txt"); //
+    Flow_st_sb.writefile("/home/behzad/Projects/ASM_Models/st_sb_tvf.txt"); //
+    Flow_st_c.writefile("/home/behzad/Projects/ASM_Models/st_c_tvf.txt"); //
 
     Inflow_S_i.writefile("/home/behzad/Projects/ASM_Models/S_i_Inflow_concentration.txt");
     Inflow_S_S.writefile("/home/behzad/Projects/ASM_Models/S_S_Inflow_concentration.txt");
@@ -697,11 +703,10 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->block("Reactor_Flex")->SetProperty("X_ND:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/X_ND_constant_inflow_concentration.txt");
 */
 
-    if (!OUP)
-    {
+
     // Time Variable inflows according DeNite data
 
-    system->block("Reactor_Flex(1)")->SetProperty("time_variable_inflow","/home/behzad/Projects/ASM_Models/Q_time_variable_inflow.txt"); // Discharge (m3/day)
+    system->block("Reactor_Flex(1)")->SetProperty("time_variable_inflow","/home/behzad/Projects/ASM_Models/Q_tvif.txt"); // Discharge (m3/day)
 
     system->block("Reactor_Flex(1)")->SetProperty("S_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/S_S_Inflow_concentration.txt");
     system->block("Reactor_Flex(1)")->SetProperty("X_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/X_S_Inflow_concentration.txt");
@@ -712,90 +717,6 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->block("Reactor_Flex(1)")->SetProperty("X_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/X_ND_Inflow_concentration.txt");
 
     system->block("Reactor_Flex(5)")->SetProperty("S_M:external_mass_flow_timeseries","/home/behzad/Projects/ASM_Models/S_M_mfr.txt");
-    }
-
-    if (OUP)
-    {
-    // Determining Inflows by OUProcess
-
-    CTimeSeries<double> OUP_Inflow_Q_NS;
-    OUP_Inflow_Q_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
-    OUP_Inflow_Q_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_Q_NS.csv");
-    vector<double> Q_params; Q_params.push_back(10); Q_params.push_back(1);
-    CTimeSeries<double> OUP_Inflow_Q = OUP_Inflow_Q_NS.MapfromNormalScoreToDistribution("lognormal", Q_params);
-    OUP_Inflow_Q.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_Q.csv");
-
-    CTimeSeries<double> OUP_Inflow_S_S_NS;
-    OUP_Inflow_S_S_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
-    OUP_Inflow_S_S_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_S_NS.csv");
-    vector<double> S_S_params; S_S_params.push_back(1); S_S_params.push_back(0.4);
-    CTimeSeries<double> OUP_Inflow_S_S = OUP_Inflow_S_S_NS.MapfromNormalScoreToDistribution("lognormal", S_S_params);
-    OUP_Inflow_S_S.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_S.csv");
-
-    CTimeSeries<double> OUP_Inflow_X_S_NS;
-    OUP_Inflow_X_S_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
-    OUP_Inflow_X_S_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_X_S_NS.csv");
-    vector<double> X_S_params; X_S_params.push_back(1.5); X_S_params.push_back(0.5);
-    CTimeSeries<double> OUP_Inflow_X_S = OUP_Inflow_X_S_NS.MapfromNormalScoreToDistribution("lognormal", X_S_params);
-    OUP_Inflow_X_S.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_X_S.csv");
-
-    CTimeSeries<double> OUP_Inflow_X_p_NS;
-    OUP_Inflow_X_p_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
-    OUP_Inflow_X_p_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_X_p_NS.csv");
-    vector<double> X_p_params; X_p_params.push_back(1.2); X_p_params.push_back(0.4);
-    CTimeSeries<double> OUP_Inflow_X_p = OUP_Inflow_X_p_NS.MapfromNormalScoreToDistribution("lognormal", X_p_params);
-    OUP_Inflow_X_p.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_X_p.csv");
-
-    CTimeSeries<double> OUP_Inflow_S_NO_NS;
-    OUP_Inflow_S_NO_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
-    OUP_Inflow_S_NO_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_NO_NS.csv");
-    vector<double> S_NO_params; S_NO_params.push_back(0.8); S_NO_params.push_back(0.4);
-    CTimeSeries<double> OUP_Inflow_S_NO = OUP_Inflow_S_NO_NS.MapfromNormalScoreToDistribution("lognormal", S_NO_params);
-    OUP_Inflow_S_NO.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_NO.csv");
-
-    CTimeSeries<double> OUP_Inflow_S_NH_NS;
-    OUP_Inflow_S_NH_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
-    OUP_Inflow_S_NH_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_NH_NS.csv");
-    vector<double> S_NH_params; S_NH_params.push_back(1.3); S_NH_params.push_back(0.5);
-    CTimeSeries<double> OUP_Inflow_S_NH = OUP_Inflow_S_NH_NS.MapfromNormalScoreToDistribution("lognormal", S_NH_params);
-    OUP_Inflow_S_NH.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_NH.csv");
-
-    CTimeSeries<double> OUP_Inflow_S_ND_NS;
-    OUP_Inflow_S_ND_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
-    OUP_Inflow_S_ND_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_ND_NS.csv");
-    vector<double> S_ND_params; S_ND_params.push_back(0.7); S_ND_params.push_back(0.3);
-    CTimeSeries<double> OUP_Inflow_S_ND = OUP_Inflow_S_ND_NS.MapfromNormalScoreToDistribution("lognormal", S_ND_params);
-    OUP_Inflow_S_ND.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_ND.csv");
-
-    CTimeSeries<double> OUP_Inflow_X_ND_NS;
-    OUP_Inflow_X_ND_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
-    OUP_Inflow_X_ND_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_X_ND_NS.csv");
-    vector<double> X_ND_params; X_ND_params.push_back(1.4); X_ND_params.push_back(0.3);
-    CTimeSeries<double> OUP_Inflow_X_ND = OUP_Inflow_X_ND_NS.MapfromNormalScoreToDistribution("lognormal", X_ND_params);
-    OUP_Inflow_X_ND.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_X_ND.csv");
-
-    CTimeSeries<double> OUP_Inflow_S_M_NS;
-    OUP_Inflow_S_M_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
-    OUP_Inflow_S_M_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_M_NS.csv");
-    vector<double> S_M_params; S_M_params.push_back(3); S_M_params.push_back(0.6);
-    CTimeSeries<double> OUP_Inflow_S_M = OUP_Inflow_S_M_NS.MapfromNormalScoreToDistribution("lognormal", S_M_params);
-    OUP_Inflow_S_M.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_M.csv");
-
-    // Time Variable inflows by OUProcess
-
-    system->block("Reactor_Flex(1)")->SetProperty("time_variable_inflow","/home/behzad/Projects/ASM_Models/OUP_Inflow_Q.csv"); // Discharge (m3/day)
-
-    system->block("Reactor_Flex(1)")->SetProperty("S_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_S_S.csv");
-    system->block("Reactor_Flex(1)")->SetProperty("X_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_X_S.csv");
-    system->block("Reactor_Flex(1)")->SetProperty("X_p:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_X_p.csv");
-    system->block("Reactor_Flex(1)")->SetProperty("S_NO:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_S_NO.csv");
-    system->block("Reactor_Flex(1)")->SetProperty("S_NH:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_S_NH.csv");
-    system->block("Reactor_Flex(1)")->SetProperty("S_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_S_ND.csv");
-    system->block("Reactor_Flex(1)")->SetProperty("X_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_X_ND.csv");
-
-    system->block("Reactor_Flex(5)")->SetProperty("S_M:external_mass_flow_timeseries","/home/behzad/Projects/ASM_Models/OUP_Inflow_S_M.csv");
-
-    }
 
     // Flex_flow Links for Reactor_Flex
     for (int i=0; i<n_tanks-1; i++)
@@ -803,7 +724,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         l_r_st.SetQuantities(system, "Flex_flow");
         l_r_st.SetName("Reactor_Flex(" + aquiutils::numbertostring(i+1)+"_" + aquiutils::numbertostring(i+2) + ")");
         l_r_st.SetType("Flex_flow");
-        //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/r_r_st_time_variable_flow.txt");
+        //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/r_r_st_tvf.txt");
         l_r_st.SetVal("flow_factor",v_flow_factor);
         system->AddLink(l_r_st, "Reactor_Flex(" + aquiutils::numbertostring(i+1)+")", "Reactor_Flex(" + aquiutils::numbertostring(i+2)+")", false);
     }
@@ -814,7 +735,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_r_st.SetQuantities(system, "Flex_flow");
     l_r_st.SetName("Reactor_Flex(" + aquiutils::numbertostring(n_tanks) + ") - Settling element top");
     l_r_st.SetType("Flex_flow");
-    //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/r_r_st_time_variable_flow.txt");
+    //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/r_r_st_tvf.txt");
     l_r_st.SetVal("flow_factor",v_flow_factor);
     system->AddLink(l_r_st, "Reactor_Flex(" + aquiutils::numbertostring(n_tanks) + ")", "Settling element top", false);
 
@@ -822,7 +743,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_st_c.SetQuantities(system, "Flex_flow");
     l_st_c.SetName("Settling element top - Clarifier");
     l_st_c.SetType("Flex_flow");
-    //l_st_c.SetProperty("flow", "/home/behzad/Projects/ASM_Models/st_c_time_variable_flow.txt");
+    //l_st_c.SetProperty("flow", "/home/behzad/Projects/ASM_Models/st_c_tvf.txt");
     l_st_c.SetVal("flow_factor",v_flow_factor);
     system->AddLink(l_st_c, "Settling element top", "Clarifier", false);
 
@@ -830,7 +751,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_sb_was.SetQuantities(system, "Flex_flow");
     l_sb_was.SetName("Settling element bottom - WAS");
     l_sb_was.SetType("Flex_flow");
-    //l_sb_was.SetProperty("flow", "/home/behzad/Projects/ASM_Models/WAS_time_variable_flow.txt");
+    //l_sb_was.SetProperty("flow", "/home/behzad/Projects/ASM_Models/WAS_tvf.txt");
     l_sb_was.SetVal("flow_factor",v_flow_factor);
     system->AddLink(l_sb_was, "Settling element bottom", "WAS", false);
 
@@ -839,7 +760,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_st_sb.SetQuantities(system, "Settling element interface (time variable)");
     l_st_sb.SetName("Settling element top - Settling element bottom");
     l_st_sb.SetType("Settling element interface (time variable)");
-    l_st_sb.SetProperty("flow", "/home/behzad/Projects/ASM_Models/st_sb_time_variable_flow.txt");
+    l_st_sb.SetProperty("flow", "/home/behzad/Projects/ASM_Models/st_sb_tvf.txt");
     l_st_sb.SetVal("area", v_st_sb_area);
     system->AddLink(l_st_sb, "Settling element top", "Settling element bottom", false);
 
@@ -848,9 +769,205 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_sb_r.SetQuantities(system, "Time-Dependent flow");
     l_sb_r.SetName("Settling element bottom - Reactor_Flex(1)");
     l_sb_r.SetType("Time-Dependent flow");
-    l_sb_r.SetProperty("flow", "/home/behzad/Projects/ASM_Models/RAS_time_variable_flow.txt");
+    l_sb_r.SetProperty("flow", "/home/behzad/Projects/ASM_Models/RAS_tvf.txt");
     system->AddLink(l_sb_r, "Settling element bottom", "Reactor_Flex(1)", false);
 
+    }
+
+    if (OUP)
+
+    {
+    // Determining Inflows by OUProcess
+
+        // Inflows
+
+        CTimeSeries<double> OUP_Inflow_Q; // Discharge (m3/day)
+
+        CTimeSeries<double> OUP_Flow_WAS; // Wasteflow (WAS) (m3/day)
+        CTimeSeries<double> OUP_Flow_RAS; // Returnflow (RAS) (m3/day)
+
+        CTimeSeries<double> OUP_Flow_r_r_st; // Reactor_Flex to Reactor_Flex + Reactor_Flex to Settling element top flow (m3/day)
+        CTimeSeries<double> OUP_Flow_st_sb; // Settling element top to Settling element bottom flow (m3/day)
+        CTimeSeries<double> OUP_Flow_st_c; // Settling element top to Clarifier flow (m3/day)
+
+        // Defining Constituents Inflows
+
+        CTimeSeries<double> OUP_Inflow_S_i; //--
+        CTimeSeries<double> OUP_Inflow_S_S;
+        CTimeSeries<double> OUP_Inflow_X_S;
+        CTimeSeries<double> OUP_Inflow_X_p;
+        CTimeSeries<double> OUP_Inflow_S_NO;
+        CTimeSeries<double> OUP_Inflow_S_NH;
+        CTimeSeries<double> OUP_Inflow_S_ND;
+        CTimeSeries<double> OUP_Inflow_X_ND;
+
+        CTimeSeries<double> OUP_Inflow_MeOH; // Methanol
+
+    CTimeSeries<double> OUP_Inflow_Q_NS; // Discharge (m3/day)
+    OUP_Inflow_Q_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
+    OUP_Inflow_Q_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_Q_NS_tvif.csv");
+    vector<double> Q_params; Q_params.push_back(10); Q_params.push_back(1);
+    OUP_Inflow_Q = OUP_Inflow_Q_NS.MapfromNormalScoreToDistribution("lognormal", Q_params);
+    OUP_Inflow_Q.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_Q_tvif.csv");
+
+    CTimeSeries<double> OUP_Flow_WAS_NS; // Wasteflow (WAS) (m3/day)
+    OUP_Flow_WAS_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
+    OUP_Flow_WAS_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Flow_WAS_NS_tvf.csv");
+    vector<double> WAS_params; WAS_params.push_back(3); WAS_params.push_back(0.8);
+    OUP_Flow_WAS = OUP_Flow_WAS_NS.MapfromNormalScoreToDistribution("lognormal", WAS_params);
+    OUP_Flow_WAS.writefile("/home/behzad/Projects/ASM_Models/OUP_Flow_WAS_tvf.csv");
+
+    CTimeSeries<double> OUP_Flow_RAS_NS; // Returnflow (RAS) (m3/day)
+    OUP_Flow_RAS_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
+    OUP_Flow_RAS_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Flow_RAS_NS_tvf.csv");
+    vector<double> RAS_params; RAS_params.push_back(9.2); RAS_params.push_back(1);
+    OUP_Flow_RAS = OUP_Flow_RAS_NS.MapfromNormalScoreToDistribution("lognormal", RAS_params);
+    OUP_Flow_RAS.writefile("/home/behzad/Projects/ASM_Models/OUP_Flow_RAS_tvf.csv");
+
+
+    OUP_Flow_r_r_st=OUP_Inflow_Q+OUP_Flow_RAS;
+    OUP_Flow_st_sb=OUP_Flow_RAS+OUP_Flow_WAS;
+    OUP_Flow_st_c=OUP_Inflow_Q-OUP_Flow_WAS;
+
+
+    OUP_Flow_r_r_st.writefile("/home/behzad/Projects/ASM_Models/OUP_r_r_st_tvf.csv"); //
+    OUP_Flow_st_sb.writefile("/home/behzad/Projects/ASM_Models/OUP_st_sb_tvf.csv"); //
+    OUP_Flow_st_c.writefile("/home/behzad/Projects/ASM_Models/OUP_st_c_tvf.csv"); //
+
+
+    CTimeSeries<double> OUP_Inflow_S_i_NS;  //--
+    OUP_Inflow_S_i_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
+    OUP_Inflow_S_i_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_i_NS.csv");
+    vector<double> S_i_params; S_i_params.push_back(0.2); S_i_params.push_back(0.5);
+    OUP_Inflow_S_i = OUP_Inflow_S_i_NS.MapfromNormalScoreToDistribution("lognormal", S_i_params);
+    OUP_Inflow_S_i.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_i.csv");
+
+    CTimeSeries<double> OUP_Inflow_S_S_NS;
+    OUP_Inflow_S_S_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
+    OUP_Inflow_S_S_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_S_NS.csv");
+    vector<double> S_S_params; S_S_params.push_back(1); S_S_params.push_back(0.4);
+    OUP_Inflow_S_S = OUP_Inflow_S_S_NS.MapfromNormalScoreToDistribution("lognormal", S_S_params);
+    OUP_Inflow_S_S.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_S.csv");
+
+    CTimeSeries<double> OUP_Inflow_X_S_NS;
+    OUP_Inflow_X_S_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
+    OUP_Inflow_X_S_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_X_S_NS.csv");
+    vector<double> X_S_params; X_S_params.push_back(1.5); X_S_params.push_back(0.5);
+    OUP_Inflow_X_S = OUP_Inflow_X_S_NS.MapfromNormalScoreToDistribution("lognormal", X_S_params);
+    OUP_Inflow_X_S.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_X_S.csv");
+
+    CTimeSeries<double> OUP_Inflow_X_p_NS;
+    OUP_Inflow_X_p_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
+    OUP_Inflow_X_p_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_X_p_NS.csv");
+    vector<double> X_p_params; X_p_params.push_back(1.2); X_p_params.push_back(0.4);
+    OUP_Inflow_X_p = OUP_Inflow_X_p_NS.MapfromNormalScoreToDistribution("lognormal", X_p_params);
+    OUP_Inflow_X_p.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_X_p.csv");
+
+    CTimeSeries<double> OUP_Inflow_S_NO_NS;
+    OUP_Inflow_S_NO_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
+    OUP_Inflow_S_NO_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_NO_NS.csv");
+    vector<double> S_NO_params; S_NO_params.push_back(0.8); S_NO_params.push_back(0.4);
+    OUP_Inflow_S_NO = OUP_Inflow_S_NO_NS.MapfromNormalScoreToDistribution("lognormal", S_NO_params);
+    OUP_Inflow_S_NO.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_NO.csv");
+
+    CTimeSeries<double> OUP_Inflow_S_NH_NS;
+    OUP_Inflow_S_NH_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
+    OUP_Inflow_S_NH_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_NH_NS.csv");
+    vector<double> S_NH_params; S_NH_params.push_back(1.3); S_NH_params.push_back(0.5);
+    OUP_Inflow_S_NH = OUP_Inflow_S_NH_NS.MapfromNormalScoreToDistribution("lognormal", S_NH_params);
+    OUP_Inflow_S_NH.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_NH.csv");
+
+    CTimeSeries<double> OUP_Inflow_S_ND_NS;
+    OUP_Inflow_S_ND_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
+    OUP_Inflow_S_ND_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_ND_NS.csv");
+    vector<double> S_ND_params; S_ND_params.push_back(0.7); S_ND_params.push_back(0.3);
+    OUP_Inflow_S_ND = OUP_Inflow_S_ND_NS.MapfromNormalScoreToDistribution("lognormal", S_ND_params);
+    OUP_Inflow_S_ND.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_S_ND.csv");
+
+    CTimeSeries<double> OUP_Inflow_X_ND_NS;
+    OUP_Inflow_X_ND_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
+    OUP_Inflow_X_ND_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_X_ND_NS.csv");
+    vector<double> X_ND_params; X_ND_params.push_back(1.4); X_ND_params.push_back(0.3);
+    OUP_Inflow_X_ND = OUP_Inflow_X_ND_NS.MapfromNormalScoreToDistribution("lognormal", X_ND_params);
+    OUP_Inflow_X_ND.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_X_ND.csv");
+
+    CTimeSeries<double> OUP_Inflow_MeOH_NS; // Methanol
+    OUP_Inflow_MeOH_NS.CreateOUProcess(0,Simulation_time_Calc,0.05,1);
+    OUP_Inflow_MeOH_NS.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_MeOH_NS.csv");
+    vector<double> MeOH_params; MeOH_params.push_back(3); MeOH_params.push_back(0.6);
+    OUP_Inflow_MeOH = OUP_Inflow_MeOH_NS.MapfromNormalScoreToDistribution("lognormal", MeOH_params);
+    OUP_Inflow_MeOH.writefile("/home/behzad/Projects/ASM_Models/OUP_Inflow_MeOH.csv");
+
+    // Time Variable inflows by OUProcess
+
+    system->block("Reactor_Flex(1)")->SetProperty("time_variable_inflow","/home/behzad/Projects/ASM_Models/OUP_Inflow_Q_tvif.csv"); // Discharge (m3/day)
+
+    system->block("Reactor_Flex(1)")->SetProperty("S_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_S_S.csv");
+    system->block("Reactor_Flex(1)")->SetProperty("X_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_X_S.csv");
+    system->block("Reactor_Flex(1)")->SetProperty("X_p:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_X_p.csv");
+    system->block("Reactor_Flex(1)")->SetProperty("S_NO:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_S_NO.csv");
+    system->block("Reactor_Flex(1)")->SetProperty("S_NH:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_S_NH.csv");
+    system->block("Reactor_Flex(1)")->SetProperty("S_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_S_ND.csv");
+    system->block("Reactor_Flex(1)")->SetProperty("X_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_X_ND.csv");
+
+    system->block("Reactor_Flex(5)")->SetProperty("S_M:external_mass_flow_timeseries","/home/behzad/Projects/ASM_Models/OUP_Inflow_MeOH.csv");
+
+
+    // Flex_flow Links for Reactor_Flex
+    for (int i=0; i<n_tanks-1; i++)
+    {   Link l_r_st;
+        l_r_st.SetQuantities(system, "Flex_flow");
+        l_r_st.SetName("Reactor_Flex(" + aquiutils::numbertostring(i+1)+"_" + aquiutils::numbertostring(i+2) + ")");
+        l_r_st.SetType("Flex_flow");
+        //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/OUP_r_r_st_tvf.csv");
+        l_r_st.SetVal("flow_factor",v_flow_factor);
+        system->AddLink(l_r_st, "Reactor_Flex(" + aquiutils::numbertostring(i+1)+")", "Reactor_Flex(" + aquiutils::numbertostring(i+2)+")", false);
+    }
+
+
+    // Flex_flow Links
+    Link l_r_st;
+    l_r_st.SetQuantities(system, "Flex_flow");
+    l_r_st.SetName("Reactor_Flex(" + aquiutils::numbertostring(n_tanks) + ") - Settling element top");
+    l_r_st.SetType("Flex_flow");
+    //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/OUP_r_r_st_tvf.csv");
+    l_r_st.SetVal("flow_factor",v_flow_factor);
+    system->AddLink(l_r_st, "Reactor_Flex(" + aquiutils::numbertostring(n_tanks) + ")", "Settling element top", false);
+
+    Link l_st_c;
+    l_st_c.SetQuantities(system, "Flex_flow");
+    l_st_c.SetName("Settling element top - Clarifier");
+    l_st_c.SetType("Flex_flow");
+    //l_st_c.SetProperty("flow", "/home/behzad/Projects/ASM_Models/OUP_st_c_tvf.csv");
+    l_st_c.SetVal("flow_factor",v_flow_factor);
+    system->AddLink(l_st_c, "Settling element top", "Clarifier", false);
+
+    Link l_sb_was;
+    l_sb_was.SetQuantities(system, "Flex_flow");
+    l_sb_was.SetName("Settling element bottom - WAS");
+    l_sb_was.SetType("Flex_flow");
+    //l_sb_was.SetProperty("flow", "/home/behzad/Projects/ASM_Models/OUP_Flow_WAS_NS_tvf.csv");
+    l_sb_was.SetVal("flow_factor",v_flow_factor);
+    system->AddLink(l_sb_was, "Settling element bottom", "WAS", false);
+
+    // Time-Dependent interface Link
+    Link l_st_sb;
+    l_st_sb.SetQuantities(system, "Settling element interface (time variable)");
+    l_st_sb.SetName("Settling element top - Settling element bottom");
+    l_st_sb.SetType("Settling element interface (time variable)");
+    l_st_sb.SetProperty("flow", "/home/behzad/Projects/ASM_Models/OUP_st_sb_tvf.csv");
+    l_st_sb.SetVal("area", v_st_sb_area);
+    system->AddLink(l_st_sb, "Settling element top", "Settling element bottom", false);
+
+    // Time-Dependent flow Links
+    Link l_sb_r;
+    l_sb_r.SetQuantities(system, "Time-Dependent flow");
+    l_sb_r.SetName("Settling element bottom - Reactor_Flex(1)");
+    l_sb_r.SetType("Time-Dependent flow");
+    l_sb_r.SetProperty("flow", "/home/behzad/Projects/ASM_Models/OUP_Flow_RAS_tvf.csv");
+    system->AddLink(l_sb_r, "Settling element bottom", "Reactor_Flex(1)", false);
+
+}
 
     // Observations
     Observation total_inflow;
