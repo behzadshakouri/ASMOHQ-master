@@ -979,16 +979,17 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     total_inflow.SetType("Observation");
     system->AddObservation(total_inflow,false);
 
+
+    Observation S_S_inflow_cn;
+
+    S_S_inflow_cn.SetQuantities(system, "Observation");
+    S_S_inflow_cn.SetProperty("expression","S_S:time_variable_inflow_concentration");
+    S_S_inflow_cn.SetProperty("object","Reactor_Flex(1)");
+    S_S_inflow_cn.SetName("S_S_InflowConcentration");
+    S_S_inflow_cn.SetType("Observation");
+    system->AddObservation(S_S_inflow_cn,false);
+
 /*
-    Observation s_inflow_concentration;
-
-    s_inflow_concentration.SetQuantities(system, "Observation");
-    s_inflow_concentration.SetProperty("expression","Solids:inflow_concentration");
-    s_inflow_concentration.SetProperty("object","Reactor_Flex (1)");
-    s_inflow_concentration.SetName("SolidsInflowConcentration");
-    s_inflow_concentration.SetType("Observation");
-    system->AddObservation(s_inflow_concentration,false);
-
     Observation coagulant_concentration;
 
     coagulant_concentration.SetQuantities(system, "Observation");
