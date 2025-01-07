@@ -20,9 +20,10 @@ bool Flex = true; // Flex or normal reactor usage
     string Workingfolder_Flex="/home/arash/Projects/ASM_Models/Flex/";
 #endif
 
+    /*
 //Data analysis
 
-    CTimeSeriesSet<double> Inflow_DeNit( Workingfolder + "Data/DeNit_Influent_Lump.txt",true);
+    CTimeSeriesSet<double> Inflow_DeNit(Workingfolder + "Data/DeNit_Influent_Lump.txt",true);
 
 //Flow
     CTimeSeries<double> flow_normal_score = Inflow_DeNit.BTC[0].ConverttoNormalScore();
@@ -36,6 +37,10 @@ bool Flex = true; // Flex or normal reactor usage
 
     CTimeSeries<double> flow_PDF = Inflow_DeNit.BTC[0].distribution(50,0);
     flow_PDF.writefile(Workingfolder + "Data/flow_PDF.txt");
+
+    double flow_mean = exp(Inflow_DeNit.BTC[0].Log().mean());
+    double flow_std = Inflow_DeNit.BTC[0].Log().std();
+    double flow_autocorrelation_coeff = flow_autocorrelation.AutoCorrelationCoeff();
 
 //TSS
     CTimeSeries<double> TSS_normal_score = Inflow_DeNit.BTC[1].ConverttoNormalScore();
@@ -81,6 +86,7 @@ bool Flex = true; // Flex or normal reactor usage
     CTimeSeries<double> logstds2 = logstds;
     logstds2.writefile(Workingfolder + "Data/logstds.txt");
 
+*/
 
     for (int i=0; i<1; i++) // Realization
     {
