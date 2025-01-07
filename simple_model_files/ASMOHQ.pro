@@ -25,12 +25,12 @@ Behzad {
     VTK_V = -9.3
 }
 
-Arash {
-    OHQPATH = /home/arash/Projects/QAquifolium/aquifolium
-    VTKBUILDPATH = /home/arash/Projects/VTK/VTK-build
-    VTKHEADERPATH = /home/arash/Projects/VTK
-    VTK_V = -9.0
-}
+#Arash {
+    #OHQPATH = /home/arash/Projects/QAquifolium/aquifolium
+    #VTKBUILDPATH = /home/arash/Projects/VTK/VTK-build
+    #VTKHEADERPATH = /home/arash/Projects/VTK
+    #VTK_V = -9.0
+#}
 
 DEFINES += use_VTK ARMA_USE_SUPERLU _ARMA
 CONFIG += use_VTK
@@ -137,7 +137,6 @@ SOURCES += \
         ../jsoncpp/src/lib_json/json_writer.cpp \
         main.cpp \
         modelcreator.cpp \
-        modelcreator_flex.cpp \
         resultgrid.cpp
 
 HEADERS += \
@@ -201,7 +200,6 @@ HEADERS += \
     $$OHQPATH/src/BTCSet.hpp \
     $$OHQPATH/include/reaction.h \
     modelcreator.h \
-    modelcreator_flex.h \
     resultgrid.h
 
 

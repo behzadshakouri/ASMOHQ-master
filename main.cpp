@@ -2,6 +2,7 @@
 #include "Script.h"
 #include "qfileinfo.h"
 #include "modelcreator.h"
+#include "modelcreator_flex.h"
 #include "resultgrid.h"
 //#include "vtk.h"
 
@@ -9,8 +10,14 @@
 int main(int argc, char *argv[])
 {
 
+bool Flex = true; // Flex or normal reactor usage
+
 #ifdef Behzad
     string Workingfolder="/home/behzad/Projects/ASM_Models/";
+    string Workingfolder_Flex="/home/behzad/Projects/ASM_Models/Flex/";
+#else
+    string Workingfolder="/home/arash/Projects/ASM_Models/";
+    string Workingfolder_Flex="/home/arash/Projects/ASM_Models/Flex/";
 #endif
 #ifdef  Arash
     string Workingfolder = "/home/arash/Projects/ASM_Models/";
@@ -19,10 +26,10 @@ int main(int argc, char *argv[])
     string Workingfolder = "C:/Projects/ASM_Models/";
 #endif // Arash_Windows
 
-
+    /*
 //Data analysis
 
-    CTimeSeriesSet<double> Inflow_DeNit( Workingfolder + "Data/DeNit_Influent_Lump.txt",true);
+    CTimeSeriesSet<double> Inflow_DeNit(Workingfolder + "Data/DeNit_Influent_Lump.txt",true);
 
 //Flow
     CTimeSeries<double> flow_normal_score = Inflow_DeNit.BTC[0].ConverttoNormalScore();
@@ -36,6 +43,10 @@ int main(int argc, char *argv[])
 
     CTimeSeries<double> flow_PDF = Inflow_DeNit.BTC[0].distribution(50,0);
     flow_PDF.writefile(Workingfolder + "Data/flow_PDF.txt");
+
+    double flow_mean = exp(Inflow_DeNit.BTC[0].Log().mean());
+    double flow_std = Inflow_DeNit.BTC[0].Log().std();
+    double flow_autocorrelation_coeff = flow_autocorrelation.AutoCorrelationCoeff();
 
 //TSS
     CTimeSeries<double> TSS_normal_score = Inflow_DeNit.BTC[1].ConverttoNormalScore();
@@ -81,8 +92,52 @@ int main(int argc, char *argv[])
     CTimeSeries<double> logstds2 = logstds;
     logstds2.writefile(Workingfolder + "Data/logstds.txt");
 
+*/
+
+    for (int i=0; i<1; i++) // Realization
+    {
+    ModelCreator_Flex ModCreate_Flex;
+
+    if (Flex)
+    {
+    for (int i=0; i<1; i++)
+    {
+        System *system=new System();
+        system->Clear();
+        cout<<"Creating model "<< i << " ..." <<endl;
+        ModCreate_Flex.Create_Flex(system);
+        cout<<"Creating model done..." <<endl;
+
+        system->SetWorkingFolder(Workingfolder_Flex);
+        system->SetSilent(false);
+        cout<<"Saving"<<endl;
+        system->SavetoScriptFile(Workingfolder_Flex + "CreatedModel_Flex.ohq");
+
+        cout<<"Solving ..."<<endl;
+        system->Solve();
+
+        cout<<"Writing outputs in '"<< system->GetWorkingFolder() + system->OutputFileName() +"'"<<endl;
+        CTimeSeriesSet<double> output = system->GetOutputs();
+        QString outputfilename = QString::fromStdString(system->OutputFileName()).split(".")[0] +"_" + QString::number(i) + ".txt";
+        output.writetofile(system->GetWorkingFolder() + outputfilename.toStdString());
+
+        cout<<"Writing outputs in '"<< system->GetWorkingFolder() + system->ObservedOutputFileName() +"'"<<endl;
+        CTimeSeriesSet<double> selectedoutput = system->GetObservedOutputs();
+        QString selectedoutputfilename = QString::fromStdString(system->ObservedOutputFileName()).split(".")[0] +"_" + QString::number(i) + ".txt";
+        selectedoutput.writetofile(system->GetWorkingFolder() + selectedoutputfilename.toStdString());
+
+        cout<<"Getting results into grid"<<endl;
+        ResultGrid resgrid(output,"theta",system);
+        //cout<<"Writing VTPs"<<endl;
+        //resgrid.WriteToVTP("Moisture_content",system->GetWorkingFolder()+"moisture.vtp");
+        delete system;
+    }
+    }
+
     ModelCreator ModCreate;
-    ModCreate.Workingfolder = Workingfolder; 
+
+    if (!Flex)
+    {
     for (int i=0; i<1; i++)
     {
         System *system=new System();
@@ -114,6 +169,8 @@ int main(int argc, char *argv[])
         //cout<<"Writing VTPs"<<endl;
         //resgrid.WriteToVTP("Moisture_content",system->GetWorkingFolder()+"moisture.vtp");
         delete system;
+    }
+    }
     }
 
     return 0;

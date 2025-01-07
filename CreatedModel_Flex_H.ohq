@@ -1,0 +1,68 @@
+loadtemplate; filename = /home/behzad/Projects/OpenHydroQual/build/Desktop_Qt_6_7_3-Release/../../resources/main_components.json
+addtemplate; filename = /home/behzad/Projects/OpenHydroQual/build/Desktop_Qt_6_7_3-Release/../../resources/main_components.json
+addtemplate; filename = /home/behzad/Projects/OpenHydroQual/resources/main_components.json
+addtemplate; filename = /home/behzad/Projects/OpenHydroQual/resources/wastewater.json
+addtemplate; filename = /home/behzad/Projects/OpenHydroQual/resources/mass_transfer.json
+setvalue; object=system, quantity=acceptance_rate, value=0.15
+setvalue; object=system, quantity=add_noise_to_realizations, value=No
+setvalue; object=system, quantity=continue_based_on_file_name, value=
+setvalue; object=system, quantity=initial_purturbation, value=No
+setvalue; object=system, quantity=initual_purturbation_factor, value=0.05
+setvalue; object=system, quantity=number_of_burnout_samples, value=0
+setvalue; object=system, quantity=number_of_chains, value=8
+setvalue; object=system, quantity=number_of_post_estimate_realizations, value=0
+setvalue; object=system, quantity=number_of_samples, value=1000
+setvalue; object=system, quantity=number_of_threads, value=1
+setvalue; object=system, quantity=perform_global_sensitivity, value=No
+setvalue; object=system, quantity=purturbation_change_scale, value=0.75
+setvalue; object=system, quantity=record_interval, value=1
+setvalue; object=system, quantity=samples_filename, value=mcmc.txt
+setvalue; object=system, quantity=alloutputfile, value=output.txt
+setvalue; object=system, quantity=observed_outputfile, value=observedoutput.txt
+setvalue; object=system, quantity=simulation_end_time, value=40359
+setvalue; object=system, quantity=simulation_start_time, value=40210
+setvalue; object=system, quantity=maxpop, value=40
+setvalue; object=system, quantity=ngen, value=40
+setvalue; object=system, quantity=numthreads, value=8
+setvalue; object=system, quantity=outputfile, value=GA_output.txt
+setvalue; object=system, quantity=pcross, value=1
+setvalue; object=system, quantity=pmute, value=0.02
+setvalue; object=system, quantity=shakescale, value=0.05
+setvalue; object=system, quantity=shakescalered, value=0.75
+setvalue; object=system, quantity=c_n_weight, value=1
+setvalue; object=system, quantity=initial_time_step, value=0.01
+setvalue; object=system, quantity=jacobian_method, value=Inverse Jacobian
+setvalue; object=system, quantity=maximum_number_of_matrix_inverstions, value=200000
+setvalue; object=system, quantity=maximum_time_allowed, value=86400
+setvalue; object=system, quantity=minimum_timestep, value=1e-06
+setvalue; object=system, quantity=n_threads, value=8
+setvalue; object=system, quantity=nr_timestep_reduction_factor, value=0.75
+setvalue; object=system, quantity=nr_timestep_reduction_factor_fail, value=0.2
+setvalue; object=system, quantity=nr_tolerance, value=0.001
+setvalue; object=system, quantity=write_intermittently, value=No
+setvalue; object=system, quantity=write_interval, value=100
+setvalue; object=system, quantity=write_solution_details, value=No
+create block;type=Settling element,Storage=2000[m~^3],Volume=2000[m~^3],_height=200,_width=200,bottom_elevation=1[m],name=Settling element top,x=800,y=600
+create block;type=Settling element,Storage=2000[m~^3],Volume=2000[m~^3],_height=200,_width=200,bottom_elevation=0[m],name=Settling element bottom,x=800,y=1000
+create block;type=time_variable_fixed_head,Storage=100000,_height=200,_width=200,head=,name=Clarifier,x=1200,y=600
+create block;type=time_variable_fixed_head,Storage=100000,_height=200,_width=200,head=,name=WAS,x=1200,y=1000
+create block;type=Reactor_Flex,Storage=2187.5[m~^3],Volume=2187.5[m~^3],_height=200,_width=200,bottom_elevation=0[m],constant_inflow=0[m~^3/day],name=Reactor_Flex(1),time_variable_inflow=/home/behzad/Projects/ASM_Models/Q_time_variable_inflow.txt,x=-3200,y=1200
+create block;type=Reactor_Flex,Storage=2187.5[m~^3],Volume=2187.5[m~^3],_height=200,_width=200,bottom_elevation=0[m],constant_inflow=0[m~^3/day],name=Reactor_Flex(2),time_variable_inflow=,x=-2800,y=800
+create block;type=Reactor_Flex,Storage=2187.5[m~^3],Volume=2187.5[m~^3],_height=200,_width=200,bottom_elevation=0[m],constant_inflow=0[m~^3/day],name=Reactor_Flex(3),time_variable_inflow=,x=-2400,y=800
+create block;type=Reactor_Flex,Storage=2187.5[m~^3],Volume=2187.5[m~^3],_height=200,_width=200,bottom_elevation=0[m],constant_inflow=0[m~^3/day],name=Reactor_Flex(4),time_variable_inflow=,x=-2000,y=800
+create block;type=Reactor_Flex,Storage=2187.5[m~^3],Volume=2187.5[m~^3],_height=200,_width=200,bottom_elevation=0[m],constant_inflow=0[m~^3/day],name=Reactor_Flex(5),time_variable_inflow=,x=-1600,y=800
+create block;type=Reactor_Flex,Storage=2187.5[m~^3],Volume=2187.5[m~^3],_height=200,_width=200,bottom_elevation=0[m],constant_inflow=0[m~^3/day],name=Reactor_Flex(6),time_variable_inflow=,x=-1200,y=800
+create block;type=Reactor_Flex,Storage=2187.5[m~^3],Volume=2187.5[m~^3],_height=200,_width=200,bottom_elevation=0[m],constant_inflow=0[m~^3/day],name=Reactor_Flex(7),time_variable_inflow=,x=-800,y=800
+create block;type=Reactor_Flex,Storage=2187.5[m~^3],Volume=2187.5[m~^3],_height=200,_width=200,bottom_elevation=0[m],constant_inflow=0[m~^3/day],name=Reactor_Flex(8),time_variable_inflow=,x=-400,y=800
+create link;from=Reactor_Flex(1),to=Reactor_Flex(2),type=Flex_flow,flow_factor=2e+10[m~^3/day],name=Reactor_Flex(1_2)
+create link;from=Reactor_Flex(2),to=Reactor_Flex(3),type=Flex_flow,flow_factor=2e+10[m~^3/day],name=Reactor_Flex(2_3)
+create link;from=Reactor_Flex(3),to=Reactor_Flex(4),type=Flex_flow,flow_factor=2e+10[m~^3/day],name=Reactor_Flex(3_4)
+create link;from=Reactor_Flex(4),to=Reactor_Flex(5),type=Flex_flow,flow_factor=2e+10[m~^3/day],name=Reactor_Flex(4_5)
+create link;from=Reactor_Flex(5),to=Reactor_Flex(6),type=Flex_flow,flow_factor=2e+10[m~^3/day],name=Reactor_Flex(5_6)
+create link;from=Reactor_Flex(6),to=Reactor_Flex(7),type=Flex_flow,flow_factor=2e+10[m~^3/day],name=Reactor_Flex(6_7)
+create link;from=Reactor_Flex(7),to=Reactor_Flex(8),type=Flex_flow,flow_factor=2e+10[m~^3/day],name=Reactor_Flex(7_8)
+create link;from=Reactor_Flex(8),to=Settling element top,type=Flex_flow,flow_factor=2e+10[m~^3/day],name=Reactor_Flex(8) - Settling element top
+create link;from=Settling element top,to=Clarifier,type=Flex_flow,flow_factor=2e+10[m~^3/day],name=Settling element top - Clarifier
+create link;from=Settling element bottom,to=WAS,type=Flex_flow,flow_factor=2e+10[m~^3/day],name=Settling element bottom - WAS
+create link;from=Settling element top,to=Settling element bottom,type=Settling element interface (time variable),area=1000[m~^2],flow=/home/behzad/Projects/ASM_Models/st_sb_time_variable_flow.txt,name=Settling element top - Settling element bottom
+create link;from=Settling element bottom,to=Reactor_Flex(1),type=Time-Dependent flow,flow=/home/behzad/Projects/ASM_Models/RAS_time_variable_flow.txt,name=Settling element bottom - Reactor_Flex(1)
