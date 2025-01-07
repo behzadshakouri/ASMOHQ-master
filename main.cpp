@@ -3,7 +3,7 @@
 #include "qfileinfo.h"
 #include "modelcreator.h"
 #include "resultgrid.h"
-#include "vtk.h"
+//#include "vtk.h"
 
 
 int main(int argc, char *argv[])
@@ -11,9 +11,14 @@ int main(int argc, char *argv[])
 
 #ifdef Behzad
     string Workingfolder="/home/behzad/Projects/ASM_Models/";
-#else
-    string Workingfolder="/home/arash/Projects/ASM_Models/";
 #endif
+#ifdef  Arash
+    string Workingfolder = "/home/arash/Projects/ASM_Models/";
+#endif //  Arash
+#ifdef Arash_Windows
+    string Workingfolder = "C:/Projects/ASM_Models/";
+#endif // Arash_Windows
+
 
 //Data analysis
 
@@ -77,7 +82,7 @@ int main(int argc, char *argv[])
     logstds2.writefile(Workingfolder + "Data/logstds.txt");
 
     ModelCreator ModCreate;
-
+    ModCreate.Workingfolder = Workingfolder; 
     for (int i=0; i<1; i++)
     {
         System *system=new System();
@@ -104,8 +109,8 @@ int main(int argc, char *argv[])
         QString selectedoutputfilename = QString::fromStdString(system->ObservedOutputFileName()).split(".")[0] +"_" + QString::number(i) + ".txt";
         selectedoutput.writetofile(system->GetWorkingFolder() + selectedoutputfilename.toStdString());
 
-        cout<<"Getting results into grid"<<endl;
-        ResultGrid resgrid(output,"theta",system);
+        //cout<<"Getting results into grid"<<endl;
+        //ResultGrid resgrid(output,"theta",system);
         //cout<<"Writing VTPs"<<endl;
         //resgrid.WriteToVTP("Moisture_content",system->GetWorkingFolder()+"moisture.vtp");
         delete system;
