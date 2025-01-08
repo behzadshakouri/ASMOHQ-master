@@ -14,13 +14,24 @@ ModelCreator::ModelCreator()
 
 bool ModelCreator::Create(System *system)
 {
+#ifdef Behzad 
     system->GetQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/main_components.json");
     //system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/unsaturated_soil.json");
     //system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/Well.json");
     system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/wastewater.json");
     system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/mass_transfer.json");
     system->ReadSystemSettingsTemplate("/home/behzad/Projects/OpenHydroQual/resources/settings.json");
+#endif // Behzad 
+#ifdef Arash_Windows
+    system->GetQuanTemplate("../../OpenHydroQual/resources/main_components.json");
+    //system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/unsaturated_soil.json");
+    //system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/Well.json");
+    system->AppendQuanTemplate("../../OpenHydroQual/resources/wastewater.json");
+    system->AppendQuanTemplate("../../OpenHydroQual/resources/mass_transfer.json");
+    system->ReadSystemSettingsTemplate("../../OpenHydroQual/resources/settings.json");
+#endif // Window_Arash
 
+    
     bool St=false; // True for using Simulation Time is Days, False for using Start and End Date
 
     const double Simulation_time=1; // Simulation Time in Days
@@ -442,12 +453,12 @@ bool ModelCreator::Create(System *system)
     /*
     CTimeSeries<double> CoagNS;
     CoagNS.CreateOUProcess(0,Simulation_time,0.05,1);
-    CoagNS.writefile("/home/behzad/Projects/ASM_Models/coagulant_mfr_NS.csv");
+    CoagNS.writefile(Workingfolder + "coagulant_mfr_NS.csv");
     vector<double> c_params; c_params.push_back(2.5); c_params.push_back(0.6);
     CTimeSeries<double> Coag = CoagNS.MapfromNormalScoreToDistribution("lognormal", c_params);
     //Reactor.Variable("Coagulant:external_mass_flow_timeseries")->SetTimeSeries(Coag);
-    Coag.writefile("/home/behzad/Projects/ASM_Models/coagulant_mfr.csv");
-    Stl_element_top.SetProperty("Coagulant:external_mass_flow_timeseries","/home/behzad/Projects/ASM_Models/coagulant_mfr.csv");
+    Coag.writefile(Workingfolder + "coagulant_mfr.csv");
+    Stl_element_top.SetProperty("Coagulant:external_mass_flow_timeseries",Workingfolder + "coagulant_mfr.csv");
     */
 
     Stl_element_top.SetVal("Settled_Particles:concentration",0);
@@ -468,12 +479,12 @@ bool ModelCreator::Create(System *system)
     /*
     CTimeSeries<double> CoagNS2;
     CoagNS2.CreateOUProcess(0,Simulation_time,0.05,1);
-    CoagNS2.writefile("/home/behzad/Projects/ASM_Models/coagulant_mfr_NS.csv");
+    CoagNS2.writefile(Workingfolder + "coagulant_mfr_NS.csv");
     vector<double> c_params2; c_params2.push_back(2.5); c_params2.push_back(0.6);
     CTimeSeries<double> Coag2 = CoagNS2.MapfromNormalScoreToDistribution("lognormal", c_params);
     //Reactor.Variable("Coagulant:external_mass_flow_timeseries")->SetTimeSeries(Coag);
-    Coag2.writefile("/home/behzad/Projects/ASM_Models/coagulant_mfr.csv");
-    Stl_element_bottom.SetProperty("Coagulant:external_mass_flow_timeseries","/home/behzad/Projects/ASM_Models/coagulant_mfr.csv");
+    Coag2.writefile(Workingfolder + "coagulant_mfr.csv");
+    Stl_element_bottom.SetProperty("Coagulant:external_mass_flow_timeseries",Workingfolder + "coagulant_mfr.csv");
     */
 
     Stl_element_bottom.SetVal("Settled_Particles:concentration",0);
@@ -564,7 +575,7 @@ bool ModelCreator::Create(System *system)
         //Reactor.SetVal("Storage",v_r_storage);
         //if (i==0) Reactor.SetVal("constant_inflow",v_r_constant_flow);
         //Reactor.SetVal("constant_inflow",v_r_constant_flow);
-        //if (i==4) Reactor.SetVal("S_M:External mass flow time-series","/home/behzad/Projects/ASM_Models/S_M_mfr.csv");
+        //if (i==4) Reactor.SetVal("S_M:External mass flow time-series",Workingfolder + "S_M_mfr.csv");
         Reactor.SetVal("x",400*(i-n_tanks));
         if (i==0) Reactor.SetVal("y",1200);
         else if (i>0) Reactor.SetVal("y",800);
@@ -583,27 +594,27 @@ bool ModelCreator::Create(System *system)
 
     CTimeSeries<double> S_S_inflow_concentration;
     S_S_inflow_concentration.CreateConstant(0,Simulation_time, v_S_S_concentration);
-    S_S_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_S_constant_inflow_concentration.txt");
+    S_S_inflow_concentration.writefile(Workingfolder + "S_S_constant_inflow_concentration.txt");
 
     CTimeSeries<double> X_S_inflow_concentration;
     X_S_inflow_concentration.CreateConstant(0,Simulation_time, v_X_S_concentration);
-    X_S_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_S_constant_inflow_concentration.txt");
+    X_S_inflow_concentration.writefile(Workingfolder + "X_S_constant_inflow_concentration.txt");
 
     CTimeSeries<double> X_p_inflow_concentration;
     X_p_inflow_concentration.CreateConstant(0,Simulation_time, v_X_p_concentration);
-    X_p_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_p_constant_inflow_concentration.txt");
+    X_p_inflow_concentration.writefile(Workingfolder + "X_p_constant_inflow_concentration.txt");
 
     CTimeSeries<double> S_NO_inflow_concentration;
     S_NO_inflow_concentration.CreateConstant(0,Simulation_time, v_S_NO_concentration);
-    S_NO_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_NO_constant_inflow_concentration.txt");
+    S_NO_inflow_concentration.writefile(Workingfolder + "S_NO_constant_inflow_concentration.txt");
 
     CTimeSeries<double> S_NH_inflow_concentration;
     S_NH_inflow_concentration.CreateConstant(0,Simulation_time, v_S_NH_concentration);
-    S_NH_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_NH_constant_inflow_concentration.txt");
+    S_NH_inflow_concentration.writefile(Workingfolder + "S_NH_constant_inflow_concentration.txt");
 
     CTimeSeries<double> S_ND_inflow_concentration;
     S_ND_inflow_concentration.CreateConstant(0,Simulation_time, v_S_ND_concentration);
-    S_ND_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_ND_constant_inflow_concentration.txt");
+    S_ND_inflow_concentration.writefile(Workingfolder + "S_ND_constant_inflow_concentration.txt");
 
     CTimeSeries<double> X_ND_inflow_concentration;
     X_ND_inflow_concentration.CreateConstant(0,Simulation_time, v_X_ND_concentration);
@@ -612,20 +623,12 @@ bool ModelCreator::Create(System *system)
 
     // Constituents Inflow Calculations from Data (Time Variable)
 
-#ifdef Behzad
-    CTimeSeriesSet<double> Inflow_DeNit("/home/behzad/Projects/ASM_Models/Data/DeNit_Influent_Lump.txt",true); // Inflow (Q)
-    CTimeSeriesSet<double> Inflow_DeNit_MeOH("/home/behzad/Projects/ASM_Models/Data/DeNit_MeOH.txt",true); // Methanol (Externtal S_M)
-    CTimeSeriesSet<double> Inflow_DeNit_wasteflow("/home/behzad/Projects/ASM_Models/Data/DeNit_wasteflow.txt",true); // Wasteflow (WAS)
-    CTimeSeriesSet<double> Inflow_DeNit_returnflow("/home/behzad/Projects/ASM_Models/Data/DeNit_returnflow.txt",true); // Returnflow (RAS)
 
+    CTimeSeriesSet<double> Inflow_DeNit(Workingfolder + "Data/DeNit_Influent_Lump.txt",true); // Inflow (Q)
+    CTimeSeriesSet<double> Inflow_DeNit_MeOH(Workingfolder + "Data/DeNit_MeOH.txt",true); // Methanol (Externtal S_M)
+    CTimeSeriesSet<double> Inflow_DeNit_wasteflow(Workingfolder + "Data/DeNit_wasteflow.txt",true); // Wasteflow (WAS)
+    CTimeSeriesSet<double> Inflow_DeNit_returnflow(Workingfolder + "Data/DeNit_returnflow.txt",true); // Returnflow (RAS)
 
-#else
-    CTimeSeriesSet<double> Inflow_DeNit("/home/arash/Projects/ASM_Models/Data/DeNit_Influent_Lump.txt",true); // Inflow (Q)
-    CTimeSeriesSet<double> Inflow_DeNit_MeOH("/home/arash/Projects/ASM_Models/Data/DeNit_MeOH.txt",true); // Methanol (Externtal S_M)
-    CTimeSeriesSet<double> Inflow_DeNit_wasteflow("/home/arash/Projects/ASM_Models/Data/DeNit_wasteflow.txt",true); // Wasteflow (WAS)
-    CTimeSeriesSet<double> Inflow_DeNit_returnflow("/home/arash/Projects/ASM_Models/Data/DeNit_returnflow.txt",true); // Returnflow (RAS)
-
-#endif
 
     // Determining Coefficients
 
@@ -684,52 +687,52 @@ bool ModelCreator::Create(System *system)
 
     // Writing to File
 
-    Inflow_Q.writefile("/home/behzad/Projects/ASM_Models/Q_time_variable_inflow.txt"); //
+    Inflow_Q.writefile(Workingfolder + "Q_time_variable_inflow.txt"); //
 
-    Inflow_WAS.writefile("/home/behzad/Projects/ASM_Models/WAS_time_variable_flow.txt"); //
-    Inflow_RAS.writefile("/home/behzad/Projects/ASM_Models/RAS_time_variable_flow.txt"); //
+    Inflow_WAS.writefile(Workingfolder + "WAS_time_variable_flow.txt"); //
+    Inflow_RAS.writefile(Workingfolder + "RAS_time_variable_flow.txt"); //
 
-    Flow_r_r_st.writefile("/home/behzad/Projects/ASM_Models/r_r_st_time_variable_flow.txt"); //
-    Flow_st_sb.writefile("/home/behzad/Projects/ASM_Models/st_sb_time_variable_flow.txt"); //
-    Flow_st_c.writefile("/home/behzad/Projects/ASM_Models/st_c_time_variable_flow.txt"); //
+    Flow_r_r_st.writefile(Workingfolder + "r_r_st_time_variable_flow.txt"); //
+    Flow_st_sb.writefile(Workingfolder + "st_sb_time_variable_flow.txt"); //
+    Flow_st_c.writefile(Workingfolder + "st_c_time_variable_flow.txt"); //
 
-    Inflow_S_i.writefile("/home/behzad/Projects/ASM_Models/S_i_Inflow_concentration.txt");
-    Inflow_S_S.writefile("/home/behzad/Projects/ASM_Models/S_S_Inflow_concentration.txt");
-    Inflow_X_S.writefile("/home/behzad/Projects/ASM_Models/X_S_Inflow_concentration.txt");
-    Inflow_X_p.writefile("/home/behzad/Projects/ASM_Models/X_p_Inflow_concentration.txt");
-    Inflow_S_NO.writefile("/home/behzad/Projects/ASM_Models/S_NO_Inflow_concentration.txt");
-    Inflow_S_NH.writefile("/home/behzad/Projects/ASM_Models/S_NH_Inflow_concentration.txt");
-    Inflow_S_ND.writefile("/home/behzad/Projects/ASM_Models/S_ND_Inflow_concentration.txt");
-    Inflow_X_ND.writefile("/home/behzad/Projects/ASM_Models/X_ND_Inflow_concentration.txt");
+    Inflow_S_i.writefile(Workingfolder + "S_i_Inflow_concentration.txt");
+    Inflow_S_S.writefile(Workingfolder + "S_S_Inflow_concentration.txt");
+    Inflow_X_S.writefile(Workingfolder + "X_S_Inflow_concentration.txt");
+    Inflow_X_p.writefile(Workingfolder + "X_p_Inflow_concentration.txt");
+    Inflow_S_NO.writefile(Workingfolder + "S_NO_Inflow_concentration.txt");
+    Inflow_S_NH.writefile(Workingfolder + "S_NH_Inflow_concentration.txt");
+    Inflow_S_ND.writefile(Workingfolder + "S_ND_Inflow_concentration.txt");
+    Inflow_X_ND.writefile(Workingfolder + "X_ND_Inflow_concentration.txt");
 
-    Inflow_MeOH.writefile("/home/behzad/Projects/ASM_Models/S_M_mfr.txt"); // Methanol
+    Inflow_MeOH.writefile(Workingfolder + "S_M_mfr.txt"); // Methanol
 
     // Assigning Constituents Inflow concentrations to the system (Reactor)
 
     // Constant inflows by given concentration
 /*
-    system->block("Reactor")->SetProperty("S_S:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/S_S_constant_inflow_concentration.txt");
-    system->block("Reactor")->SetProperty("X_S:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/X_S_constant_inflow_concentration.txt");
-    system->block("Reactor")->SetProperty("X_p:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/X_p_constant_inflow_concentration.txt");
-    system->block("Reactor")->SetProperty("S_NO:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/S_NO_constant_inflow_concentration.txt");
-    system->block("Reactor")->SetProperty("S_NH:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/S_NH_constant_inflow_concentration.txt");
-    system->block("Reactor")->SetProperty("S_ND:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/S_ND_constant_inflow_concentration.txt");
-    system->block("Reactor")->SetProperty("X_ND:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/X_ND_constant_inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("S_S:constant_inflow_concentration",Workingfolder + "S_S_constant_inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("X_S:constant_inflow_concentration",Workingfolder + "X_S_constant_inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("X_p:constant_inflow_concentration",Workingfolder + "X_p_constant_inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("S_NO:constant_inflow_concentration",Workingfolder + "S_NO_constant_inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("S_NH:constant_inflow_concentration",Workingfolder + "S_NH_constant_inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("S_ND:constant_inflow_concentration",Workingfolder + "S_ND_constant_inflow_concentration.txt");
+    system->block("Reactor")->SetProperty("X_ND:constant_inflow_concentration",Workingfolder + "X_ND_constant_inflow_concentration.txt");
 */
 
     // Time Variable inflows according DeNite data
 
-    system->block("Reactor(1)")->SetProperty("time_variable_inflow","/home/behzad/Projects/ASM_Models/Q_time_variable_inflow.txt"); // Discharge (m3/day)
+    system->block("Reactor(1)")->SetProperty("time_variable_inflow",Workingfolder + "Q_time_variable_inflow.txt"); // Discharge (m3/day)
 
-    system->block("Reactor(1)")->SetProperty("S_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/S_S_Inflow_concentration.txt");
-    system->block("Reactor(1)")->SetProperty("X_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/X_S_Inflow_concentration.txt");
-    system->block("Reactor(1)")->SetProperty("X_p:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/X_p_Inflow_concentration.txt");
-    system->block("Reactor(1)")->SetProperty("S_NO:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/S_NO_Inflow_concentration.txt");
-    system->block("Reactor(1)")->SetProperty("S_NH:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/S_NH_Inflow_concentration.txt");
-    system->block("Reactor(1)")->SetProperty("S_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/S_ND_Inflow_concentration.txt");
-    system->block("Reactor(1)")->SetProperty("X_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/X_ND_Inflow_concentration.txt");
+    system->block("Reactor(1)")->SetProperty("S_S:time_variable_inflow_concentration",Workingfolder + "S_S_Inflow_concentration.txt");
+    system->block("Reactor(1)")->SetProperty("X_S:time_variable_inflow_concentration",Workingfolder + "X_S_Inflow_concentration.txt");
+    system->block("Reactor(1)")->SetProperty("X_p:time_variable_inflow_concentration",Workingfolder + "X_p_Inflow_concentration.txt");
+    system->block("Reactor(1)")->SetProperty("S_NO:time_variable_inflow_concentration",Workingfolder + "S_NO_Inflow_concentration.txt");
+    system->block("Reactor(1)")->SetProperty("S_NH:time_variable_inflow_concentration",Workingfolder + "S_NH_Inflow_concentration.txt");
+    system->block("Reactor(1)")->SetProperty("S_ND:time_variable_inflow_concentration",Workingfolder + "S_ND_Inflow_concentration.txt");
+    system->block("Reactor(1)")->SetProperty("X_ND:time_variable_inflow_concentration",Workingfolder + "X_ND_Inflow_concentration.txt");
 
-    system->block("Reactor(5)")->SetProperty("S_M:external_mass_flow_timeseries","/home/behzad/Projects/ASM_Models/S_M_mfr.txt");
+    system->block("Reactor(5)")->SetProperty("S_M:external_mass_flow_timeseries",Workingfolder + "S_M_mfr.txt");
 
 
     /*
@@ -787,7 +790,7 @@ bool ModelCreator::Create(System *system)
         l_r_st.SetQuantities(system, "Time-Dependent flow");
         l_r_st.SetName("Reactor(" + aquiutils::numbertostring(i+1)+"_" + aquiutils::numbertostring(i+2) + ")");
         l_r_st.SetType("Time-Dependent flow");
-        l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/r_r_st_time_variable_flow.txt");
+        l_r_st.SetProperty("flow", Workingfolder + "r_r_st_time_variable_flow.txt");
         system->AddLink(l_r_st, "Reactor(" + aquiutils::numbertostring(i+1)+")", "Reactor(" + aquiutils::numbertostring(i+2)+")", false);
     }
 
@@ -796,14 +799,14 @@ bool ModelCreator::Create(System *system)
     l_r_st.SetQuantities(system, "Time-Dependent flow");
     l_r_st.SetName("Reactor(" + aquiutils::numbertostring(n_tanks) + ") - Settling element top");
     l_r_st.SetType("Time-Dependent flow");
-    l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/r_r_st_time_variable_flow.txt");
+    l_r_st.SetProperty("flow", Workingfolder + "r_r_st_time_variable_flow.txt");
     system->AddLink(l_r_st, "Reactor(" + aquiutils::numbertostring(n_tanks) + ")", "Settling element top", false);
 
     Link l_st_c;
     l_st_c.SetQuantities(system, "Time-Dependent flow");
     l_st_c.SetName("Settling element top - Clarifier");
     l_st_c.SetType("Time-Dependent flow");
-    l_st_c.SetProperty("flow", "/home/behzad/Projects/ASM_Models/st_c_time_variable_flow.txt");
+    l_st_c.SetProperty("flow", Workingfolder + "st_c_time_variable_flow.txt");
     system->AddLink(l_st_c, "Settling element top", "Clarifier", false);
 
     Link l_sb_was;
@@ -817,7 +820,7 @@ bool ModelCreator::Create(System *system)
     l_sb_r.SetQuantities(system, "Time-Dependent flow");
     l_sb_r.SetName("Settling element bottom - Reactor(1)");
     l_sb_r.SetType("Time-Dependent flow");
-    l_sb_r.SetProperty("flow", "/home/behzad/Projects/ASM_Models/RAS_time_variable_flow.txt");
+    l_sb_r.SetProperty("flow", Workingfolder + "RAS_time_variable_flow.txt");
     system->AddLink(l_sb_r, "Settling element bottom", "Reactor(1)", false);
 
     // Time-Dependent interface Link
@@ -902,12 +905,12 @@ bool ModelCreator::Create(System *system)
 
     CTimeSeries<double> SolidConcentrationNS;
     SolidConcentrationNS.CreateOUProcess(0,Simulation_time,0.05,1);
-    SolidConcentrationNS.writefile("/home/behzad/Projects/ASM_Models/inflow_concentration_NS.csv");
+    SolidConcentrationNS.writefile(Workingfolder + "inflow_concentration_NS.csv");
     vector<double> params; params.push_back(3); params.push_back(1);
     CTimeSeries<double> SolidConcentration = SolidConcentrationNS.MapfromNormalScoreToDistribution("lognormal", params);
 //Reactor.Variable("Solids:inflow_concentration")->SetTimeSeries(SolidConcentration);
-    SolidConcentration.writefile("/home/behzad/Projects/ASM_Models/inflow_concentration.csv");
-    Reactor.SetProperty("Solids:inflow_concentration","/home/behzad/Projects/ASM_Models/inflow_concentration.csv");
+    SolidConcentration.writefile(Workingfolder + "inflow_concentration.csv");
+    Reactor.SetProperty("Solids:inflow_concentration",Workingfolder + "inflow_concentration.csv");
 
 /*
     CTimeSeries<double> InflowNS;
@@ -915,6 +918,6 @@ bool ModelCreator::Create(System *system)
     vector<double> i_params; i_params.push_back(1.5); i_params.push_back(0.7);
     CTimeSeries<double> Inflow = InflowNS.MapfromNormalScoreToDistribution("lognormal", i_params);
     //Reactor.Variable("inflow")->SetTimeSeries(Inflow);
-    Inflow.writefile("/home/behzad/Projects/ASM_Models/inflow.csv");
-    Reactor.SetProperty("inflow","/home/behzad/Projects/ASM_Models/inflow.csv");
+    Inflow.writefile(Workingfolder + "inflow.csv");
+    Reactor.SetProperty("inflow",Workingfolder + "inflow.csv");
     */

@@ -4,7 +4,7 @@
 #include "modelcreator.h"
 #include "modelcreator_flex.h"
 #include "resultgrid.h"
-#include "vtk.h"
+//#include "vtk.h"
 
 
 int main(int argc, char *argv[])
@@ -19,6 +19,12 @@ bool Flex = true; // Flex or normal reactor usage
     string Workingfolder="/home/arash/Projects/ASM_Models/";
     string Workingfolder_Flex="/home/arash/Projects/ASM_Models/Flex/";
 #endif
+#ifdef  Arash
+    string Workingfolder = "/home/arash/Projects/ASM_Models/";
+#endif //  Arash
+#ifdef Arash_Windows
+    string Workingfolder = "C:/Projects/ASM_Models/";
+#endif // Arash_Windows
 
     /*
 //Data analysis
@@ -158,8 +164,8 @@ bool Flex = true; // Flex or normal reactor usage
         QString selectedoutputfilename = QString::fromStdString(system->ObservedOutputFileName()).split(".")[0] +"_" + QString::number(i) + ".txt";
         selectedoutput.writetofile(system->GetWorkingFolder() + selectedoutputfilename.toStdString());
 
-        cout<<"Getting results into grid"<<endl;
-        ResultGrid resgrid(output,"theta",system);
+        //cout<<"Getting results into grid"<<endl;
+        //ResultGrid resgrid(output,"theta",system);
         //cout<<"Writing VTPs"<<endl;
         //resgrid.WriteToVTP("Moisture_content",system->GetWorkingFolder()+"moisture.vtp");
         delete system;
