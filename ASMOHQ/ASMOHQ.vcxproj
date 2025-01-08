@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{CD18A536-11B0-43E0-A179-82BFA55EB93F}</ProjectGuid>
+    <Keyword>QtVS_v304</Keyword>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.22621.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.22621.0</WindowsTargetPlatformVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
+    <QtInstall>Qt 6.8</QtInstall>
+    <QtModules>core</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
+    <QtInstall>Qt 6.8</QtInstall>
+    <QtModules>core</QtModules>
+    <QtBuildConfig>release</QtBuildConfig>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <AdditionalLibraryDirectories>..\..\OpenHydroQual\libs\lapack-blas_lib_win64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>blas_win64_MT.lib;lapack_win64_MT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy ..\..\OpenHydroQual\libs\lapack-blas_lib_win64\*.dll $(OutDir)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Link>
+      <AdditionalLibraryDirectories>..\..\OpenHydroQual\libs\lapack-blas_lib_win64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>blas_win64_MT.lib;lapack_win64_MT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy ..\..\OpenHydroQual\libs\lapack-blas_lib_win64\*.dll $(OutDir)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>..\..\jsoncpp\include;..\..\armadillo\armadillo-header;..\..\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;..\..\OpenHydroQual\aquifolium\include;..\..\OpenHydroQual\aquifolium\src;..\..\OpenHydroQual\aquifolium\include\GA;..\..\OpenHydroQual\aquifolium\include\MCMC;..\..\..\jsoncpp\include;./include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GSL;Arash_Windows;ARMA_USE_LAPACK;ARMA_USE_BLAS;_DEBUG;_CONSOLE;NO_OPENMP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>..\..\jsoncpp\include;..\..\armadillo\armadillo-header;..\..\include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;..\..\OpenHydroQual\aquifolium\include;..\..\OpenHydroQual\aquifolium\src;..\..\OpenHydroQual\aquifolium\include\GA;..\..\OpenHydroQual\aquifolium\include\MCMC;..\..\..\jsoncpp\include;./include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GSL;Arash_Windows;ARMA_USE_LAPACK;ARMA_USE_BLAS;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\GA\Binary.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Block.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Command.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Condition.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\GA\Distribution.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\GA\DistributionNUnif.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\ErrorHandler.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Expression.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\GA\Individual.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Link.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Matrix.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Matrix_arma.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\MetaModel.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\NormalDist.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Object.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Objective_Function.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Objective_Function_Set.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Parameter.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Parameter_Set.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Precipitation.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Quan.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\QuanSet.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\QuickSort.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Rule.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\RxnParameter.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Script.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Source.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\System.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Utilities.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Vector.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\Vector_arma.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\constituent.cpp" />
+    <ClCompile Include="..\..\jsoncpp\src\lib_json\json_reader.cpp" />
+    <ClCompile Include="..\..\jsoncpp\src\lib_json\json_value.cpp" />
+    <ClCompile Include="..\..\jsoncpp\src\lib_json\json_writer.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\observation.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\precalculatedfunction.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\reaction.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\restorepoint.cpp" />
+    <ClCompile Include="..\..\OpenHydroQual\aquifolium\src\solutionlogger.cpp" />
+    <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="..\modelcreator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\BTC.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\src\BTC.hpp" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\BTCSet.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\src\BTCSet.hpp" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\GA\Binary.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Block.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Command.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\GA\Distribution.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\GA\DistributionNUnif.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Expression.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\GA\GA.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\GA\GA.hpp" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\GA\Individual.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Link.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\MCMC\MCMC.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\MCMC\MCMC.hpp" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Matrix.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Matrix_arma.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\MetaModel.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\NormalDist.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Object.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Objective_Function.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Objective_Function_Set.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Parameter.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Parameter_Set.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Precipitation.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Quan.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\QuanSet.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\QuickSort.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\RxnParameter.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Script.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\StringOP.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\System.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Utilities.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Vector.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\Vector_arma.h" />
+    <ClInclude Include="..\..\jsoncpp\include\json\allocator.h" />
+    <ClInclude Include="..\..\jsoncpp\include\json\assertions.h" />
+    <ClInclude Include="..\..\jsoncpp\include\json\autolink.h" />
+    <ClInclude Include="..\..\jsoncpp\include\json\config.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\constituent.h" />
+    <ClInclude Include="..\..\jsoncpp\include\json\features.h" />
+    <ClInclude Include="..\..\jsoncpp\include\json\forwards.h" />
+    <ClInclude Include="..\..\jsoncpp\include\json\json.h" />
+    <ClInclude Include="..\..\jsoncpp\src\lib_json\json_tool.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\observation.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\precalculatedfunction.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\reaction.h" />
+    <ClInclude Include="..\..\jsoncpp\include\json\reader.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\restorepoint.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\safevector.h" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\safevector.hpp" />
+    <ClInclude Include="..\..\OpenHydroQual\aquifolium\include\solutionlogger.h" />
+    <ClInclude Include="..\..\jsoncpp\include\json\value.h" />
+    <ClInclude Include="..\..\jsoncpp\include\json\version.h" />
+    <ClInclude Include="..\..\jsoncpp\src\lib_json\version.h.in" />
+    <ClInclude Include="..\..\jsoncpp\include\json\writer.h" />
+    <ClInclude Include="..\modelcreator.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -17,7 +17,7 @@ class ModelCreator
 public:
     ModelCreator();
     bool Create(System *system);
-
+    string Workingfolder; 
     // ASM1 Model Properties
     const double v_mu_H=1.742;
     const double v_K_S=8.065;
