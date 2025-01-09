@@ -23,14 +23,15 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
     bool OUP=true; // True for using OUProcess, False for using DeNite Data
 
-    bool St=false; // True for using Simulation Time is Days, False for using Start and End Date
-
-    const double Simulation_time=1; // Simulation Time in Days
+    bool St=true; // True for using Simulation Time is Days, False for using Start and End Date
 
     const double Simulation_start_time=40210; // Simulation Start Date
     const double Simulation_end_time=40359; // Simulation End Date
 
     const double Simulation_time_Calc = Simulation_end_time - Simulation_start_time;
+
+    const double Simulation_time=Simulation_time_Calc; // Simulation Time in Days
+
 
     const double dt = 1; // Time Step
 
@@ -835,6 +836,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         CTimeSeries<double> flow_CDF = Inflow_DeNit.BTC[0].GetCummulativeDistribution();
         flow_CDF.writefile(Workingfolder + "Data/flow_CDF.txt");
 
+        CTimeSeries<double> flow_inv_cum = flow_CDF.inverse_cumulative_uniform(100);
+
         CTimeSeries<double> flow_PDF = Inflow_DeNit.BTC[0].distribution(50,0);
         flow_PDF.writefile(Workingfolder + "Data/flow_PDF.txt");
 
@@ -851,6 +854,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
         CTimeSeries<double> TSS_CDF = Inflow_DeNit.BTC[1].GetCummulativeDistribution();
         TSS_CDF.writefile(Workingfolder + "Data/TSS_CDF.txt");
+
+        CTimeSeries<double> TSS_inv_cum = TSS_CDF.inverse_cumulative_uniform(100);
 
         CTimeSeries<double> TSS_PDF = Inflow_DeNit.BTC[1].distribution(50,0);
         TSS_PDF.writefile(Workingfolder + "Data/TSS_PDF.txt");
@@ -869,6 +874,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         CTimeSeries<double> VSS_CDF = Inflow_DeNit.BTC[2].GetCummulativeDistribution();
         VSS_CDF.writefile(Workingfolder + "Data/VSS_CDF.txt");
 
+        CTimeSeries<double> VSS_inv_cum = VSS_CDF.inverse_cumulative_uniform(100);
+
         CTimeSeries<double> VSS_PDF = Inflow_DeNit.BTC[2].distribution(50,0);
         VSS_PDF.writefile(Workingfolder + "Data/VSS_PDF.txt");
 
@@ -885,6 +892,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
         CTimeSeries<double> BOD_CDF = Inflow_DeNit.BTC[3].GetCummulativeDistribution();
         BOD_CDF.writefile(Workingfolder + "Data/BOD_CDF.txt");
+
+        CTimeSeries<double> BOD_inv_cum = BOD_CDF.inverse_cumulative_uniform(100);
 
         CTimeSeries<double> BOD_PDF = Inflow_DeNit.BTC[3].distribution(50,0);
         BOD_PDF.writefile(Workingfolder + "Data/BOD_PDF.txt");
@@ -903,6 +912,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         CTimeSeries<double> sCOD_CDF = Inflow_DeNit.BTC[8].GetCummulativeDistribution();
         sCOD_CDF.writefile(Workingfolder + "Data/sCOD_CDF.txt");
 
+        CTimeSeries<double> sCOD_inv_cum = sCOD_CDF.inverse_cumulative_uniform(100);
+
         CTimeSeries<double> sCOD_PDF = Inflow_DeNit.BTC[8].distribution(50,0);
         sCOD_PDF.writefile(Workingfolder + "Data/sCOD_PDF.txt");
 
@@ -919,6 +930,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
         CTimeSeries<double> NH3_CDF = Inflow_DeNit.BTC[9].GetCummulativeDistribution();
         NH3_CDF.writefile(Workingfolder + "Data/NH3_CDF.txt");
+
+        CTimeSeries<double> NH3_inv_cum = NH3_CDF.inverse_cumulative_uniform(100);
 
         CTimeSeries<double> NH3_PDF = Inflow_DeNit.BTC[9].distribution(50,0);
         NH3_PDF.writefile(Workingfolder + "Data/NH3_PDF.txt");
@@ -937,6 +950,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         CTimeSeries<double> NO3_CDF = Inflow_DeNit.BTC[10].GetCummulativeDistribution();
         NO3_CDF.writefile(Workingfolder + "Data/NO3_CDF.txt");
 
+        CTimeSeries<double> NO3_inv_cum = NO3_CDF.inverse_cumulative_uniform(100);
+
         CTimeSeries<double> NO3_PDF = Inflow_DeNit.BTC[10].distribution(50,0);
         NO3_PDF.writefile(Workingfolder + "Data/NO3_PDF.txt");
 
@@ -953,6 +968,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
         CTimeSeries<double> was_flow_CDF = Inflow_DeNit_wasteflow.BTC[0].GetCummulativeDistribution();
         was_flow_CDF.writefile(Workingfolder + "Data/was_flow_CDF.txt");
+
+        CTimeSeries<double> was_flow_inv_cum = was_flow_CDF.inverse_cumulative_uniform(100);
 
         CTimeSeries<double> was_flow_PDF = Inflow_DeNit_wasteflow.BTC[0].distribution(50,0);
         was_flow_PDF.writefile(Workingfolder + "Data/was_flow_PDF.txt");
@@ -971,6 +988,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         CTimeSeries<double> ras_flow_CDF = Inflow_DeNit_returnflow.BTC[0].GetCummulativeDistribution();
         ras_flow_CDF.writefile(Workingfolder + "Data/ras_flow_CDF.txt");
 
+        CTimeSeries<double> ras_flow_inv_cum = ras_flow_CDF.inverse_cumulative_uniform(100);
+
         CTimeSeries<double> ras_flow_PDF = Inflow_DeNit_returnflow.BTC[0].distribution(50,0);
         ras_flow_PDF.writefile(Workingfolder + "Data/ras_flow_PDF.txt");
 
@@ -987,6 +1006,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
         CTimeSeries<double> MeOH_CDF = Inflow_DeNit_MeOH.BTC[0].GetCummulativeDistribution();
         MeOH_CDF.writefile(Workingfolder + "Data/MeOH_CDF.txt");
+
+        CTimeSeries<double> MeOH_inv_cum = MeOH_CDF.inverse_cumulative_uniform(100);
 
         CTimeSeries<double> MeOH_PDF = Inflow_DeNit_MeOH.BTC[0].distribution(50,0);
         MeOH_PDF.writefile(Workingfolder + "Data/MeOH_PDF.txt");
@@ -1030,22 +1051,25 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     CTimeSeries<double> OUP_Inflow_Q_NS; // Discharge (m3/day)
     OUP_Inflow_Q_NS.CreateOUProcess(0,Simulation_time_Calc,dt,flow_autocorrelation_coeff);
     OUP_Inflow_Q_NS.writefile(Workingfolder + "OUP_Inflow_Q_NS_tvif.csv");
-    vector<double> Q_params; Q_params.push_back(flow_mean); Q_params.push_back(flow_std);
-    OUP_Inflow_Q = OUP_Inflow_Q_NS.MapfromNormalScoreToDistribution("lognormal", Q_params);
+    //vector<double> Q_params; Q_params.push_back(flow_mean); Q_params.push_back(flow_std);
+    //OUP_Inflow_Q = OUP_Inflow_Q_NS.MapfromNormalScoreToDistribution("lognormal", Q_params);
+    OUP_Inflow_Q = OUP_Inflow_Q_NS.MapfromNormalScoreToDistribution(flow_inv_cum);
     OUP_Inflow_Q.writefile(Workingfolder + "OUP_Inflow_Q_tvif.csv");
 
     CTimeSeries<double> OUP_Flow_WAS_NS; // Wasteflow (WAS) (m3/day)
     OUP_Flow_WAS_NS.CreateOUProcess(0,Simulation_time_Calc,dt,was_flow_autocorrelation_coeff);
     OUP_Flow_WAS_NS.writefile(Workingfolder + "OUP_Flow_WAS_NS_tvf.csv");
-    vector<double> WAS_params; WAS_params.push_back(was_flow_mean); WAS_params.push_back(was_flow_std);
-    OUP_Flow_WAS = OUP_Flow_WAS_NS.MapfromNormalScoreToDistribution("lognormal", WAS_params);
+    //vector<double> WAS_params; WAS_params.push_back(was_flow_mean); WAS_params.push_back(was_flow_std);
+    //OUP_Flow_WAS = OUP_Flow_WAS_NS.MapfromNormalScoreToDistribution("lognormal", WAS_params);
+    OUP_Flow_WAS = OUP_Flow_WAS_NS.MapfromNormalScoreToDistribution(was_flow_inv_cum);
     OUP_Flow_WAS.writefile(Workingfolder + "OUP_Flow_WAS_tvf.csv");
 
     CTimeSeries<double> OUP_Flow_RAS_NS; // Returnflow (RAS) (m3/day)
     OUP_Flow_RAS_NS.CreateOUProcess(0,Simulation_time_Calc,dt,ras_flow_autocorrelation_coeff);
     OUP_Flow_RAS_NS.writefile(Workingfolder + "OUP_Flow_RAS_NS_tvf.csv");
-    vector<double> RAS_params; RAS_params.push_back(ras_flow_mean); RAS_params.push_back(ras_flow_std);
-    OUP_Flow_RAS = OUP_Flow_RAS_NS.MapfromNormalScoreToDistribution("lognormal", RAS_params);
+    //vector<double> RAS_params; RAS_params.push_back(ras_flow_mean); RAS_params.push_back(ras_flow_std);
+    //OUP_Flow_RAS = OUP_Flow_RAS_NS.MapfromNormalScoreToDistribution("lognormal", RAS_params);
+    OUP_Flow_RAS = OUP_Flow_RAS_NS.MapfromNormalScoreToDistribution(ras_flow_inv_cum);
     OUP_Flow_RAS.writefile(Workingfolder + "OUP_Flow_RAS_tvf.csv");
 
 
@@ -1062,40 +1086,45 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     CTimeSeries<double> OUP_VSS_Flow_NS; // VSS (2)
     OUP_VSS_Flow_NS.CreateOUProcess(0,Simulation_time_Calc,dt,VSS_autocorrelation_coeff);
     OUP_VSS_Flow_NS.writefile(Workingfolder + "OUP_VSS_Flow_NS_tvf.csv");
-    vector<double> VSS_params; VSS_params.push_back(VSS_mean); VSS_params.push_back(VSS_std);
-    OUP_VSS_Flow = OUP_VSS_Flow_NS.MapfromNormalScoreToDistribution("lognormal", VSS_params);
+    //vector<double> VSS_params; VSS_params.push_back(VSS_mean); VSS_params.push_back(VSS_std);
+    //OUP_VSS_Flow = OUP_VSS_Flow_NS.MapfromNormalScoreToDistribution("lognormal", VSS_params);
+    OUP_VSS_Flow = OUP_VSS_Flow_NS.MapfromNormalScoreToDistribution(VSS_inv_cum);
     OUP_VSS_Flow.writefile(Workingfolder + "OUP_VSS_Flow_tvf.csv");
 
     //sCOD (8)
     CTimeSeries<double> OUP_sCOD_Flow_NS; // sCOD (8)
     OUP_sCOD_Flow_NS.CreateOUProcess(0,Simulation_time_Calc,dt,sCOD_autocorrelation_coeff);
     OUP_sCOD_Flow_NS.writefile(Workingfolder + "OUP_sCOD_Flow_NS_tvf.csv");
-    vector<double> sCOD_params; sCOD_params.push_back(sCOD_mean); sCOD_params.push_back(sCOD_std);
-    OUP_sCOD_Flow = OUP_sCOD_Flow_NS.MapfromNormalScoreToDistribution("lognormal", sCOD_params);
+    //vector<double> sCOD_params; sCOD_params.push_back(sCOD_mean); sCOD_params.push_back(sCOD_std);
+    //OUP_sCOD_Flow = OUP_sCOD_Flow_NS.MapfromNormalScoreToDistribution("lognormal", sCOD_params);
+    OUP_sCOD_Flow = OUP_sCOD_Flow_NS.MapfromNormalScoreToDistribution(sCOD_inv_cum);
     OUP_sCOD_Flow.writefile(Workingfolder + "OUP_sCOD_Flow_tvf.csv");
 
     //NH3 (9)
     CTimeSeries<double> OUP_NH3_Flow_NS; // NH3 (9)
     OUP_NH3_Flow_NS.CreateOUProcess(0,Simulation_time_Calc,dt,NH3_autocorrelation_coeff);
     OUP_NH3_Flow_NS.writefile(Workingfolder + "OUP_NH3_Flow_NS_tvf.csv");
-    vector<double> NH3_params; NH3_params.push_back(NH3_mean); NH3_params.push_back(NH3_std);
-    OUP_NH3_Flow = OUP_NH3_Flow_NS.MapfromNormalScoreToDistribution("lognormal", NH3_params);
+    //vector<double> NH3_params; NH3_params.push_back(NH3_mean); NH3_params.push_back(NH3_std);
+    //OUP_NH3_Flow = OUP_NH3_Flow_NS.MapfromNormalScoreToDistribution("lognormal", NH3_params);
+    OUP_NH3_Flow = OUP_NH3_Flow_NS.MapfromNormalScoreToDistribution(NH3_inv_cum);
     OUP_NH3_Flow.writefile(Workingfolder + "OUP_NH3_Flow_tvf.csv");
 
     //NO3 (10)
     CTimeSeries<double> OUP_NO3_Flow_NS; // NO3 (10)
     OUP_NO3_Flow_NS.CreateOUProcess(0,Simulation_time_Calc,dt,NO3_autocorrelation_coeff);
     OUP_NO3_Flow_NS.writefile(Workingfolder + "OUP_NO3_Flow_NS_tvf.csv");
-    vector<double> NO3_params; NO3_params.push_back(NO3_mean); NO3_params.push_back(NO3_std);
-    OUP_NO3_Flow = OUP_NO3_Flow_NS.MapfromNormalScoreToDistribution("lognormal", NO3_params);
+    //vector<double> NO3_params; NO3_params.push_back(NO3_mean); NO3_params.push_back(NO3_std);
+    //OUP_NO3_Flow = OUP_NO3_Flow_NS.MapfromNormalScoreToDistribution("lognormal", NO3_params);
+    OUP_NO3_Flow = OUP_NO3_Flow_NS.MapfromNormalScoreToDistribution(NO3_inv_cum);
     OUP_NO3_Flow.writefile(Workingfolder + "OUP_NO3_Flow_tvf.csv");
 
     //MeOH (Methanol)
     CTimeSeries<double> OUP_MeOH_Flow_NS; // MeOH (10)
     OUP_MeOH_Flow_NS.CreateOUProcess(0,Simulation_time_Calc,dt,MeOH_autocorrelation_coeff);
     OUP_MeOH_Flow_NS.writefile(Workingfolder + "OUP_MeOH_Flow_NS_tvf.csv");
-    vector<double> MeOH_params; MeOH_params.push_back(MeOH_mean); MeOH_params.push_back(MeOH_std);
-    OUP_MeOH_Flow = OUP_MeOH_Flow_NS.MapfromNormalScoreToDistribution("lognormal", MeOH_params);
+    //vector<double> MeOH_params; MeOH_params.push_back(MeOH_mean); MeOH_params.push_back(MeOH_std);
+    //OUP_MeOH_Flow = OUP_MeOH_Flow_NS.MapfromNormalScoreToDistribution("lognormal", MeOH_params);
+    OUP_MeOH_Flow = OUP_MeOH_Flow_NS.MapfromNormalScoreToDistribution(MeOH_inv_cum);
     OUP_MeOH_Flow.writefile(Workingfolder + "OUP_MeoH_Flow_tvf.csv");
 
         OUP_Inflow_S_i=c_S_i*OUP_sCOD_Flow; //-- 8
