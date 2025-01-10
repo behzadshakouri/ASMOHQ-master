@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
 
 bool Flex = true; // Flex or normal reactor usage
 
+double Realization = 1;
+
 #ifdef Behzad
     string Workingfolder="/home/behzad/Projects/ASM_Models/";
     string Workingfolder_Flex="/home/behzad/Projects/ASM_Models/Flex/";
@@ -94,13 +96,12 @@ bool Flex = true; // Flex or normal reactor usage
 
 */
 
-    for (int i=0; i<1; i++) // Realization
-    {
+
     ModelCreator_Flex ModCreate_Flex;
 
     if (Flex)
     {
-    for (int i=0; i<1; i++)
+    for (int i=0; i<Realization; i++)
     {
         System *system=new System();
         system->Clear();
@@ -138,7 +139,7 @@ bool Flex = true; // Flex or normal reactor usage
 
     if (!Flex)
     {
-    for (int i=0; i<1; i++)
+    for (int i=0; i<Realization; i++)
     {
         System *system=new System();
         system->Clear();
@@ -169,7 +170,6 @@ bool Flex = true; // Flex or normal reactor usage
         //cout<<"Writing VTPs"<<endl;
         //resgrid.WriteToVTP("Moisture_content",system->GetWorkingFolder()+"moisture.vtp");
         delete system;
-    }
     }
     }
 

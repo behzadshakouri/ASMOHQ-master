@@ -17,7 +17,9 @@ class ModelCreator
 public:
     ModelCreator();
     bool Create(System *system);
-    string Workingfolder; 
+
+    string Workingfolder;
+
     // ASM1 Model Properties
     const double v_mu_H=1.742;
     const double v_K_S=8.065;
@@ -62,11 +64,11 @@ public:
     const double v_S_NO_concentration=1;
     const double v_S_ND_concentration=1;
 
-    const double v_X_BM_concentration=1450;
-    const double v_X_BH_concentration=460;
-    const double v_X_BA_concentration=180;
+    const double v_X_BM_concentration=1450; // ?
+    const double v_X_BH_concentration=460; // ?
+    const double v_X_BA_concentration=180; // ?
     const double v_X_S_concentration=9;
-    const double v_X_p_concentration=350;
+    const double v_X_p_concentration=350; // ?
     const double v_X_ND_concentration=1;
 
     const double v_a_rate_coefficient=240; // 5 ~ 10 1/hr : 120 ~ 240 1/day
@@ -79,16 +81,16 @@ public:
     const double p_3=0.075;
 
     // OHQ Model properties
-    const double v_settling_vel=1000; // X_b : Unit: m/day
+    const double v_settling_vel=10000; // X_b : Unit: m/day
     const double v_r_storage=17500; // Reactor: Intial Storage : Unit: m3
 
     const double v_r_volume=v_r_storage; // Reactor: Intial Volume : Unit: m3
 
-    const double v_s_t_storage=2000; // Settling element top: initial storage
+    const double v_s_t_storage=20000; // Settling element top: initial storage
     const double v_s_t_bottom_elevation=1; // Settling element top: bottom elevation
-    const double v_s_b_storage=2000; // Settling element bottom: initial storage
+    const double v_s_b_storage=20000; // Settling element bottom: initial storage
     const double v_s_b_bottom_elevation=0; // Settling element bottom: bottom elevation
-    const double v_st_sb_area=100; // Link: Settling element top to Settling element bottom: area
+    const double v_st_sb_area=1e6; // Link: Settling element top to Settling element bottom: area
 
     const double v_c_bottom_elevation=1; // Clarifer: bottom elevation (head)
     const double v_was_bottom_elevation=0; // WAS: bottom elevation(head)

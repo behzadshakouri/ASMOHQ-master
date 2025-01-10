@@ -21,7 +21,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/mass_transfer.json");
     system->ReadSystemSettingsTemplate("/home/behzad/Projects/OpenHydroQual/resources/settings.json");
 
-    bool OUP=true; // True for using OUProcess, False for using DeNite Data
+    bool OUP=false; // True for using OUProcess, False for using DeNite Data
 
     bool St=true; // True for using Simulation Time is Days, False for using Start and End Date
 

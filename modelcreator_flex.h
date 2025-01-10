@@ -79,16 +79,16 @@ public:
     const double p_3=0.075;
 
     // OHQ Model properties
-    const double v_settling_vel=100; // X_b : Unit: m/day
+    const double v_settling_vel=10000; // X_b : Unit: m/day
     const double v_r_storage=17500; // Reactor: Intial Storage : Unit: m3
 
     const double v_r_volume=v_r_storage; // Reactor: Intial Volume : Unit: m3
 
-    const double v_s_t_storage=2000; // Settling element top: initial storage
+    const double v_s_t_storage=20000; // Settling element top: initial storage
     const double v_s_t_bottom_elevation=1; // Settling element top: bottom elevation
-    const double v_s_b_storage=2000; // Settling element bottom: initial storage
+    const double v_s_b_storage=20000; // Settling element bottom: initial storage
     const double v_s_b_bottom_elevation=0; // Settling element bottom: bottom elevation
-    const double v_st_sb_area=1000; // Link: Settling element top to Settling element bottom: area
+    const double v_st_sb_area=1e6; // Link: Settling element top to Settling element bottom: area
 
     const double v_c_bottom_elevation=1; // Clarifer: bottom elevation (head)
     const double v_was_bottom_elevation=0; // WAS: bottom elevation(head)
