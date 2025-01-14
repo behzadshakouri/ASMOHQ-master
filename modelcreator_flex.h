@@ -55,6 +55,7 @@ public:
     const double v_k_LO2=190.446;
 
     // Constituents Concentration
+    const double v_S_i_concentration=14.14;
     const double v_S_S_concentration=0.5;
     const double v_S_O_concentration=0.1;
     const double v_S_NH_concentration=1;
@@ -84,9 +85,9 @@ public:
 
     const double v_r_volume=v_r_storage; // Reactor: Intial Volume : Unit: m3
 
-    const double v_s_t_storage=20000; // Settling element top: initial storage
+    const double v_s_t_storage=200; // Settling element top: initial storage
     const double v_s_t_bottom_elevation=1; // Settling element top: bottom elevation
-    const double v_s_b_storage=20000; // Settling element bottom: initial storage
+    const double v_s_b_storage=200; // Settling element bottom: initial storage
     const double v_s_b_bottom_elevation=0; // Settling element bottom: bottom elevation
     const double v_st_sb_area=1e6; // Link: Settling element top to Settling element bottom: area
 

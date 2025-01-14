@@ -354,7 +354,7 @@ bool ModelCreator::Create(System *system)
     AerobicGHM.SetProperty("S_O:stoichiometric_constant","(0-(1-Y_H)/Y_H)");
     AerobicGHM.SetProperty("S_NH:stoichiometric_constant","(0-i_XB)");
     AerobicGHM.SetProperty("X_BH:stoichiometric_constant","(1)");
-    AerobicGHM.SetProperty("rate_expression","(mu_H*S_M/(K_MH+S_M)*S_O/(K_OH+S_O)*(S_NH/K_NH+S_NH)*X_BH)");
+    AerobicGHM.SetProperty("rate_expression","(mu_H*S_M/(K_MH+S_M)*S_O/(K_OH+S_O)*S_NH/(K_NH+S_NH)*X_BH)");
     system->AddReaction(AerobicGHM,false);
 
     Reaction AnoxicGH; // Reaction 3
