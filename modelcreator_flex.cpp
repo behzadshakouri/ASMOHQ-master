@@ -21,7 +21,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/mass_transfer.json");
     system->ReadSystemSettingsTemplate("/home/behzad/Projects/OpenHydroQual/resources/settings.json");
 
-    bool OUP=false; // True for using OUProcess, False for using DeNite Data
+    bool OUP=true; // True for using OUProcess, False for using DeNite Data
 
     bool St=true; // True for using Simulation Time is Days, False for using Start and End Date
 
@@ -37,11 +37,19 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
     const double dt = 1; // Time Step
 
+    bool Calibration = false; // True for Calibration
 
     // Model Configuration
 
-    // Consistuents
+    Parameter K_LO2;
+    K_LO2.SetQuantities(system,"Parameter");
+    K_LO2.SetName("K_LO2");
+    K_LO2.SetVal("value",v_k_LO2);
+    K_LO2.SetVal("high",v_k_LO2_high);
+    K_LO2.SetVal("low",v_k_LO2_low);
+    system->AppendParameter("K_LO2", K_LO2);
 
+    // Consistuents
     Constituent S_i;
     S_i.SetQuantities(system, "Constituent");
     S_i.SetName("S_i");
@@ -326,19 +334,13 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     i_MeOH.SetVal("base_value",v_i_MeOH);
     system->AddReactionParameter(i_MeOH, false);
 
-    RxnParameter k_LO2;
-    k_LO2.SetQuantities(system,"ReactionParameter");
-    k_LO2.SetName("k_LO2");
-    k_LO2.SetVal("base_value",v_k_LO2);
-    system->AddReactionParameter(k_LO2, false);
-
-
     // Sources
     Source Aeration;
     Aeration.SetQuantities(system, "atmospheric exchange");
     Aeration.SetType("atmospheric exchange");
     Aeration.SetName("Aeration");
     Aeration.SetVal("rate_coefficient",v_a_rate_coefficient);
+    //Aeration.SetVal("high",300);
     Aeration.SetVal("saturation",v_a_saturation);
     system->AddSource(Aeration, false);
 
@@ -1213,6 +1215,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
     // Observations
 
+/*
     // For Validation
     Observation R5_S_NO_inflow_cn; // T3B
 
@@ -1321,6 +1324,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     R8_S_NH_inflow_cn.SetName("R8_S_NH_Concentration");
     R8_S_NH_inflow_cn.SetType("Observation");
     system->AddObservation(R8_S_NH_inflow_cn,false);
+*/
 
     // For FFNWrapper
     Observation total_inflow;
@@ -1350,98 +1354,68 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     RAS_flow.SetType("Observation");
     system->AddObservation(RAS_flow,false);
 
-    /*
-    Observation S_i_inflow_cn; //--
+    Observation R1_VSS_inflow_cn;
 
-    S_i_inflow_cn.SetQuantities(system, "Observation");
-    S_i_inflow_cn.SetProperty("expression","S_i:concentration");
-    S_i_inflow_cn.SetProperty("object","Reactor_Flex(1)");
-    S_i_inflow_cn.SetName("S_i_InflowConcentration");
-    S_i_inflow_cn.SetType("Observation");
-    system->AddObservation(S_i_inflow_cn,false);
-    */
+    R1_VSS_inflow_cn.SetQuantities(system, "Observation");
+    R1_VSS_inflow_cn.SetProperty("expression","0.556*X_S:concentration+0.704*X_BH:concentration+0.704*X_BM:concentration+0.704*X_BA:concentration+0.704*X_p:concentration");
+    R1_VSS_inflow_cn.SetProperty("object","Reactor_Flex(1)");
+    R1_VSS_inflow_cn.SetName("R1_VSS_Inflow_Concentration");
+    R1_VSS_inflow_cn.SetType("Observation");
+    system->AddObservation(R1_VSS_inflow_cn,false);
 
-    Observation R1_S_S_inflow_cn;
+    Observation R1_sCOD_inflow_cn;
 
-    R1_S_S_inflow_cn.SetQuantities(system, "Observation");
-    R1_S_S_inflow_cn.SetProperty("expression","S_S:concentration");
-    R1_S_S_inflow_cn.SetProperty("object","Reactor_Flex(1)");
-    R1_S_S_inflow_cn.SetName("R1_S_S_InflowConcentration");
-    R1_S_S_inflow_cn.SetType("Observation");
-    system->AddObservation(R1_S_S_inflow_cn,false);
+    R1_sCOD_inflow_cn.SetQuantities(system, "Observation");
+    R1_sCOD_inflow_cn.SetProperty("expression","S_i:concentration+S_S:concentration+S_M:concentration");
+    R1_sCOD_inflow_cn.SetProperty("object","Reactor_Flex(1)");
+    R1_sCOD_inflow_cn.SetName("R1_sCOD_Inflow_Concentration");
+    R1_sCOD_inflow_cn.SetType("Observation");
+    system->AddObservation(R1_sCOD_inflow_cn,false);
 
-    Observation R1_X_S_inflow_cn; //?
+    Observation R1_NH3_inflow_cn;
 
-    R1_X_S_inflow_cn.SetQuantities(system, "Observation");
-    R1_X_S_inflow_cn.SetProperty("expression","X_S:concentration");
-    R1_X_S_inflow_cn.SetProperty("object","Reactor_Flex(1)");
-    R1_X_S_inflow_cn.SetName("R1_X_S_InflowConcentration");
-    R1_X_S_inflow_cn.SetType("Observation");
-    system->AddObservation(R1_X_S_inflow_cn,false);
+    R1_NH3_inflow_cn.SetQuantities(system, "Observation");
+    R1_NH3_inflow_cn.SetProperty("expression","S_NH:concentration");
+    R1_NH3_inflow_cn.SetProperty("object","Reactor_Flex(1)");
+    R1_NH3_inflow_cn.SetName("R1_NH3_Inflow_Concentration");
+    R1_NH3_inflow_cn.SetType("Observation");
+    system->AddObservation(R1_NH3_inflow_cn,false);
 
-    Observation R1_X_p_inflow_cn; //?
+    Observation R1_NO3_inflow_cn;
 
-    R1_X_p_inflow_cn.SetQuantities(system, "Observation");
-    R1_X_p_inflow_cn.SetProperty("expression","X_p:concentration");
-    R1_X_p_inflow_cn.SetProperty("object","Reactor_Flex(1)");
-    R1_X_p_inflow_cn.SetName("R1_X_p_InflowConcentration");
-    R1_X_p_inflow_cn.SetType("Observation");
-    system->AddObservation(R1_X_p_inflow_cn,false);
+    R1_NO3_inflow_cn.SetQuantities(system, "Observation");
+    R1_NO3_inflow_cn.SetProperty("expression","S_NO:concentration");
+    R1_NO3_inflow_cn.SetProperty("object","Reactor_Flex(1)");
+    R1_NO3_inflow_cn.SetName("R1_NO3_Inflow_Concentration");
+    R1_NO3_inflow_cn.SetType("Observation");
+    system->AddObservation(R1_NO3_inflow_cn,false);
 
-    Observation R1_S_NO_inflow_cn;
+    Observation R1_MeOH_inflow_cn;
 
-    R1_S_NO_inflow_cn.SetQuantities(system, "Observation");
-    R1_S_NO_inflow_cn.SetProperty("expression","S_NO:concentration");
-    R1_S_NO_inflow_cn.SetProperty("object","Reactor_Flex(1)");
-    R1_S_NO_inflow_cn.SetName("R1_S_NO_InflowConcentration");
-    R1_S_NO_inflow_cn.SetType("Observation");
-    system->AddObservation(R1_S_NO_inflow_cn,false);
+    R1_MeOH_inflow_cn.SetQuantities(system, "Observation");
+    R1_MeOH_inflow_cn.SetProperty("expression","S_M:concentration");
+    R1_MeOH_inflow_cn.SetProperty("object","Reactor_Flex(5)");
+    R1_MeOH_inflow_cn.SetName("R5_MeOH_Inflow_Concentration");
+    R1_MeOH_inflow_cn.SetType("Observation");
+    system->AddObservation(R1_MeOH_inflow_cn,false);
 
-    Observation R1_S_NH_inflow_cn;
+    Observation Stl_t_S_NO_inflow_cn;
 
-    R1_S_NH_inflow_cn.SetQuantities(system, "Observation");
-    R1_S_NH_inflow_cn.SetProperty("expression","S_NH:concentration");
-    R1_S_NH_inflow_cn.SetProperty("object","Reactor_Flex(1)");
-    R1_S_NH_inflow_cn.SetName("R1_S_NH_InflowConcentration");
-    R1_S_NH_inflow_cn.SetType("Observation");
-    system->AddObservation(R1_S_NH_inflow_cn,false);
+    Stl_t_S_NO_inflow_cn.SetQuantities(system, "Observation");
+    Stl_t_S_NO_inflow_cn.SetProperty("expression","S_NO:concentration");
+    Stl_t_S_NO_inflow_cn.SetProperty("object","Settling element top");
+    Stl_t_S_NO_inflow_cn.SetName("Stl_t_S_NO_Concentration");
+    Stl_t_S_NO_inflow_cn.SetType("Observation");
+    system->AddObservation(Stl_t_S_NO_inflow_cn,false);
 
-    Observation R1_S_ND_inflow_cn;
+    if (Calibration)
+    {
+    // Setting as parameter for calibration
+    system->SetAsParameter("Aeration","rate_coefficient","K_LO2");
+    system->object("Aeration")->Variable("rate_coefficient")->SetParameterAssignedTo("K_LO2");
+    }
 
-    R1_S_ND_inflow_cn.SetQuantities(system, "Observation");
-    R1_S_ND_inflow_cn.SetProperty("expression","S_ND:concentration");
-    R1_S_ND_inflow_cn.SetProperty("object","Reactor_Flex(1)");
-    R1_S_ND_inflow_cn.SetName("R1_S_ND_InflowConcentration");
-    R1_S_ND_inflow_cn.SetType("Observation");
-    system->AddObservation(R1_S_ND_inflow_cn,false);
-
-    Observation R1_X_ND_inflow_cn; //?
-
-    R1_X_ND_inflow_cn.SetQuantities(system, "Observation");
-    R1_X_ND_inflow_cn.SetProperty("expression","X_ND:concentration");
-    R1_X_ND_inflow_cn.SetProperty("object","Reactor_Flex(1)");
-    R1_X_ND_inflow_cn.SetName("R1_X_ND_InflowConcentration");
-    R1_X_ND_inflow_cn.SetType("Observation");
-    system->AddObservation(R1_X_ND_inflow_cn,false);
-
-    Observation R1_S_M_inflow_cn; // Methonal : Reactor 5
-
-    R1_S_M_inflow_cn.SetQuantities(system, "Observation");
-    R1_S_M_inflow_cn.SetProperty("expression","S_M:concentration");
-    R1_S_M_inflow_cn.SetProperty("object","Reactor_Flex(5)");
-    R1_S_M_inflow_cn.SetName("R1_S_M_InflowConcentration");
-    R1_S_M_inflow_cn.SetType("Observation");
-    system->AddObservation(R1_S_M_inflow_cn,false);
-
-    Observation R1_X_BH_cn;
-
-    R1_X_BH_cn.SetQuantities(system, "Observation");
-    R1_X_BH_cn.SetProperty("expression","X_BH:concentration");
-    R1_X_BH_cn.SetProperty("object","Reactor_Flex(1)");
-    R1_X_BH_cn.SetName("R1_X_BH_Concentration");
-    R1_X_BH_cn.SetType("Observation");
-    system->AddObservation(R1_X_BH_cn,false);
-
+    // Setting simulation time
     if (St)
     {
         system->SetSettingsParameter("simulation_end_time",Simulation_time);
@@ -1465,5 +1439,95 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
 
 
+/*
+Observation S_i_inflow_cn; //--
 
+S_i_inflow_cn.SetQuantities(system, "Observation");
+S_i_inflow_cn.SetProperty("expression","S_i:concentration");
+S_i_inflow_cn.SetProperty("object","Reactor_Flex(1)");
+S_i_inflow_cn.SetName("S_i_InflowConcentration");
+S_i_inflow_cn.SetType("Observation");
+system->AddObservation(S_i_inflow_cn,false);
+
+Observation R1_S_S_inflow_cn;
+
+R1_S_S_inflow_cn.SetQuantities(system, "Observation");
+R1_S_S_inflow_cn.SetProperty("expression","S_S:concentration");
+R1_S_S_inflow_cn.SetProperty("object","Reactor_Flex(1)");
+R1_S_S_inflow_cn.SetName("R1_S_S_InflowConcentration");
+R1_S_S_inflow_cn.SetType("Observation");
+system->AddObservation(R1_S_S_inflow_cn,false);
+
+Observation R1_X_S_inflow_cn; //?
+
+R1_X_S_inflow_cn.SetQuantities(system, "Observation");
+R1_X_S_inflow_cn.SetProperty("expression","X_S:concentration");
+R1_X_S_inflow_cn.SetProperty("object","Reactor_Flex(1)");
+R1_X_S_inflow_cn.SetName("R1_X_S_InflowConcentration");
+R1_X_S_inflow_cn.SetType("Observation");
+system->AddObservation(R1_X_S_inflow_cn,false);
+
+Observation R1_X_p_inflow_cn; //?
+
+R1_X_p_inflow_cn.SetQuantities(system, "Observation");
+R1_X_p_inflow_cn.SetProperty("expression","X_p:concentration");
+R1_X_p_inflow_cn.SetProperty("object","Reactor_Flex(1)");
+R1_X_p_inflow_cn.SetName("R1_X_p_InflowConcentration");
+R1_X_p_inflow_cn.SetType("Observation");
+system->AddObservation(R1_X_p_inflow_cn,false);
+
+Observation R1_S_NO_inflow_cn;
+
+R1_S_NO_inflow_cn.SetQuantities(system, "Observation");
+R1_S_NO_inflow_cn.SetProperty("expression","S_NO:concentration");
+R1_S_NO_inflow_cn.SetProperty("object","Reactor_Flex(1)");
+R1_S_NO_inflow_cn.SetName("R1_S_NO_InflowConcentration");
+R1_S_NO_inflow_cn.SetType("Observation");
+system->AddObservation(R1_S_NO_inflow_cn,false);
+
+Observation R1_S_NH_inflow_cn;
+
+R1_S_NH_inflow_cn.SetQuantities(system, "Observation");
+R1_S_NH_inflow_cn.SetProperty("expression","S_NH:concentration");
+R1_S_NH_inflow_cn.SetProperty("object","Reactor_Flex(1)");
+R1_S_NH_inflow_cn.SetName("R1_S_NH_InflowConcentration");
+R1_S_NH_inflow_cn.SetType("Observation");
+system->AddObservation(R1_S_NH_inflow_cn,false);
+
+Observation R1_S_ND_inflow_cn;
+
+R1_S_ND_inflow_cn.SetQuantities(system, "Observation");
+R1_S_ND_inflow_cn.SetProperty("expression","S_ND:concentration");
+R1_S_ND_inflow_cn.SetProperty("object","Reactor_Flex(1)");
+R1_S_ND_inflow_cn.SetName("R1_S_ND_InflowConcentration");
+R1_S_ND_inflow_cn.SetType("Observation");
+system->AddObservation(R1_S_ND_inflow_cn,false);
+
+Observation R1_X_ND_inflow_cn; //?
+
+R1_X_ND_inflow_cn.SetQuantities(system, "Observation");
+R1_X_ND_inflow_cn.SetProperty("expression","X_ND:concentration");
+R1_X_ND_inflow_cn.SetProperty("object","Reactor_Flex(1)");
+R1_X_ND_inflow_cn.SetName("R1_X_ND_InflowConcentration");
+R1_X_ND_inflow_cn.SetType("Observation");
+system->AddObservation(R1_X_ND_inflow_cn,false);
+
+Observation R1_S_M_inflow_cn; // Methonal : Reactor 5
+
+R1_S_M_inflow_cn.SetQuantities(system, "Observation");
+R1_S_M_inflow_cn.SetProperty("expression","S_M:concentration");
+R1_S_M_inflow_cn.SetProperty("object","Reactor_Flex(5)");
+R1_S_M_inflow_cn.SetName("R1_S_M_InflowConcentration");
+R1_S_M_inflow_cn.SetType("Observation");
+system->AddObservation(R1_S_M_inflow_cn,false);
+
+Observation R1_X_BH_cn;
+
+R1_X_BH_cn.SetQuantities(system, "Observation");
+R1_X_BH_cn.SetProperty("expression","X_BH:concentration");
+R1_X_BH_cn.SetProperty("object","Reactor_Flex(1)");
+R1_X_BH_cn.SetName("R1_X_BH_Concentration");
+R1_X_BH_cn.SetType("Observation");
+system->AddObservation(R1_X_BH_cn,false);
+*/
 

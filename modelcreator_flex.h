@@ -52,7 +52,7 @@ public:
     const double v_i_VSSs=1.800;
     const double v_i_VSSP=1.420;
     const double v_i_MeOH=1.500;
-    const double v_k_LO2=190.446;
+    const double v_k_LO2=190.446; //Aearation coeff
 
     // Constituents Concentration
     const double v_S_i_concentration=14.14;
@@ -70,7 +70,7 @@ public:
     const double v_X_p_concentration=350; // ?
     const double v_X_ND_concentration=1;
 
-    const double v_a_rate_coefficient=240; // 5 ~ 10 1/hr : 120 ~ 240 1/day
+    const double v_a_rate_coefficient=v_k_LO2; // 5 ~ 10 1/hr : 120 ~ 240 1/day
     const double v_a_saturation=8.55;
 
     const double p_31=0.57;
@@ -115,6 +115,10 @@ public:
     const double v_t_volume=v_t_storage; // Tank: Intial Volume : Unit: m3
     const double v_s_t_volume=v_s_t_storage; // Settling element top: initial volume : Unit: m3
     const double v_s_b_volume=v_s_b_storage; // Settling element bottom: initial volume : Unit: m3
+
+    // Calibration
+    const double v_k_LO2_high=250; //Aearation coeff UL
+    const double v_k_LO2_low=50; //Aearation coeff LL
 
 private:
     const double pi = 3.141521;
