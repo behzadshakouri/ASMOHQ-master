@@ -26,7 +26,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     bool St=true; // True for using Simulation Time is Days, False for using Start and End Date
 
     const double Simulation_start_time=40000; // Simulation Start Date
-    const double Simulation_end_time=41000; // Simulation End Date
+    const double Simulation_end_time=40300; // Simulation End Date
 
     const double Simulation_time_Calc = Simulation_end_time - Simulation_start_time;
 
@@ -44,7 +44,9 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     if (OUP==false) // Set using Simulation Time is Days
         St=false;
 
-    const double dt = 0.1; // Time Step
+    const double dt = 0.1; // OUP Time Step
+
+    const double Initial_time_step = dt; // Observation writing time step
 
     bool Calibration = false; // True for Calibration
 
@@ -512,6 +514,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     fh_WAS.SetVal("S_S:concentration",0);
     fh_WAS.SetVal("X_b:concentration",0);
     fh_WAS.SetVal("Storage",100000);
+    fh_WAS.SetProperty("Dummy_timeseries","/home/behzad/Projects/ASM_Models/OUP_Flow_WAS_tvf.csv");
     fh_WAS.SetVal("x",1200);
     fh_WAS.SetVal("y",1000);
     system->AddBlock(fh_WAS,false);
@@ -1360,11 +1363,22 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     Observation WAS_flow;
 
     WAS_flow.SetQuantities(system, "Observation");
+    WAS_flow.SetProperty("expression","Dummy_timeseries");
+    WAS_flow.SetProperty("object","WAS");
+    WAS_flow.SetName("WAS_Flow");
+    WAS_flow.SetType("Observation");
+    system->AddObservation(WAS_flow,false);
+
+    /*
+    Observation WAS_flow;
+
+    WAS_flow.SetQuantities(system, "Observation");
     WAS_flow.SetProperty("expression","flow");
     WAS_flow.SetProperty("object","Settling element bottom - WAS");
     WAS_flow.SetName("WAS_Flow");
     WAS_flow.SetType("Observation");
     system->AddObservation(WAS_flow,false);
+    */
 
     Observation RAS_flow;
 
@@ -1446,9 +1460,12 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
     else if (!St)
     {
-    system->SetSettingsParameter("simulation_start_time",Simulation_start_time);
-    system->SetSettingsParameter("simulation_end_time",Simulation_end_time);
+        system->SetSettingsParameter("simulation_start_time",Simulation_start_time);
+        system->SetSettingsParameter("simulation_end_time",Simulation_end_time);
     }
+
+    // Observation writing time step
+    system->SetSettingsParameter("initial_time_step",Initial_time_step);
 
     system->SetSystemSettings();
     cout<<"Populate functions"<<endl;
