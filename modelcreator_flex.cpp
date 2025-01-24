@@ -26,7 +26,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     bool St=true; // True for using Simulation Time is Days, False for using Start and End Date
 
     const double Simulation_start_time=40000; // Simulation Start Date
-    const double Simulation_end_time=40300; // Simulation End Date
+    const double Simulation_end_time=41000; // Simulation End Date
 
     const double Simulation_time_Calc = Simulation_end_time - Simulation_start_time;
 
