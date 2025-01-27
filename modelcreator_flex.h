@@ -94,7 +94,9 @@ public:
     const double v_c_bottom_elevation=1; // Clarifer: bottom elevation (head)
     const double v_was_bottom_elevation=0; // WAS: bottom elevation(head)
 
-    const double v_flow_factor=2e10; // Flow factor for storage-base flow
+    const double v_flow_factor_i=2e10; // Flow factor for storage-base flow -- inside
+    const double v_flow_factor_o=2e9; // Flow factor for storage-base flow -- out of
+
 
     // Water Balance (Constant)
     const double v_r_constant_flow=800; // Reactor: Constant flow : Unit: m3/day
@@ -115,6 +117,20 @@ public:
     const double v_t_volume=v_t_storage; // Tank: Intial Volume : Unit: m3
     const double v_s_t_volume=v_s_t_storage; // Settling element top: initial volume : Unit: m3
     const double v_s_b_volume=v_s_b_storage; // Settling element bottom: initial volume : Unit: m3
+
+    // Temperature effect
+    const double v_rt=0; // Ref Temp (+20 as a room temp included in the Temp file)
+    const double v_rtt=0; // Ref Temp (+20 as a room temp included in the Temp file)
+
+    const double v_mu_H_af=1.072;
+    const double v_K_S_af=1.03;
+    const double v_mu_M_af=1.09;
+    const double v_b_M_af=1.03;
+    const double v_mu_A_af=1.072;
+    const double v_b_A_af=1.03;
+    const double v_K_h_af=1.03;
+    const double v_K_a_af=1.03;
+
 
     // Calibration
     const double v_k_LO2_high=250; //Aearation coeff UL
