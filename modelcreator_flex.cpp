@@ -21,7 +21,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/mass_transfer.json");
     system->ReadSystemSettingsTemplate("/home/behzad/Projects/OpenHydroQual/resources/settings.json");
 
-    bool OUP=true; // True for using OUProcess, False for using DeNite Data
+    bool OUP=false; // True for using OUProcess, False for using DeNite Data
 
     bool St=true; // True for using Simulation Time is Days, False for using Start and End Date
 
@@ -219,7 +219,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     if (OUP)
     K_S.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
     else
-    K_S.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/Denit_Temp.csv");
+    K_S.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(K_S, false);
 
     RxnParameter K_MH;
@@ -267,7 +267,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     if (OUP)
     mu_M.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
     else
-    mu_M.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/Denit_Temp.csv");
+    mu_M.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(mu_M, false);
 
     RxnParameter K_MM;
@@ -297,7 +297,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     if (OUP)
     b_M.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
     else
-    b_M.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/Denit_Temp.csv");
+    b_M.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(b_M, false);
 
     RxnParameter mu_A;
@@ -309,7 +309,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     if (OUP)
     mu_A.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
     else
-    mu_A.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/Denit_Temp.csv");
+    mu_A.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(mu_A, false);
 
     RxnParameter K_NHA;
@@ -339,7 +339,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     if (OUP)
     b_A.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
     else
-    b_A.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/Denit_Temp.csv");
+    b_A.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(b_A, false);
 
     RxnParameter eta_h;
@@ -357,7 +357,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     if (OUP)
     K_h.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
     else
-    K_h.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/Denit_Temp.csv");
+    K_h.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(K_h, false);
 
     RxnParameter K_X;
@@ -375,7 +375,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     if (OUP)
     K_a.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
     else
-    K_a.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/Denit_Temp.csv");
+    K_a.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(K_a, false);
 
     RxnParameter Y_H;
