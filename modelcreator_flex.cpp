@@ -21,7 +21,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AppendQuanTemplate("/home/behzad/Projects/OpenHydroQual/resources/mass_transfer.json");
     system->ReadSystemSettingsTemplate("/home/behzad/Projects/OpenHydroQual/resources/settings.json");
 
-    bool OUP=false; // True for using OUProcess, False for using DeNite Data
+    bool OUP=true; // True for using OUProcess, False for using DeNite Data
 
     bool St=true; // True for using Simulation Time is Days, False for using Start and End Date
 
@@ -572,8 +572,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     Stl_element_top.SetVal("Storage",v_s_t_storage);
     Stl_element_top.SetVal("bottom_elevation",v_s_t_bottom_elevation);
     Stl_element_top.SetVal("Volume",v_s_t_volume);
-    Stl_element_top.SetVal("x",800);
-    Stl_element_top.SetVal("y",600);
+    Stl_element_top.SetVal("x",600);
+    Stl_element_top.SetVal("y",500);
     system->AddBlock(Stl_element_top,false);
 
     Block Stl_element_bottom;
@@ -586,8 +586,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     Stl_element_bottom.SetVal("Storage",v_s_b_storage);
     Stl_element_bottom.SetVal("bottom_elevation",v_s_b_bottom_elevation);
     Stl_element_bottom.SetVal("Volume",v_s_b_volume);
-    Stl_element_bottom.SetVal("x",800);
-    Stl_element_bottom.SetVal("y",1000);
+    Stl_element_bottom.SetVal("x",600);
+    Stl_element_bottom.SetVal("y",1100);
     system->AddBlock(Stl_element_bottom,false);
 
     // Time-variable Fixed Head Blocks
@@ -1536,6 +1536,15 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     Stl_t_S_NO_inflow_cn.SetName("Stl_t_S_NO_Concentration");
     Stl_t_S_NO_inflow_cn.SetType("Observation");
     system->AddObservation(Stl_t_S_NO_inflow_cn,false);
+
+    Observation Stl_t_S_NH3_inflow_cn;
+
+    Stl_t_S_NH3_inflow_cn.SetQuantities(system, "Observation");
+    Stl_t_S_NH3_inflow_cn.SetProperty("expression","S_NH:concentration"); // use NH instead of NH3
+    Stl_t_S_NH3_inflow_cn.SetProperty("object","Settling element top");
+    Stl_t_S_NH3_inflow_cn.SetName("Stl_t_S_NH3_Concentration");
+    Stl_t_S_NH3_inflow_cn.SetType("Observation");
+    system->AddObservation(Stl_t_S_NH3_inflow_cn,false);
 
     if (Calibration)
     {
