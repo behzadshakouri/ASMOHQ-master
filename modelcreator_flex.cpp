@@ -1546,6 +1546,15 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     Stl_t_S_NH3_inflow_cn.SetType("Observation");
     system->AddObservation(Stl_t_S_NH3_inflow_cn,false);
 
+    Observation Stl_t_S_ND_inflow_cn;
+
+    Stl_t_S_ND_inflow_cn.SetQuantities(system, "Observation");
+    Stl_t_S_ND_inflow_cn.SetProperty("expression","S_ND:concentration");
+    Stl_t_S_ND_inflow_cn.SetProperty("object","Settling element top");
+    Stl_t_S_ND_inflow_cn.SetName("Stl_t_S_ND_Concentration");
+    Stl_t_S_ND_inflow_cn.SetType("Observation");
+    system->AddObservation(Stl_t_S_ND_inflow_cn,false);
+
     if (Calibration)
     {
     // Setting as parameter for calibration
