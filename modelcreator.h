@@ -74,11 +74,11 @@ public:
     const double v_a_rate_coefficient=240; // 5 ~ 10 1/hr : 120 ~ 240 1/day
     const double v_a_saturation=8.55;
 
-    const double p_31=0.57;
-    const double p_32=1.42;
-    const double p_2=0.08;
-    const double p_36=0.05;
-    const double p_3=0.075;
+    const double p_31=0.57; // f_SiCODs
+    const double p_32=1.42; // i_CV_Bio
+    const double p_2=0.08; // f_p
+    const double p_36=0.05; // f_Ss_Snd
+    const double p_3=0.075; // i_XB
 
     // OHQ Model properties
     const double v_settling_vel=10000; // X_b : Unit: m/day

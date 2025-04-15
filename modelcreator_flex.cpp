@@ -1,4 +1,4 @@
-#include "modelcreator_flex.h"
+ #include "modelcreator_flex.h"
 #include "System.h"
 #include "QString"
 #include <iostream>
@@ -737,6 +737,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     CTimeSeries<double> Inflow_MeOH; // Methanol
 
     // Calculating Inflows according DeNite data (Time Variable)
+    // Denite Parameters(0-10): Q, TSS, VSS, BOD, sBOD, TP, TSP, TKN, sCOD, NH3, NO3
 
     Inflow_Q=Inflow_DeNit.BTC[0]; // Discharge (m3/day)
 
