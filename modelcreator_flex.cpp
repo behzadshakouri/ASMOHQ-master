@@ -1529,32 +1529,41 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     R1_MeOH_inflow_cn.SetType("Observation");
     system->AddObservation(R1_MeOH_inflow_cn,false);
 
-    Observation Stl_t_S_NO_inflow_cn;
+    Observation Stl_t_S_NO_flow_cn;
 
-    Stl_t_S_NO_inflow_cn.SetQuantities(system, "Observation");
-    Stl_t_S_NO_inflow_cn.SetProperty("expression","S_NO:concentration");
-    Stl_t_S_NO_inflow_cn.SetProperty("object","Settling element top");
-    Stl_t_S_NO_inflow_cn.SetName("Stl_t_S_NO_Concentration");
-    Stl_t_S_NO_inflow_cn.SetType("Observation");
-    system->AddObservation(Stl_t_S_NO_inflow_cn,false);
+    Stl_t_S_NO_flow_cn.SetQuantities(system, "Observation");
+    Stl_t_S_NO_flow_cn.SetProperty("expression","S_NO:concentration");
+    Stl_t_S_NO_flow_cn.SetProperty("object","Settling element top");
+    Stl_t_S_NO_flow_cn.SetName("Stl_t_S_NO_Concentration");
+    Stl_t_S_NO_flow_cn.SetType("Observation");
+    system->AddObservation(Stl_t_S_NO_flow_cn,false);
 
-    Observation Stl_t_S_NH3_inflow_cn;
+    Observation Stl_t_S_NH3_flow_cn;
 
-    Stl_t_S_NH3_inflow_cn.SetQuantities(system, "Observation");
-    Stl_t_S_NH3_inflow_cn.SetProperty("expression","S_NH:concentration"); // use NH instead of NH3
-    Stl_t_S_NH3_inflow_cn.SetProperty("object","Settling element top");
-    Stl_t_S_NH3_inflow_cn.SetName("Stl_t_S_NH3_Concentration");
-    Stl_t_S_NH3_inflow_cn.SetType("Observation");
-    system->AddObservation(Stl_t_S_NH3_inflow_cn,false);
+    Stl_t_S_NH3_flow_cn.SetQuantities(system, "Observation");
+    Stl_t_S_NH3_flow_cn.SetProperty("expression","S_NH:concentration"); // use NH instead of NH3
+    Stl_t_S_NH3_flow_cn.SetProperty("object","Settling element top");
+    Stl_t_S_NH3_flow_cn.SetName("Stl_t_S_NH3_Concentration");
+    Stl_t_S_NH3_flow_cn.SetType("Observation");
+    system->AddObservation(Stl_t_S_NH3_flow_cn,false);
 
-    Observation Stl_t_S_ND_inflow_cn;
+    Observation Stl_t_S_ND_flow_cn;
 
-    Stl_t_S_ND_inflow_cn.SetQuantities(system, "Observation");
-    Stl_t_S_ND_inflow_cn.SetProperty("expression","S_ND:concentration");
-    Stl_t_S_ND_inflow_cn.SetProperty("object","Settling element top");
-    Stl_t_S_ND_inflow_cn.SetName("Stl_t_S_ND_Concentration");
-    Stl_t_S_ND_inflow_cn.SetType("Observation");
-    system->AddObservation(Stl_t_S_ND_inflow_cn,false);
+    Stl_t_S_ND_flow_cn.SetQuantities(system, "Observation");
+    Stl_t_S_ND_flow_cn.SetProperty("expression","S_ND:concentration");
+    Stl_t_S_ND_flow_cn.SetProperty("object","Settling element top");
+    Stl_t_S_ND_flow_cn.SetName("Stl_t_S_ND_Concentration");
+    Stl_t_S_ND_flow_cn.SetType("Observation");
+    system->AddObservation(Stl_t_S_ND_flow_cn,false);
+
+    Observation Stl_t_TKN_flow_cn;
+
+    Stl_t_TKN_flow_cn.SetQuantities(system, "Observation");
+    Stl_t_TKN_flow_cn.SetProperty("expression","0.086*X_BH:concentration+0.086*X_BM:concentration+0.086*X_BA:concentration+0.06*X_p:concentration+S_NH:concentration+S_ND:concentration+X_ND:concentration"); // use NH instead of NH3
+    Stl_t_TKN_flow_cn.SetProperty("object","Settling element top");
+    Stl_t_TKN_flow_cn.SetName("Stl_t_TKN_Concentration");
+    Stl_t_TKN_flow_cn.SetType("Observation");
+    system->AddObservation(Stl_t_TKN_flow_cn,false);
 
     if (Calibration)
     {
