@@ -50,7 +50,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     CTimeSeriesSet<double> ToWrite;
 
 #ifdef Behzad
-    string Workingfolder = "/home/behzad/Projects/ASM_Models/";
+    string Workingfolder = "/home/behzad/Projects/ASM_Models/Flex/";
     CTimeSeriesSet<double> Inflow_DeNit("/home/behzad/Projects/ASM_Models/Data/DeNit_Influent_Lump.txt",true); // Inflow (Q)
     CTimeSeriesSet<double> Inflow_DeNit_MeOH("/home/behzad/Projects/ASM_Models/Data/DeNit_MeOH.txt",true); // Methanol (Externtal S_M)
     CTimeSeriesSet<double> Inflow_DeNit_wasteflow("/home/behzad/Projects/ASM_Models/Data/DeNit_wasteflow.txt",true); // Wasteflow (WAS)
@@ -205,7 +205,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     mu_H.SetVal("Arrhenius_factor",v_mu_H_af);
     mu_H.SetVal("reference_temperature",v_rt);
     if (OUP)
-    mu_H.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
+    mu_H.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Flex/OUP_Temp.csv");
     else
     mu_H.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(mu_H, false);
@@ -217,7 +217,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     K_S.SetVal("Arrhenius_factor",v_K_S_af);
     K_S.SetVal("reference_temperature",v_rt);
     if (OUP)
-    K_S.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
+    K_S.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Flex/OUP_Temp.csv");
     else
     K_S.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(K_S, false);
@@ -265,7 +265,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     mu_M.SetVal("Arrhenius_factor",v_mu_M_af);
     mu_M.SetVal("reference_temperature",v_rt);
     if (OUP)
-    mu_M.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
+    mu_M.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Flex/OUP_Temp.csv");
     else
     mu_M.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(mu_M, false);
@@ -295,7 +295,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     b_M.SetVal("Arrhenius_factor",v_b_M_af);
     b_M.SetVal("reference_temperature",v_rt);
     if (OUP)
-    b_M.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
+    b_M.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Flex/OUP_Temp.csv");
     else
     b_M.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(b_M, false);
@@ -307,7 +307,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     mu_A.SetVal("Arrhenius_factor",v_mu_A_af);
     mu_A.SetVal("reference_temperature",v_rt);
     if (OUP)
-    mu_A.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
+    mu_A.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Flex/OUP_Temp.csv");
     else
     mu_A.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(mu_A, false);
@@ -337,7 +337,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     b_A.SetVal("Arrhenius_factor",v_b_A_af);
     b_A.SetVal("reference_temperature",v_rt);
     if (OUP)
-    b_A.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
+    b_A.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Flex/OUP_Temp.csv");
     else
     b_A.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(b_A, false);
@@ -355,7 +355,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     K_h.SetVal("Arrhenius_factor",v_K_h_af);
     K_h.SetVal("reference_temperature",v_rt);
     if (OUP)
-    K_h.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
+    K_h.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Flex/OUP_Temp.csv");
     else
     K_h.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(K_h, false);
@@ -373,7 +373,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     K_a.SetVal("Arrhenius_factor",v_K_a_af);
     K_a.SetVal("reference_temperature",v_rt);
     if (OUP)
-    K_a.SetProperty("temperature","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
+    K_a.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Flex/OUP_Temp.csv");
     else
     K_a.SetProperty("temperature","/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt");
     system->AddReactionParameter(K_a, false);
@@ -599,7 +599,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     fh_clarifier.SetVal("S_S:concentration",0);
     fh_clarifier.SetVal("X_b:concentration",0);
     fh_clarifier.SetVal("Storage",100000);
-    fh_clarifier.SetProperty("Dummy_timeseries","/home/behzad/Projects/ASM_Models/OUP_Temp.csv");
+    fh_clarifier.SetProperty("Dummy_timeseries","/home/behzad/Projects/ASM_Models/Flex/OUP_Temp.csv");
     fh_clarifier.SetVal("x",1200);
     fh_clarifier.SetVal("y",600);
     system->AddBlock(fh_clarifier,false);
@@ -612,7 +612,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     fh_WAS.SetVal("S_S:concentration",0);
     fh_WAS.SetVal("X_b:concentration",0);
     fh_WAS.SetVal("Storage",100000);
-    fh_WAS.SetProperty("Dummy_timeseries","/home/behzad/Projects/ASM_Models/OUP_Flow_WAS_tvf.csv");
+    fh_WAS.SetProperty("Dummy_timeseries","/home/behzad/Projects/ASM_Models/Flex/OUP_Flow_WAS_tvf.csv");
     fh_WAS.SetVal("x",1200);
     fh_WAS.SetVal("y",1000);
     system->AddBlock(fh_WAS,false);
@@ -1250,18 +1250,18 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
     // Assigninig Time Variable inflows by OUProcess
 
-    system->block("Reactor_Flex(1)")->SetProperty("time_variable_inflow","/home/behzad/Projects/ASM_Models/OUP_Inflow_Q_tvif.csv"); // Discharge (m3/day)
+    system->block("Reactor_Flex(1)")->SetProperty("time_variable_inflow","/home/behzad/Projects/ASM_Models/Flex/OUP_Inflow_Q_tvif.csv"); // Discharge (m3/day)
 
-    system->block("Reactor_Flex(1)")->SetProperty("S_i:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_S_i.csv");
-    system->block("Reactor_Flex(1)")->SetProperty("S_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_S_S.csv");
-    system->block("Reactor_Flex(1)")->SetProperty("X_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_X_S.csv");
-    system->block("Reactor_Flex(1)")->SetProperty("X_p:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_X_p.csv");
-    system->block("Reactor_Flex(1)")->SetProperty("S_NO:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_S_NO.csv");
-    system->block("Reactor_Flex(1)")->SetProperty("S_NH:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_S_NH.csv");
-    system->block("Reactor_Flex(1)")->SetProperty("S_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_S_ND.csv");
-    system->block("Reactor_Flex(1)")->SetProperty("X_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/OUP_Inflow_X_ND.csv");
+    system->block("Reactor_Flex(1)")->SetProperty("S_i:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/OUP_Inflow_S_i.csv");
+    system->block("Reactor_Flex(1)")->SetProperty("S_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/OUP_Inflow_S_S.csv");
+    system->block("Reactor_Flex(1)")->SetProperty("X_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/OUP_Inflow_X_S.csv");
+    system->block("Reactor_Flex(1)")->SetProperty("X_p:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/OUP_Inflow_X_p.csv");
+    system->block("Reactor_Flex(1)")->SetProperty("S_NO:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/OUP_Inflow_S_NO.csv");
+    system->block("Reactor_Flex(1)")->SetProperty("S_NH:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/OUP_Inflow_S_NH.csv");
+    system->block("Reactor_Flex(1)")->SetProperty("S_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/OUP_Inflow_S_ND.csv");
+    system->block("Reactor_Flex(1)")->SetProperty("X_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/OUP_Inflow_X_ND.csv");
 
-    system->block("Reactor_Flex(5)")->SetProperty("S_M:external_mass_flow_timeseries","/home/behzad/Projects/ASM_Models/OUP_Inflow_MeOH.csv");
+    system->block("Reactor_Flex(5)")->SetProperty("S_M:external_mass_flow_timeseries","/home/behzad/Projects/ASM_Models/Flex/OUP_Inflow_MeOH.csv");
 
 
     // Flex_flow Links for Reactor_Flex
@@ -1270,7 +1270,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         l_r_st.SetQuantities(system, "Flex_flow");
         l_r_st.SetName("Reactor_Flex(" + aquiutils::numbertostring(i+1)+"_" + aquiutils::numbertostring(i+2) + ")");
         l_r_st.SetType("Flex_flow");
-        //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/OUP_r_r_st_tvf.csv");
+        //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/Flex/OUP_r_r_st_tvf.csv");
         l_r_st.SetVal("flow_factor",v_flow_factor_i);
         system->AddLink(l_r_st, "Reactor_Flex(" + aquiutils::numbertostring(i+1)+")", "Reactor_Flex(" + aquiutils::numbertostring(i+2)+")", false);
     }
@@ -1281,7 +1281,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_r_st.SetQuantities(system, "Flex_flow");
     l_r_st.SetName("Reactor_Flex(" + aquiutils::numbertostring(n_tanks) + ") - Settling element top");
     l_r_st.SetType("Flex_flow");
-    //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/OUP_r_r_st_tvf.csv");
+    //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/Flex/OUP_r_r_st_tvf.csv");
     l_r_st.SetVal("flow_factor",v_flow_factor_i);
     system->AddLink(l_r_st, "Reactor_Flex(" + aquiutils::numbertostring(n_tanks) + ")", "Settling element top", false);
 
@@ -1289,7 +1289,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_st_c.SetQuantities(system, "Flex_flow");
     l_st_c.SetName("Settling element top - Clarifier");
     l_st_c.SetType("Flex_flow");
-    //l_st_c.SetProperty("flow", "/home/behzad/Projects/ASM_Models/OUP_st_c_tvf.csv");
+    //l_st_c.SetProperty("flow", "/home/behzad/Projects/ASM_Models/Flex/OUP_st_c_tvf.csv");
     l_st_c.SetVal("flow_factor",v_flow_factor_o);
     system->AddLink(l_st_c, "Settling element top", "Clarifier", false);
 
@@ -1297,7 +1297,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_sb_was.SetQuantities(system, "Flex_flow");
     l_sb_was.SetName("Settling element bottom - WAS");
     l_sb_was.SetType("Flex_flow");
-    //l_sb_was.SetProperty("flow", "/home/behzad/Projects/ASM_Models/OUP_Flow_WAS_NS_tvf.csv");
+    //l_sb_was.SetProperty("flow", "/home/behzad/Projects/ASM_Models/Flex/OUP_Flow_WAS_NS_tvf.csv");
     l_sb_was.SetVal("flow_factor",v_flow_factor_o);
     system->AddLink(l_sb_was, "Settling element bottom", "WAS", false);
 
@@ -1306,7 +1306,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_st_sb.SetQuantities(system, "Settling element interface (time variable)");
     l_st_sb.SetName("Settling element top - Settling element bottom");
     l_st_sb.SetType("Settling element interface (time variable)");
-    l_st_sb.SetProperty("flow", "/home/behzad/Projects/ASM_Models/OUP_st_sb_tvf.csv");
+    l_st_sb.SetProperty("flow", "/home/behzad/Projects/ASM_Models/Flex/OUP_st_sb_tvf.csv");
     l_st_sb.SetVal("area", v_st_sb_area);
     system->AddLink(l_st_sb, "Settling element top", "Settling element bottom", false);
 
@@ -1315,7 +1315,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_sb_r.SetQuantities(system, "Time-Dependent flow");
     l_sb_r.SetName("Settling element bottom - Reactor_Flex(1)");
     l_sb_r.SetType("Time-Dependent flow");
-    l_sb_r.SetProperty("flow", "/home/behzad/Projects/ASM_Models/OUP_Flow_RAS_tvf.csv");
+    l_sb_r.SetProperty("flow", "/home/behzad/Projects/ASM_Models/Flex/OUP_Flow_RAS_tvf.csv");
     system->AddLink(l_sb_r, "Settling element bottom", "Reactor_Flex(1)", false);
 
 }
