@@ -644,7 +644,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         //Reactor_Flex.SetVal("Storage",v_r_storage);
         //if (i==0) Reactor_Flex.SetVal("constant_inflow",v_r_constant_flow);
         //Reactor_Flex.SetVal("constant_inflow",v_r_constant_flow);
-        //if (i==4) Reactor_Flex.SetVal("S_M:External mass flow time-series","/home/behzad/Projects/ASM_Models/S_M_mfr.csv");
+        //if (i==4) Reactor_Flex.SetVal("S_M:External mass flow time-series","/home/behzad/Projects/ASM_Models/Flex/S_M_mfr.csv");
         Reactor_Flex.SetVal("Volume",v_t_volume);
         Reactor_Flex.SetVal("x",400*(i-n_tanks));
         if (i==0) Reactor_Flex.SetVal("y",1200);
@@ -663,35 +663,35 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
     CTimeSeries<double> S_i_inflow_concentration;
     S_i_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_S_i_concentration);
-    S_i_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_i_constant_inflow_concentration.txt");
+    S_i_inflow_concentration.writefile(Workingfolder + "S_i_constant_inflow_concentration.txt");
 
     CTimeSeries<double> S_S_inflow_concentration;
     S_S_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_S_S_concentration);
-    S_S_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_S_constant_inflow_concentration.txt");
+    S_S_inflow_concentration.writefile(Workingfolder + "S_S_constant_inflow_concentration.txt");
 
     CTimeSeries<double> X_S_inflow_concentration;
     X_S_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_X_S_concentration);
-    X_S_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_S_constant_inflow_concentration.txt");
+    X_S_inflow_concentration.writefile(Workingfolder + "X_S_constant_inflow_concentration.txt");
 
     CTimeSeries<double> X_p_inflow_concentration;
     X_p_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_X_p_concentration);
-    X_p_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_p_constant_inflow_concentration.txt");
+    X_p_inflow_concentration.writefile(Workingfolder + "X_p_constant_inflow_concentration.txt");
 
     CTimeSeries<double> S_NO_inflow_concentration;
     S_NO_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_S_NO_concentration);
-    S_NO_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_NO_constant_inflow_concentration.txt");
+    S_NO_inflow_concentration.writefile(Workingfolder + "S_NO_constant_inflow_concentration.txt");
 
     CTimeSeries<double> S_NH_inflow_concentration;
     S_NH_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_S_NH_concentration);
-    S_NH_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_NH_constant_inflow_concentration.txt");
+    S_NH_inflow_concentration.writefile(Workingfolder + "S_NH_constant_inflow_concentration.txt");
 
     CTimeSeries<double> S_ND_inflow_concentration;
     S_ND_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_S_ND_concentration);
-    S_ND_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/S_ND_constant_inflow_concentration.txt");
+    S_ND_inflow_concentration.writefile(Workingfolder + "S_ND_constant_inflow_concentration.txt");
 
     CTimeSeries<double> X_ND_inflow_concentration;
     X_ND_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_X_ND_concentration);
-    X_ND_inflow_concentration.writefile("/home/behzad/Projects/ASM_Models/X_ND_constant_inflow_concentration.txt");
+    X_ND_inflow_concentration.writefile(Workingfolder + "X_ND_constant_inflow_concentration.txt");
 
 
     // Constituents Inflow Calculations from Data (Time Variable)
@@ -761,54 +761,54 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
     // Writing to File
 
-    Inflow_Q.writefile("/home/behzad/Projects/ASM_Models/Q_tvif.txt"); //
+    Inflow_Q.writefile(Workingfolder + "Q_tvif.txt"); //
 
-    Flow_WAS.writefile("/home/behzad/Projects/ASM_Models/WAS_tvf.txt"); //
-    Flow_RAS.writefile("/home/behzad/Projects/ASM_Models/RAS_tvf.txt"); //
+    Flow_WAS.writefile(Workingfolder + "WAS_tvf.txt"); //
+    Flow_RAS.writefile(Workingfolder + "RAS_tvf.txt"); //
 
-    Flow_r_r_st.writefile("/home/behzad/Projects/ASM_Models/r_r_st_tvf.txt"); //
-    Flow_st_sb.writefile("/home/behzad/Projects/ASM_Models/st_sb_tvf.txt"); //
-    Flow_st_c.writefile("/home/behzad/Projects/ASM_Models/st_c_tvf.txt"); //
+    Flow_r_r_st.writefile(Workingfolder + "r_r_st_tvf.txt"); //
+    Flow_st_sb.writefile(Workingfolder + "st_sb_tvf.txt"); //
+    Flow_st_c.writefile(Workingfolder + "st_c_tvf.txt"); //
 
-    Inflow_S_i.writefile("/home/behzad/Projects/ASM_Models/S_i_Inflow_concentration.txt");
-    Inflow_S_S.writefile("/home/behzad/Projects/ASM_Models/S_S_Inflow_concentration.txt");
-    Inflow_X_S.writefile("/home/behzad/Projects/ASM_Models/X_S_Inflow_concentration.txt");
-    Inflow_X_p.writefile("/home/behzad/Projects/ASM_Models/X_p_Inflow_concentration.txt");
-    Inflow_S_NO.writefile("/home/behzad/Projects/ASM_Models/S_NO_Inflow_concentration.txt");
-    Inflow_S_NH.writefile("/home/behzad/Projects/ASM_Models/S_NH_Inflow_concentration.txt");
-    Inflow_S_ND.writefile("/home/behzad/Projects/ASM_Models/S_ND_Inflow_concentration.txt");
-    Inflow_X_ND.writefile("/home/behzad/Projects/ASM_Models/X_ND_Inflow_concentration.txt");
+    Inflow_S_i.writefile(Workingfolder + "S_i_Inflow_concentration.txt");
+    Inflow_S_S.writefile(Workingfolder + "S_S_Inflow_concentration.txt");
+    Inflow_X_S.writefile(Workingfolder + "X_S_Inflow_concentration.txt");
+    Inflow_X_p.writefile(Workingfolder + "X_p_Inflow_concentration.txt");
+    Inflow_S_NO.writefile(Workingfolder + "S_NO_Inflow_concentration.txt");
+    Inflow_S_NH.writefile(Workingfolder + "S_NH_Inflow_concentration.txt");
+    Inflow_S_ND.writefile(Workingfolder + "S_ND_Inflow_concentration.txt");
+    Inflow_X_ND.writefile(Workingfolder + "X_ND_Inflow_concentration.txt");
 
-    Inflow_MeOH.writefile("/home/behzad/Projects/ASM_Models/S_M_mfr.txt"); // Methanol
+    Inflow_MeOH.writefile(Workingfolder + "S_M_mfr.txt"); // Methanol
 
     // Assigning Constituents Inflow concentrations to the system (Reactor_Flex)
 
     // Constant inflows by given concentration
 /*
-    system->block("Reactor_Flex")->SetProperty("S_S:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/S_S_constant_inflow_concentration.txt");
-    system->block("Reactor_Flex")->SetProperty("X_S:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/X_S_constant_inflow_concentration.txt");
-    system->block("Reactor_Flex")->SetProperty("X_p:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/X_p_constant_inflow_concentration.txt");
-    system->block("Reactor_Flex")->SetProperty("S_NO:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/S_NO_constant_inflow_concentration.txt");
-    system->block("Reactor_Flex")->SetProperty("S_NH:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/S_NH_constant_inflow_concentration.txt");
-    system->block("Reactor_Flex")->SetProperty("S_ND:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/S_ND_constant_inflow_concentration.txt");
-    system->block("Reactor_Flex")->SetProperty("X_ND:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/X_ND_constant_inflow_concentration.txt");
+    system->block("Reactor_Flex")->SetProperty("S_S:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/S_S_constant_inflow_concentration.txt");
+    system->block("Reactor_Flex")->SetProperty("X_S:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/X_S_constant_inflow_concentration.txt");
+    system->block("Reactor_Flex")->SetProperty("X_p:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/X_p_constant_inflow_concentration.txt");
+    system->block("Reactor_Flex")->SetProperty("S_NO:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/S_NO_constant_inflow_concentration.txt");
+    system->block("Reactor_Flex")->SetProperty("S_NH:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/S_NH_constant_inflow_concentration.txt");
+    system->block("Reactor_Flex")->SetProperty("S_ND:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/S_ND_constant_inflow_concentration.txt");
+    system->block("Reactor_Flex")->SetProperty("X_ND:constant_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/X_ND_constant_inflow_concentration.txt");
 */
 
 
     // Time Variable inflows according DeNite data
 
-    system->block("Reactor_Flex(1)")->SetProperty("time_variable_inflow","/home/behzad/Projects/ASM_Models/Q_tvif.txt"); // Discharge (m3/day)
+    system->block("Reactor_Flex(1)")->SetProperty("time_variable_inflow","/home/behzad/Projects/ASM_Models/Flex/Q_tvif.txt"); // Discharge (m3/day)
 
-    system->block("Reactor_Flex(1)")->SetProperty("S_i:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/S_i_Inflow_concentration.txt");
-    system->block("Reactor_Flex(1)")->SetProperty("S_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/S_S_Inflow_concentration.txt");
-    system->block("Reactor_Flex(1)")->SetProperty("X_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/X_S_Inflow_concentration.txt");
-    system->block("Reactor_Flex(1)")->SetProperty("X_p:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/X_p_Inflow_concentration.txt");
-    system->block("Reactor_Flex(1)")->SetProperty("S_NO:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/S_NO_Inflow_concentration.txt");
-    system->block("Reactor_Flex(1)")->SetProperty("S_NH:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/S_NH_Inflow_concentration.txt");
-    system->block("Reactor_Flex(1)")->SetProperty("S_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/S_ND_Inflow_concentration.txt");
-    system->block("Reactor_Flex(1)")->SetProperty("X_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/X_ND_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("S_i:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/S_i_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("S_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/S_S_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("X_S:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/X_S_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("X_p:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/X_p_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("S_NO:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/S_NO_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("S_NH:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/S_NH_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("S_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/S_ND_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("X_ND:time_variable_inflow_concentration","/home/behzad/Projects/ASM_Models/Flex/X_ND_Inflow_concentration.txt");
 
-    system->block("Reactor_Flex(5)")->SetProperty("S_M:external_mass_flow_timeseries","/home/behzad/Projects/ASM_Models/S_M_mfr.txt");
+    system->block("Reactor_Flex(5)")->SetProperty("S_M:external_mass_flow_timeseries","/home/behzad/Projects/ASM_Models/Flex/S_M_mfr.txt");
 
     // Flex_flow Links for Reactor_Flex
     for (int i=0; i<n_tanks-1; i++)
@@ -816,7 +816,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         l_r_st.SetQuantities(system, "Flex_flow");
         l_r_st.SetName("Reactor_Flex(" + aquiutils::numbertostring(i+1)+"_" + aquiutils::numbertostring(i+2) + ")");
         l_r_st.SetType("Flex_flow");
-        //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/r_r_st_tvf.txt");
+        //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/Flex/r_r_st_tvf.txt");
         l_r_st.SetVal("flow_factor",v_flow_factor_i);
         system->AddLink(l_r_st, "Reactor_Flex(" + aquiutils::numbertostring(i+1)+")", "Reactor_Flex(" + aquiutils::numbertostring(i+2)+")", false);
     }
@@ -827,7 +827,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_r_st.SetQuantities(system, "Flex_flow");
     l_r_st.SetName("Reactor_Flex(" + aquiutils::numbertostring(n_tanks) + ") - Settling element top");
     l_r_st.SetType("Flex_flow");
-    //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/r_r_st_tvf.txt");
+    //l_r_st.SetProperty("flow", "/home/behzad/Projects/ASM_Models/Flex/r_r_st_tvf.txt");
     l_r_st.SetVal("flow_factor",v_flow_factor_i);
     system->AddLink(l_r_st, "Reactor_Flex(" + aquiutils::numbertostring(n_tanks) + ")", "Settling element top", false);
 
@@ -835,7 +835,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_st_c.SetQuantities(system, "Flex_flow");
     l_st_c.SetName("Settling element top - Clarifier");
     l_st_c.SetType("Flex_flow");
-    //l_st_c.SetProperty("flow", "/home/behzad/Projects/ASM_Models/st_c_tvf.txt");
+    //l_st_c.SetProperty("flow", "/home/behzad/Projects/ASM_Models/Flex/st_c_tvf.txt");
     l_st_c.SetVal("flow_factor",v_flow_factor_o);
     system->AddLink(l_st_c, "Settling element top", "Clarifier", false);
 
@@ -843,7 +843,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_sb_was.SetQuantities(system, "Flex_flow");
     l_sb_was.SetName("Settling element bottom - WAS");
     l_sb_was.SetType("Flex_flow");
-    //l_sb_was.SetProperty("flow", "/home/behzad/Projects/ASM_Models/WAS_tvf.txt");
+    //l_sb_was.SetProperty("flow", "/home/behzad/Projects/ASM_Models/Flex/WAS_tvf.txt");
     l_sb_was.SetVal("flow_factor",v_flow_factor_o);
     system->AddLink(l_sb_was, "Settling element bottom", "WAS", false);
 
@@ -852,7 +852,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_st_sb.SetQuantities(system, "Settling element interface (time variable)");
     l_st_sb.SetName("Settling element top - Settling element bottom");
     l_st_sb.SetType("Settling element interface (time variable)");
-    l_st_sb.SetProperty("flow", "/home/behzad/Projects/ASM_Models/st_sb_tvf.txt");
+    l_st_sb.SetProperty("flow", "/home/behzad/Projects/ASM_Models/Flex/st_sb_tvf.txt");
     l_st_sb.SetVal("area", v_st_sb_area);
     system->AddLink(l_st_sb, "Settling element top", "Settling element bottom", false);
 
@@ -861,7 +861,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_sb_r.SetQuantities(system, "Time-Dependent flow");
     l_sb_r.SetName("Settling element bottom - Reactor_Flex(1)");
     l_sb_r.SetType("Time-Dependent flow");
-    l_sb_r.SetProperty("flow", "/home/behzad/Projects/ASM_Models/RAS_tvf.txt");
+    l_sb_r.SetProperty("flow", "/home/behzad/Projects/ASM_Models/Flex/RAS_tvf.txt");
     system->AddLink(l_sb_r, "Settling element bottom", "Reactor_Flex(1)", false);
 
     }
