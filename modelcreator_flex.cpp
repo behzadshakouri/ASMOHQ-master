@@ -1556,6 +1556,24 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     Stl_t_S_ND_flow_cn.SetType("Observation");
     system->AddObservation(Stl_t_S_ND_flow_cn,false);
 
+    Observation Stl_t_sCOD_flow_cn;
+
+    Stl_t_sCOD_flow_cn.SetQuantities(system, "Observation");
+    Stl_t_sCOD_flow_cn.SetProperty("expression","S_i:concentration+S_S:concentration+S_M:concentration");
+    Stl_t_sCOD_flow_cn.SetProperty("object","Settling element top");
+    Stl_t_sCOD_flow_cn.SetName("Stl_t_sCOD_Concentration");
+    Stl_t_sCOD_flow_cn.SetType("Observation");
+    system->AddObservation(Stl_t_sCOD_flow_cn,false);
+
+    Observation Stl_t_VSS_flow_cn;
+
+    Stl_t_VSS_flow_cn.SetQuantities(system, "Observation");
+    Stl_t_VSS_flow_cn.SetProperty("expression","0.769*X_i:concentration+0.556*X_S:concentration+0.704*X_BH:concentration+0.704*X_BM:concentration+0.704*X_BA:concentration+0.704*X_p:concentration");
+    Stl_t_VSS_flow_cn.SetProperty("object","Settling element top");
+    Stl_t_VSS_flow_cn.SetName("Stl_t_VSS_Concentration");
+    Stl_t_VSS_flow_cn.SetType("Observation");
+    system->AddObservation(Stl_t_VSS_flow_cn,false);
+
     Observation Stl_t_TKN_flow_cn;
 
     Stl_t_TKN_flow_cn.SetQuantities(system, "Observation");
@@ -1564,6 +1582,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     Stl_t_TKN_flow_cn.SetName("Stl_t_TKN_Concentration");
     Stl_t_TKN_flow_cn.SetType("Observation");
     system->AddObservation(Stl_t_TKN_flow_cn,false);
+
 
     if (Calibration)
     {
