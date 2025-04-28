@@ -153,7 +153,9 @@ double Realization = 1;
         system->SavetoScriptFile(Workingfolder + "CreatedModel.ohq");
 
         cout<<"Solving ..."<<endl;
+
         system->Solve();
+        system->SavetoScriptFile(system->GetWorkingFolder() + "AfterState.ohq");
 
         cout<<"Writing outputs in '"<< system->GetWorkingFolder() + system->OutputFileName() +"'"<<endl;
         CTimeSeriesSet<double> output = system->GetOutputs();

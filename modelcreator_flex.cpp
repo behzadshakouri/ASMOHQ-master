@@ -1568,7 +1568,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     Observation Stl_t_VSS_flow_cn;
 
     Stl_t_VSS_flow_cn.SetQuantities(system, "Observation");
-    Stl_t_VSS_flow_cn.SetProperty("expression","0.769*X_i:concentration+0.556*X_S:concentration+0.704*X_BH:concentration+0.704*X_BM:concentration+0.704*X_BA:concentration+0.704*X_p:concentration");
+    Stl_t_VSS_flow_cn.SetProperty("expression","0.556*X_S:concentration+0.704*X_BH:concentration+0.704*X_BM:concentration+0.704*X_BA:concentration+0.704*X_p:concentration");
     Stl_t_VSS_flow_cn.SetProperty("object","Settling element top");
     Stl_t_VSS_flow_cn.SetName("Stl_t_VSS_Concentration");
     Stl_t_VSS_flow_cn.SetType("Observation");
@@ -1603,8 +1603,12 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         system->SetSettingsParameter("simulation_end_time",Simulation_end_time);
     }
 
+        system->SetSettingsParameter("maximum_time_allowed",86400*3);
+        system->SetSettingsParameter("maximum_number_of_matrix_inverstions",1e6);
+
     // Observation writing time step
     system->SetSettingsParameter("initial_time_step",Initial_time_step);
+
 
     system->SetSystemSettings();
 
