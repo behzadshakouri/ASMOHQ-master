@@ -14,3 +14,19 @@ ASMOHQ/ASMOHQ/x64/Debug/
 ASMOHQ/ASMOHQ/x64/Release/
 
 ASMOHQ/.vs/ASMOHQ/v17/
+
+Build-Debug-5.15.2/.qtc_clangd/.cache/clangd/index/
+
+Build-Debug-5.15.2/.qtc_clangd/
+
+Build-Debug-6.9.1/.qtc_clangd/.cache/clangd/index/
+
+Build-Debug-6.9.1/
+
+Build-Release-5.15.2/.qtc_clangd/.cache/clangd/index/
+
+Build-Release-5.15.2/.qtc_clangd/
+
+Build-Release-6.9.1/.qtc_clangd/.cache/clangd/index/
+
+Build-Release-6.9.1/.qtc_clangd/

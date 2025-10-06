@@ -14,19 +14,19 @@ bool Flex = true; // Flex or normal reactor usage
 
 double Realization = 1;
 
-#ifdef Behzad
+#ifdef PowerEdge
+    string Workingfolder="/mnt/3rd900/Projects/ASM_Models/";
+    string Workingfolder_Flex="/mnt/3rd900/Projects/ASM_Models/Flex/";
+#elif Behzad
     string Workingfolder="/home/behzad/Projects/ASM_Models/";
     string Workingfolder_Flex="/home/behzad/Projects/ASM_Models/Flex/";
-#else
-    string Workingfolder="/home/arash/Projects/ASM_Models/";
-    string Workingfolder_Flex="/home/arash/Projects/ASM_Models/Flex/";
-#endif
-#ifdef  Arash
+#elif  Arash
     string Workingfolder = "/home/arash/Projects/ASM_Models/";
-#endif //  Arash
-#ifdef Arash_Windows
+    string Workingfolder_Flex="/home/Arash/Projects/ASM_Models/Flex/";
+#elif Arash_Windows
     string Workingfolder = "C:/Projects/ASM_Models/";
-#endif // Arash_Windows
+    string Workingfolder_Flex = "C:/Projects/ASM_Models/Flex/";
+#endif
 
     /*
 //Data analysis
@@ -118,17 +118,17 @@ double Realization = 1;
         system->Solve();
 
         cout<<"Writing outputs in '"<< system->GetWorkingFolder() + system->OutputFileName() +"'"<<endl;
-        CTimeSeriesSet<double> output = system->GetOutputs();
+        TimeSeriesSet<double> output = system->GetOutputs();
         QString outputfilename = QString::fromStdString(system->OutputFileName()).split(".")[0] +"_" + QString::number(i) + ".txt";
-        output.writetofile(system->GetWorkingFolder() + outputfilename.toStdString());
+        output.write(system->GetWorkingFolder() + outputfilename.toStdString());
 
         cout<<"Writing outputs in '"<< system->GetWorkingFolder() + system->ObservedOutputFileName() +"'"<<endl;
-        CTimeSeriesSet<double> selectedoutput = system->GetObservedOutputs();
+        TimeSeriesSet<double> selectedoutput = system->GetObservedOutputs();
         QString selectedoutputfilename = QString::fromStdString(system->ObservedOutputFileName()).split(".")[0] +"_" + QString::number(i) + ".txt";
-        selectedoutput.writetofile(system->GetWorkingFolder() + selectedoutputfilename.toStdString());
+        selectedoutput.write(system->GetWorkingFolder() + selectedoutputfilename.toStdString());
 
-        cout<<"Getting results into grid"<<endl;
-        ResultGrid resgrid(output,"theta",system);
+        //cout<<"Getting results into grid"<<endl;
+        //ResultGrid resgrid(output,"theta",system);
         //cout<<"Writing VTPs"<<endl;
         //resgrid.WriteToVTP("Moisture_content",system->GetWorkingFolder()+"moisture.vtp");
         delete system;
@@ -158,14 +158,14 @@ double Realization = 1;
         system->SavetoScriptFile(system->GetWorkingFolder() + "AfterState.ohq");
 
         cout<<"Writing outputs in '"<< system->GetWorkingFolder() + system->OutputFileName() +"'"<<endl;
-        CTimeSeriesSet<double> output = system->GetOutputs();
+        TimeSeriesSet<double> output = system->GetOutputs();
         QString outputfilename = QString::fromStdString(system->OutputFileName()).split(".")[0] +"_" + QString::number(i) + ".txt";
-        output.writetofile(system->GetWorkingFolder() + outputfilename.toStdString());
+        output.write(system->GetWorkingFolder() + outputfilename.toStdString());
 
         cout<<"Writing outputs in '"<< system->GetWorkingFolder() + system->ObservedOutputFileName() +"'"<<endl;
-        CTimeSeriesSet<double> selectedoutput = system->GetObservedOutputs();
+        TimeSeriesSet<double> selectedoutput = system->GetObservedOutputs();
         QString selectedoutputfilename = QString::fromStdString(system->ObservedOutputFileName()).split(".")[0] +"_" + QString::number(i) + ".txt";
-        selectedoutput.writetofile(system->GetWorkingFolder() + selectedoutputfilename.toStdString());
+        selectedoutput.write(system->GetWorkingFolder() + selectedoutputfilename.toStdString());
 
         //cout<<"Getting results into grid"<<endl;
         //ResultGrid resgrid(output,"theta",system);

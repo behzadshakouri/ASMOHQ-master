@@ -11,12 +11,23 @@ CONFIG += c++14
 
 DEFINES += GSL
 
-CONFIG += Behzad
-DEFINES += Behzad
+CONFIG += PowerEdge
+DEFINES += PowerEdge
 
+#CONFIG += Behzad
+#DEFINES += Behzad
 
 #CONFIG += Arash
 #DEFINES += Arash
+
+DEFINES += Q_JSON_SUPPORT
+
+PowerEdge {
+    OHQPATH = /mnt/3rd900/Projects/OpenHydroQual/aquifolium
+    VTKBUILDPATH = /mnt/3rd900/Projects/VTK/VTK-build
+    VTKHEADERPATH = /mnt/3rd900/Projects/VTK
+    VTK_V = -9.0
+}
 
 Behzad {
     OHQPATH = /home/behzad/Projects/OpenHydroQual/aquifolium
@@ -31,6 +42,7 @@ Arash {
     VTKHEADERPATH = /home/arash/Projects/VTK
     VTK_V = -9.0
 }
+
 
 DEFINES += use_VTK ARMA_USE_SUPERLU _ARMA
 CONFIG += use_VTK
@@ -137,8 +149,8 @@ SOURCES += \
         ../jsoncpp/src/lib_json/json_writer.cpp \
         main.cpp \
         modelcreator.cpp \
-        modelcreator_flex.cpp \
-        resultgrid.cpp
+        modelcreator_flex.cpp
+
 
 HEADERS += \
     $$OHQPATH/include/Objective_Function.h \
@@ -201,9 +213,7 @@ HEADERS += \
     $$OHQPATH/src/BTCSet.hpp \
     $$OHQPATH/include/reaction.h \
     modelcreator.h \
-    modelcreator_flex.h \
-    resultgrid.h
-
+    modelcreator_flex.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
