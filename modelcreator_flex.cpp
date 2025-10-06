@@ -17,16 +17,16 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
 #ifdef PowerEdge
     string Workingfolder = "/mnt/3rd900/Projects/ASM_Models/Flex/";
-    string OHQ_r_path = "/mnt/3rd900/Projects/OpenHydroQual/";
+    string OHQ_r_path = "/mnt/3rd900/Projects/OpenHydroQual/resources/";
     CTimeSeriesSet<double> Inflow_DeNit("/mnt/3rd900/Projects/ASM_Models/Flex/Data/DeNit_Influent_Lump.txt",true); // Inflow (Q)
     CTimeSeriesSet<double> Inflow_DeNit_MeOH("/mnt/3rd900/Projects/ASM_Models/Flex/Data/DeNit_MeOH.txt",true); // Methanol (Externtal S_M)
     CTimeSeriesSet<double> Inflow_DeNit_wasteflow("/mnt/3rd900/Projects/ASM_Models/Flex/Data/DeNit_wasteflow.txt",true); // Wasteflow (WAS)
     CTimeSeriesSet<double> Inflow_DeNit_returnflow("/mnt/3rd900/Projects/ASM_Models/Flex/Data/DeNit_returnflow.txt",true); // Returnflow (RAS)
-    CTimeSeriesSet<double> DeNit_Temp("/mnt/3rd900/Projects/ASM_Models/Flex/DeNit_Temp.txt",true); // Temperature
+    CTimeSeriesSet<double> DeNit_Temp("/mnt/3rd900/Projects/ASM_Models/Flex/Data/DeNit_Temp.txt",true); // Temperature
 
 #elif Behzad
     string Workingfolder = "/home/behzad/Projects/ASM_Models/Flex/";
-    string OHQ_r_path = "/home/behzad/Projects/OpenHydroQual/";
+    string OHQ_r_path = "/home/behzad/Projects/OpenHydroQual/resources/";
     CTimeSeriesSet<double> Inflow_DeNit("/home/behzad/Projects/ASM_Models/Data/DeNit_Influent_Lump.txt",true); // Inflow (Q)
     CTimeSeriesSet<double> Inflow_DeNit_MeOH("/home/behzad/Projects/ASM_Models/Data/DeNit_MeOH.txt",true); // Methanol (Externtal S_M)
     CTimeSeriesSet<double> Inflow_DeNit_wasteflow("/home/behzad/Projects/ASM_Models/Data/DeNit_wasteflow.txt",true); // Wasteflow (WAS)
@@ -36,7 +36,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
 #else
     string Workingfolder = "/home/arash/Projects/ASM_Models/";
-    string OHQ_r_path = "/home/Arash/Projects/OpenHydroQual/";
+    string OHQ_r_path = "/home/Arash/Projects/OpenHydroQual/resources/";
     CTimeSeriesSet<double> Inflow_DeNit("/home/arash/Projects/ASM_Models/Data/DeNit_Influent_Lump.txt",true); // Inflow (Q)
     CTimeSeriesSet<double> Inflow_DeNit_MeOH("/home/arash/Projects/ASM_Models/Data/DeNit_MeOH.txt",true); // Methanol (Externtal S_M)
     CTimeSeriesSet<double> Inflow_DeNit_wasteflow("/home/arash/Projects/ASM_Models/Data/DeNit_wasteflow.txt",true); // Wasteflow (WAS)
