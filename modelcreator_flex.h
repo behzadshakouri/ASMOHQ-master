@@ -122,6 +122,11 @@ public:
     const double v_rt=0; // Ref Temp (+20 as a room temp included in the Temp file)
     const double v_rtt=0; // Ref Temp (+20 as a room temp included in the Temp file)
 
+    const double sin_a=-2.4; // Siusoidal a
+    const double sin_b=6.5; // Siusoidal b
+    const double sin_T0=40179; // Siusoidal T0 (2010.01.01 according to data)
+    const double sin_T0_p=40179-40210; // Siusoidal T0_p (initial date)
+
     const double v_mu_H_af=1.072;
     const double v_K_S_af=1.03;
     const double v_mu_M_af=1.09;

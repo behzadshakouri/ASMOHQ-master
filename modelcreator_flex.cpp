@@ -85,27 +85,37 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     CTimeSeries<double> OUP_Temp;
 
     //Temp
-    CTimeSeries<double> Temp_normal_score = DeNit_Temp.BTC[0].ConverttoNormalScore();
+    CTimeSeries<double> Fitted_Sin = DeNit_Temp.BTC[0].CreateSinusoidal(sin_T0,sin_a,sin_b);
+    CTimeSeries<double> Residual = Fitted_Sin - DeNit_Temp.BTC[0];
+
+    CTimeSeries<double> Temp_normal_score = Residual.ConverttoNormalScore(); // Temperature residual
+
     Temp_normal_score.writefile(Workingfolder + "Data/Temp_normal_score.txt");
 
     CTimeSeries<double> Temp_autocorrelation = Temp_normal_score.AutoCorrelation(10,0.5);
     Temp_autocorrelation.writefile(Workingfolder + "Data/Temp_autocorrelation.txt");
 
-    CTimeSeries<double> Temp_CDF = DeNit_Temp.BTC[0].GetCummulativeDistribution();
+    CTimeSeries<double> Temp_CDF = Residual.GetCummulativeDistribution();
     Temp_CDF.writefile(Workingfolder + "Data/Temp_CDF.txt");
 
     CTimeSeries<double> Temp_inv_cum = Temp_CDF.inverse_cumulative_uniform(100);
 
-    CTimeSeries<double> Temp_PDF = DeNit_Temp.BTC[0].distribution(50,0);
+    CTimeSeries<double> Temp_PDF = Residual.distribution(50,0);
     Temp_PDF.writefile(Workingfolder + "Data/Temp_PDF.txt");
 
-    double Temp_mean = DeNit_Temp.BTC[0].Log().mean();
-    double Temp_std = DeNit_Temp.BTC[0].Log().std();
+    //double Temp_mean = ResidualLog().mean();
+    //double Temp_std = Residual.Log().std();
+
     double Temp_autocorrelation_coeff = Temp_autocorrelation.AutoCorrelationCoeff();
 
     // Temperature
     CTimeSeries<double> OUP_Temp_NS;
-    OUP_Temp_NS.CreateOUProcess(0,Simulation_time_Calc,dt,Temp_autocorrelation_coeff);
+    OUP_Temp_NS.CreateOUProcess(0,Simulation_time_Calc,dt,Temp_autocorrelation_coeff); // This is correct
+
+    CTimeSeries<double> Periodic_Temp = CTimeSeries<double>::CreateSinusoidal(0,Simulation_time_Calc,dt,sin_T0_p,sin_a,sin_b); // Sinusoidal
+
+    OUP_Temp_NS = OUP_Temp_NS + Periodic_Temp; // Residual + Sinusoidal
+
     OUP_Temp_NS.writefile(Workingfolder + "OUP_Temp_NS_tvf.csv");
     //vector<double> Temp_params; Temp_params.push_back(Temp_mean); Temp_params.push_back(Temp_std);
     //OUP_Temp = OUP_Temp_NS.MapfromNormalScoreToDistribution("lognormal", Temp_params);
@@ -1640,3 +1650,28 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     return true;
 }
 
+
+/*
+CTimeSeries<double> Temp_normal_score = DeNit_Temp.BTC[0].ConverttoNormalScore();
+
+Temp_normal_score.writefile(Workingfolder + "Data/Temp_normal_score.txt");
+
+CTimeSeries<double> Temp_autocorrelation = Temp_normal_score.AutoCorrelation(10,0.5);
+Temp_autocorrelation.writefile(Workingfolder + "Data/Temp_autocorrelation.txt");
+
+CTimeSeries<double> Temp_CDF = DeNit_Temp.BTC[0].GetCummulativeDistribution();
+Temp_CDF.writefile(Workingfolder + "Data/Temp_CDF.txt");
+
+CTimeSeries<double> Temp_inv_cum = Temp_CDF.inverse_cumulative_uniform(100);
+
+CTimeSeries<double> Temp_PDF = DeNit_Temp.BTC[0].distribution(50,0);
+Temp_PDF.writefile(Workingfolder + "Data/Temp_PDF.txt");
+
+double Temp_mean = DeNit_Temp.BTC[0].Log().mean();
+double Temp_std = DeNit_Temp.BTC[0].Log().std();
+double Temp_autocorrelation_coeff = Temp_autocorrelation.AutoCorrelationCoeff();
+
+// Temperature
+CTimeSeries<double> OUP_Temp_NS;
+OUP_Temp_NS.CreateOUProcess(0,Simulation_time_Calc,dt,Temp_autocorrelation_coeff); // This is correct
+*/
