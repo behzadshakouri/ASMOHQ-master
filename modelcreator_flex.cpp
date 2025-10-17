@@ -103,7 +103,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     CTimeSeries<double> Residual_PDF = Residual.distribution(50,0);
     Residual_PDF.writefile(Workingfolder + "Data/Residual_PDF.txt");
 
-    //double Residual_mean = ResidualLog().mean();
+    //double Residual_mean = Residual.Log().mean();
     //double Residual_std = Residual.Log().std();
 
     double Residual_autocorrelation_coeff = Residual_autocorrelation.AutoCorrelationCoeff();
