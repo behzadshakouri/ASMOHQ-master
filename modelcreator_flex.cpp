@@ -88,38 +88,37 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     CTimeSeries<double> Fitted_Sin = DeNit_Temp.BTC[0].CreateSinusoidal(sin_T0,sin_a,sin_b);
     CTimeSeries<double> Residual = Fitted_Sin - DeNit_Temp.BTC[0];
 
-    CTimeSeries<double> Temp_normal_score = Residual.ConverttoNormalScore(); // Temperature residual
+    CTimeSeries<double> Residual_normal_score = Residual.ConverttoNormalScore(); // Temperature residual
 
-    Temp_normal_score.writefile(Workingfolder + "Data/Temp_normal_score.txt");
+    Residual_normal_score.writefile(Workingfolder + "Data/Residual_normal_score.txt");
 
-    CTimeSeries<double> Temp_autocorrelation = Temp_normal_score.AutoCorrelation(10,0.5);
-    Temp_autocorrelation.writefile(Workingfolder + "Data/Temp_autocorrelation.txt");
+    CTimeSeries<double> Residual_autocorrelation = Residual_normal_score.AutoCorrelation(10,0.5);
+    Residual_autocorrelation.writefile(Workingfolder + "Data/Residual_autocorrelation.txt");
 
-    CTimeSeries<double> Temp_CDF = Residual.GetCummulativeDistribution();
-    Temp_CDF.writefile(Workingfolder + "Data/Temp_CDF.txt");
+    CTimeSeries<double> Residual_CDF = Residual.GetCummulativeDistribution();
+    Residual_CDF.writefile(Workingfolder + "Data/Residual_CDF.txt");
 
-    CTimeSeries<double> Temp_inv_cum = Temp_CDF.inverse_cumulative_uniform(100);
+    CTimeSeries<double> Residual_inv_cum = Residual_CDF.inverse_cumulative_uniform(100);
 
-    CTimeSeries<double> Temp_PDF = Residual.distribution(50,0);
-    Temp_PDF.writefile(Workingfolder + "Data/Temp_PDF.txt");
+    CTimeSeries<double> Residual_PDF = Residual.distribution(50,0);
+    Residual_PDF.writefile(Workingfolder + "Data/Residual_PDF.txt");
 
-    //double Temp_mean = ResidualLog().mean();
-    //double Temp_std = Residual.Log().std();
+    //double Residual_mean = ResidualLog().mean();
+    //double Residual_std = Residual.Log().std();
 
-    double Temp_autocorrelation_coeff = Temp_autocorrelation.AutoCorrelationCoeff();
+    double Residual_autocorrelation_coeff = Residual_autocorrelation.AutoCorrelationCoeff();
 
     // Temperature
-    CTimeSeries<double> OUP_Temp_NS;
-    OUP_Temp_NS.CreateOUProcess(0,Simulation_time_Calc,dt,Temp_autocorrelation_coeff); // This is correct
+    CTimeSeries<double> OUP_Residual_NS;
+    OUP_Residual_NS.CreateOUProcess(0,Simulation_time_Calc,dt,Residual_autocorrelation_coeff); // This is correct
 
+    OUP_Residual_NS.writefile(Workingfolder + "OUP_Residual_NS_tvf.csv");
+
+    CTimeSeries<double> OUP_Generated_Residuals = OUP_Residual_NS.MapfromNormalScoreToDistribution(Residual_inv_cum);
     CTimeSeries<double> Periodic_Temp = CTimeSeries<double>::CreateSinusoidal(0,Simulation_time_Calc,dt,sin_T0_p,sin_a,sin_b); // Sinusoidal
 
-    OUP_Temp_NS = OUP_Temp_NS + Periodic_Temp; // Residual + Sinusoidal
+    OUP_Temp = OUP_Generated_Residuals + Periodic_Temp; // Residual + Sinusoidal
 
-    OUP_Temp_NS.writefile(Workingfolder + "OUP_Temp_NS_tvf.csv");
-    //vector<double> Temp_params; Temp_params.push_back(Temp_mean); Temp_params.push_back(Temp_std);
-    //OUP_Temp = OUP_Temp_NS.MapfromNormalScoreToDistribution("lognormal", Temp_params);
-    OUP_Temp = OUP_Temp_NS.MapfromNormalScoreToDistribution(Temp_inv_cum);
     OUP_Temp.writefile(Workingfolder + "OUP_Temp.csv");
 
     //----------------------------------------------------------------------------------
