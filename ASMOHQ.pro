@@ -11,14 +11,14 @@ CONFIG += c++14
 
 DEFINES += GSL
 
-CONFIG += PowerEdge
-DEFINES += PowerEdge
+#CONFIG += PowerEdge
+#DEFINES += PowerEdge
 
 #CONFIG += Behzad
 #DEFINES += Behzad
 
-#CONFIG += Arash
-#DEFINES += Arash
+CONFIG += Arash
+DEFINES += Arash
 
 DEFINES += Q_JSON_SUPPORT
 
@@ -37,10 +37,10 @@ Behzad {
 }
 
 Arash {
-    OHQPATH = /home/arash/Projects/QAquifolium/aquifolium
+    OHQPATH = /home/arash/Projects/OpenHydroQual/aquifolium
     VTKBUILDPATH = /home/arash/Projects/VTK/VTK-build
     VTKHEADERPATH = /home/arash/Projects/VTK
-    VTK_V = -9.0
+    VTK_V = -9.4
 }
 
 
@@ -300,7 +300,6 @@ use_VTK {
     LIBS += -L$$VTKBUILDPATH/lib/ -lvtkfreetype$$VTK_V
     LIBS += -L$$VTKBUILDPATH/lib/ -lvtkGeovisCore$$VTK_V
     LIBS += -L$$VTKBUILDPATH/lib/ -lvtkgl2ps$$VTK_V
-    LIBS += -L$$VTKBUILDPATH/lib/ -lvtkglew$$VTK_V
     LIBS += -L$$VTKBUILDPATH/lib/ -lvtkhdf5$$VTK_V
     LIBS += -L$$VTKBUILDPATH/lib/ -lvtkhdf5_hl$$VTK_V
     LIBS += -L$$VTKBUILDPATH/lib/ -lvtkImagingColor$$VTK_V
