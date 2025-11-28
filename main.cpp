@@ -22,7 +22,7 @@ double Realization = 1;
     string Workingfolder_Flex="/home/behzad/Projects/ASM_Models/Flex/";
 #elif  Arash
     string Workingfolder = "/home/arash/Projects/ASM_Models/";
-    string Workingfolder_Flex="/home/Arash/Projects/ASM_Models/Flex/";
+    string Workingfolder_Flex="/home/arash/Projects/ASM_Models/Flex/";
 #elif Arash_Windows
     string Workingfolder = "C:/Projects/ASM_Models/";
     string Workingfolder_Flex = "C:/Projects/ASM_Models/Flex/";
