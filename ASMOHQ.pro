@@ -7,18 +7,24 @@ QT += core
 CONFIG += console
 CONFIG -= app_bundle
 
-CONFIG += c++14
+# --- Force C++17 required by std::optional ---
+CONFIG -= c++11 c++14
+CONFIG += c++17
+
+QMAKE_CXXFLAGS += -std=c++17
+QMAKE_CXXFLAGS_RELEASE += -std=c++17
+QMAKE_CXXFLAGS_DEBUG += -std=c++17
 
 DEFINES += GSL
 
-#CONFIG += PowerEdge
-#DEFINES += PowerEdge
+CONFIG += PowerEdge
+DEFINES += PowerEdge
 
 #CONFIG += Behzad
 #DEFINES += Behzad
 
-CONFIG += Arash
-DEFINES += Arash
+#CONFIG += Arash
+#DEFINES += Arash
 
 DEFINES += Q_JSON_SUPPORT
 

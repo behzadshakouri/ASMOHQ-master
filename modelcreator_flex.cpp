@@ -33,7 +33,6 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     CTimeSeriesSet<double> Inflow_DeNit_returnflow("/home/behzad/Projects/ASM_Models/Data/DeNit_returnflow.txt",true); // Returnflow (RAS)
     CTimeSeriesSet<double> DeNit_Temp("/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt",true); // Temperature
 
-
 #else
     string Workingfolder = "/home/arash/Projects/ASM_Models/";
     string OHQ_r_path = "/home/arash/Projects/OpenHydroQual/resources/";
@@ -62,7 +61,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     if (OUP)
     {
         Simulation_start_time=40000; // Simulation Start Date
-        Simulation_end_time=41000; // Simulation End Date
+        Simulation_end_time=40700; // Simulation End Date
     }
 
     const double Simulation_time_Calc = Simulation_end_time - Simulation_start_time;
