@@ -32,8 +32,9 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     CTimeSeriesSet<double> Inflow_DeNit_wasteflow("/home/behzad/Projects/ASM_Models/Data/DeNit_wasteflow.txt",true); // Wasteflow (WAS)
     CTimeSeriesSet<double> Inflow_DeNit_returnflow("/home/behzad/Projects/ASM_Models/Data/DeNit_returnflow.txt",true); // Returnflow (RAS)
     CTimeSeriesSet<double> DeNit_Temp("/home/behzad/Projects/ASM_Models/Data/DeNit_Temp.txt",true); // Temperature
+#endif
 
-#else
+#elif Arash
     string Workingfolder = "/home/arash/Projects/ASM_Models/";
     string OHQ_r_path = "/home/arash/Projects/OpenHydroQual/resources/";
     CTimeSeriesSet<double> Inflow_DeNit("/home/arash/Projects/ASM_Models/Data/DeNit_Influent_Lump.txt",true); // Inflow (Q)
@@ -41,7 +42,6 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     CTimeSeriesSet<double> Inflow_DeNit_wasteflow("/home/arash/Projects/ASM_Models/Data/DeNit_wasteflow.txt",true); // Wasteflow (WAS)
     CTimeSeriesSet<double> Inflow_DeNit_returnflow("/home/arash/Projects/ASM_Models/Data/DeNit_returnflow.txt",true); // Returnflow (RAS)
     CTimeSeriesSet<double> DeNit_Temp("/home/arash/Projects/ASM_Models/Data/DeNit_Temp.txt",true); // Temperature
-
 #endif
 
     system->GetQuanTemplate(OHQ_r_path + "main_components.json");
