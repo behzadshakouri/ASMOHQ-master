@@ -138,8 +138,58 @@ public:
 
 
     // Calibration
-    const double v_k_LO2_high=250; //Aearation coeff UL
-    const double v_k_LO2_low=50; //Aearation coeff LL
+    const double v_mu_H_high=10;
+    const double v_mu_H_low=2;
+    const double v_b_H_high=0.7;
+    const double v_b_H_low=0.4;
+    const double v_K_S_high=10;
+    const double v_K_S_low=1;
+    const double v_K_MH_high=0.5;
+    const double v_K_MH_low=0.1;
+    const double v_K_OH_high=0.1;
+    const double v_K_OH_low=0.02;
+    const double v_K_NH_high=0.03;
+    const double v_K_NH_low=0;
+    const double v_K_NOH_high=0.1;
+    const double v_K_NOH_low=0.01;
+    const double v_eta_g_high=0.8;
+    const double v_eta_g_low=0.4;
+    const double v_mu_A_high=1.2;
+    const double v_mu_A_low=0.7;
+    const double v_b_A_high=0.25;
+    const double v_b_A_low=0.15;
+    const double v_K_OA_high=0.5;
+    const double v_K_OA_low=0.1;
+    const double v_K_NHA_high=1;
+    const double v_K_NHA_low=0.5;
+    const double v_K_NOA_high=0.2;
+    const double v_K_NOA_low=0.01;
+    const double v_mu_M_high=2;
+    const double v_mu_M_low=0.8;
+    const double v_b_M_high=0.1;
+    const double v_b_M_low=0.04;
+    const double v_K_MM_high=1;
+    const double v_K_MM_low=0.1;
+    const double v_K_OM_high=0.1;
+    const double v_K_OM_low=0.01;
+    const double v_K_NOM_high=1;
+    const double v_K_NOM_low=0.01;
+    const double v_K_a_high=0.1;
+    const double v_K_a_low=0.01;
+    const double v_K_h_high=3;
+    const double v_K_h_low=1;
+    const double v_K_X_high=0.2;
+    const double v_K_X_low=0.01;
+    const double v_eta_h_high=0.8;
+    const double v_eta_h_low=0.3;
+    const double v_i_XB_high=0.1;
+    const double v_i_XB_low=0.05;
+    const double v_k_LO2_high=250; // Aearation coeff UL
+    const double v_k_LO2_low=50; // Aearation coeff LL
+    const double v_Y_H_high=0.7;
+    const double v_Y_H_low=0.6;
+    const double v_Y_M_high=0.5;
+    const double v_Y_M_low=0.3;
 
 private:
     const double pi = 3.141521;

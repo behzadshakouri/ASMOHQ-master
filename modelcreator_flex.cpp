@@ -54,6 +54,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
     bool St=true; // True for using Simulation Time is Days, False for using Start and End Date
 
+    bool Calibration = true; // True for Calibration
+
     double Simulation_start_time=40210; // Simulation Start Date
     double Simulation_end_time=40359; // Simulation End Date
 
@@ -73,8 +75,6 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     const double dt = 0.1; // OUP Time Step
 
     const double Initial_time_step = dt; // Observation writing time step
-
-    bool Calibration = false; // True for Calibration
 
     CTimeSeriesSet<double> ToWrite;
 
@@ -132,6 +132,218 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     K_LO2.SetVal("high",v_k_LO2_high);
     K_LO2.SetVal("low",v_k_LO2_low);
     system->AppendParameter("K_LO2", K_LO2);
+
+    // For Calibration
+    if (Calibration)
+    {
+        Parameter mu_H1;
+        mu_H1.SetQuantities(system,"Parameter");
+        mu_H1.SetName("mu_H1");
+        mu_H1.SetVal("value",v_mu_H);
+        mu_H1.SetVal("high",v_mu_H_high);
+        mu_H1.SetVal("low",v_mu_H_low);
+        system->AppendParameter("mu_H1", mu_H1);
+
+        Parameter b_H1;
+        b_H1.SetQuantities(system,"Parameter");
+        b_H1.SetName("b_H1");
+        b_H1.SetVal("value",v_b_H);
+        b_H1.SetVal("high",v_b_H_high);
+        b_H1.SetVal("low",v_b_H_low);
+        system->AppendParameter("b_H1", b_H1);
+
+        Parameter K_S1;
+        K_S1.SetQuantities(system,"Parameter");
+        K_S1.SetName("K_S1");
+        K_S1.SetVal("value",v_K_S);
+        K_S1.SetVal("high",v_K_S_high);
+        K_S1.SetVal("low",v_K_S_low);
+        system->AppendParameter("K_S1", K_S1);
+
+        Parameter K_MH1;
+        K_MH1.SetQuantities(system,"Parameter");
+        K_MH1.SetName("K_MH1");
+        K_MH1.SetVal("value",v_K_MH);
+        K_MH1.SetVal("high",v_K_MH_high);
+        K_MH1.SetVal("low",v_K_MH_low);
+        system->AppendParameter("K_MH1", K_MH1);
+
+        Parameter K_OH1;
+        K_OH1.SetQuantities(system,"Parameter");
+        K_OH1.SetName("K_OH1");
+        K_OH1.SetVal("value",v_K_OH);
+        K_OH1.SetVal("high",v_K_OH_high);
+        K_OH1.SetVal("low",v_K_OH_low);
+        system->AppendParameter("K_OH1", K_OH1);
+
+        Parameter K_NH1;
+        K_NH1.SetQuantities(system,"Parameter");
+        K_NH1.SetName("K_NH");
+        K_NH1.SetVal("value",v_K_NH);
+        K_NH1.SetVal("high",v_K_NH_high);
+        K_NH1.SetVal("low",v_K_NH_low);
+        system->AppendParameter("K_NH1", K_NH1);
+
+        Parameter K_NOH1;
+        K_NOH1.SetQuantities(system,"Parameter");
+        K_NOH1.SetName("K_NOH1");
+        K_NOH1.SetVal("value",v_K_NOH);
+        K_NOH1.SetVal("high",v_K_NOH_high);
+        K_NOH1.SetVal("low",v_K_NOH_low);
+        system->AppendParameter("K_NOH1", K_NOH1);
+
+        Parameter eta_g1;
+        eta_g1.SetQuantities(system,"Parameter");
+        eta_g1.SetName("eta_g1");
+        eta_g1.SetVal("value",v_eta_g);
+        eta_g1.SetVal("high",v_eta_g_high);
+        eta_g1.SetVal("low",v_eta_g_low);
+        system->AppendParameter("eta_g1", eta_g1);
+
+        Parameter mu_A1;
+        mu_A1.SetQuantities(system,"Parameter");
+        mu_A1.SetName("mu_A1");
+        mu_A1.SetVal("value",v_mu_A);
+        mu_A1.SetVal("high",v_mu_A_high);
+        mu_A1.SetVal("low",v_mu_A_low);
+        system->AppendParameter("mu_A1", mu_A1);
+
+        Parameter b_A1;
+        b_A1.SetQuantities(system,"Parameter");
+        b_A1.SetName("b_A1");
+        b_A1.SetVal("value",v_b_A);
+        b_A1.SetVal("high",v_b_A_high);
+        b_A1.SetVal("low",v_b_A_low);
+        system->AppendParameter("b_A1", b_A1);
+
+        Parameter K_OA1;
+        K_OA1.SetQuantities(system,"Parameter");
+        K_OA1.SetName("K_OA1");
+        K_OA1.SetVal("value",v_K_OA);
+        K_OA1.SetVal("high",v_K_OA_high);
+        K_OA1.SetVal("low",v_K_OA_low);
+        system->AppendParameter("K_OA1", K_OA1);
+
+        Parameter K_NHA1;
+        K_NHA1.SetQuantities(system,"Parameter");
+        K_NHA1.SetName("K_NHA1");
+        K_NHA1.SetVal("value",v_K_NHA);
+        K_NHA1.SetVal("high",v_K_NHA_high);
+        K_NHA1.SetVal("low",v_K_NHA_low);
+        system->AppendParameter("K_NHA1", K_NHA1);
+
+        Parameter K_NOA1;
+        K_NOA1.SetQuantities(system,"Parameter");
+        K_NOA1.SetName("K_NOA1");
+        K_NOA1.SetVal("value",v_K_NOA);
+        K_NOA1.SetVal("high",v_K_NOA_high);
+        K_NOA1.SetVal("low",v_K_NOA_low);
+        system->AppendParameter("K_NOA1", K_NOA1);
+
+        Parameter mu_M1;
+        mu_M1.SetQuantities(system,"Parameter");
+        mu_M1.SetName("mu_M1");
+        mu_M1.SetVal("value",v_mu_M);
+        mu_M1.SetVal("high",v_mu_M_high);
+        mu_M1.SetVal("low",v_mu_M_low);
+        system->AppendParameter("mu_M1", mu_M1);
+
+        Parameter b_M1;
+        b_M1.SetQuantities(system,"Parameter");
+        b_M1.SetName("b_M1");
+        b_M1.SetVal("value",v_b_M);
+        b_M1.SetVal("high",v_b_M_high);
+        b_M1.SetVal("low",v_b_M_low);
+        system->AppendParameter("b_M1", b_M1);
+
+        Parameter K_MM1;
+        K_MM1.SetQuantities(system,"Parameter");
+        K_MM1.SetName("K_MM1");
+        K_MM1.SetVal("value",v_K_MM);
+        K_MM1.SetVal("high",v_K_MM_high);
+        K_MM1.SetVal("low",v_K_MM_low);
+        system->AppendParameter("K_MM1", K_MM1);
+
+        Parameter K_OM1;
+        K_OM1.SetQuantities(system,"Parameter");
+        K_OM1.SetName("K_OM1");
+        K_OM1.SetVal("value",v_K_OM);
+        K_OM1.SetVal("high",v_K_OM_high);
+        K_OM1.SetVal("low",v_K_OM_low);
+        system->AppendParameter("K_OM1", K_OM1);
+
+        Parameter K_NOM1;
+        K_NOM1.SetQuantities(system,"Parameter");
+        K_NOM1.SetName("K_NOM");
+        K_NOM1.SetVal("value",v_K_NOM);
+        K_NOM1.SetVal("high",v_K_NOM_high);
+        K_NOM1.SetVal("low",v_K_NOM_low);
+        system->AppendParameter("K_NOM1", K_NOM1);
+
+        Parameter K_a1;
+        K_a1.SetQuantities(system,"Parameter");
+        K_a1.SetName("K_a1");
+        K_a1.SetVal("value",v_K_a);
+        K_a1.SetVal("high",v_K_a_high);
+        K_a1.SetVal("low",v_K_a_low);
+        system->AppendParameter("K_a1", K_a1);
+
+        Parameter K_h1;
+        K_h1.SetQuantities(system,"Parameter");
+        K_h1.SetName("K_h1");
+        K_h1.SetVal("value",v_K_h);
+        K_h1.SetVal("high",v_K_h_high);
+        K_h1.SetVal("low",v_K_h_low);
+        system->AppendParameter("K_h1", K_h1);
+
+        Parameter K_X1;
+        K_X1.SetQuantities(system,"Parameter");
+        K_X1.SetName("K_X1");
+        K_X1.SetVal("value",v_K_X);
+        K_X1.SetVal("high",v_K_X_high);
+        K_X1.SetVal("low",v_K_X_low);
+        system->AppendParameter("K_X1", K_X1);
+
+        Parameter eta_h1;
+        eta_h1.SetQuantities(system,"Parameter");
+        eta_h1.SetName("eta_h1");
+        eta_h1.SetVal("value",v_eta_h);
+        eta_h1.SetVal("high",v_eta_h_high);
+        eta_h1.SetVal("low",v_eta_h_low);
+        system->AppendParameter("eta_h1", eta_h1);
+
+        Parameter i_XB1;
+        i_XB1.SetQuantities(system,"Parameter");
+        i_XB1.SetName("i_XB1");
+        i_XB1.SetVal("value",v_i_XB);
+        i_XB1.SetVal("high",v_i_XB_high);
+        i_XB1.SetVal("low",v_i_XB_low);
+        system->AppendParameter("i_XB1", i_XB1);
+
+        Parameter K_LO21;
+        K_LO21.SetQuantities(system,"Parameter");
+        K_LO21.SetName("K_LO21");
+        K_LO21.SetVal("value",v_k_LO2);
+        K_LO21.SetVal("high",v_k_LO2_high);
+        K_LO21.SetVal("low",v_k_LO2_low);
+        system->AppendParameter("K_LO21", K_LO21);
+
+        Parameter Y_H1;
+        Y_H1.SetQuantities(system,"Parameter");
+        Y_H1.SetName("Y_H1");
+        Y_H1.SetVal("value",v_Y_H);
+        Y_H1.SetVal("high",v_Y_H_high);
+        Y_H1.SetVal("low",v_Y_H_low);
+        system->AppendParameter("Y_H1", Y_H1);
+
+        Parameter Y_M1;
+        Y_M1.SetQuantities(system,"Parameter");
+        Y_M1.SetName("Y_M1");
+        Y_M1.SetVal("value",v_Y_M);
+        Y_M1.SetVal("high",v_Y_M_high);
+        Y_M1.SetVal("low",v_Y_M_low);
+        system->AppendParameter("Y_M1", Y_M1);
+    }
 
     // Consistuents
     Constituent S_i;
@@ -231,6 +443,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     else
     mu_H.SetProperty("temperature",Workingfolder + "Data/DeNit_Temp.txt");
     system->AddReactionParameter(mu_H, false);
+    system->SetAsParameter("mu_H","base_value","mu_H1");
+    system->object("mu_H")->Variable("base_value")->SetParameterAssignedTo("mu_H1");
 
     RxnParameter K_S;
     K_S.SetQuantities(system,"ReactionParameter");
@@ -1344,8 +1558,10 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
     // Observations
 
-/*
-    // For Validation
+
+    // For Calibration
+if (Calibration)
+{
     Observation R5_S_NO_inflow_cn; // T3B
 
     R5_S_NO_inflow_cn.SetQuantities(system, "Observation");
@@ -1453,9 +1669,11 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     R8_S_NH_inflow_cn.SetName("R8_S_NH_Concentration");
     R8_S_NH_inflow_cn.SetType("Observation");
     system->AddObservation(R8_S_NH_inflow_cn,false);
-*/
+}
 
-    // For FFNWrapper
+    // For FFNWrapper (OUP)
+if (OUP)
+{
     Observation total_inflow;
 
     total_inflow.SetQuantities(system, "Observation");
@@ -1604,7 +1822,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     Stl_t_TKN_flow_cn.SetName("Stl_t_TKN_Concentration");
     Stl_t_TKN_flow_cn.SetType("Observation");
     system->AddObservation(Stl_t_TKN_flow_cn,false);
-
+}
 
     if (Calibration)
     {
