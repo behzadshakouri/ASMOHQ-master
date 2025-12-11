@@ -457,42 +457,56 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     else
     K_S.SetProperty("temperature",Workingfolder + "Data/DeNit_Temp.txt");
     system->AddReactionParameter(K_S, false);
+    system->SetAsParameter("K_S","base_value","K_S1");
+    system->object("K_S")->Variable("base_value")->SetParameterAssignedTo("K_S1");
 
     RxnParameter K_MH;
     K_MH.SetQuantities(system,"ReactionParameter");
     K_MH.SetName("K_MH");
     K_MH.SetVal("base_value",v_K_MH);
     system->AddReactionParameter(K_MH, false);
+    system->SetAsParameter("K_MH","base_value","K_MH1");
+    system->object("K_MH")->Variable("base_value")->SetParameterAssignedTo("K_MH1");
 
     RxnParameter K_OH;
     K_OH.SetQuantities(system,"ReactionParameter");
     K_OH.SetName("K_OH");
     K_OH.SetVal("base_value",v_K_OH);
     system->AddReactionParameter(K_OH, false);
+    system->SetAsParameter("K_OH","base_value","K_OH1");
+    system->object("K_OH")->Variable("base_value")->SetParameterAssignedTo("K_OH1");
 
     RxnParameter K_NOH;
     K_NOH.SetQuantities(system,"ReactionParameter");
     K_NOH.SetName("K_NOH");
     K_NOH.SetVal("base_value",v_K_NOH);
     system->AddReactionParameter(K_NOH, false);
+    system->SetAsParameter("K_NOH","base_value","K_NOH1");
+    system->object("K_NOH")->Variable("base_value")->SetParameterAssignedTo("K_NOH1");
 
     RxnParameter eta_g;
     eta_g.SetQuantities(system,"ReactionParameter");
     eta_g.SetName("eta_g");
     eta_g.SetVal("base_value",v_eta_g);
     system->AddReactionParameter(eta_g, false);
+    system->SetAsParameter("eta_g","base_value","eta_g1");
+    system->object("eta_g")->Variable("base_value")->SetParameterAssignedTo("eta_g1");
 
     RxnParameter b_H;
     b_H.SetQuantities(system,"ReactionParameter");
     b_H.SetName("b_H");
     b_H.SetVal("base_value",v_b_H);
     system->AddReactionParameter(b_H, false);
+    system->SetAsParameter("b_H","base_value","b_H1");
+    system->object("b_H")->Variable("base_value")->SetParameterAssignedTo("b_H1");
 
     RxnParameter K_NH;
     K_NH.SetQuantities(system,"ReactionParameter");
     K_NH.SetName("K_NH");
     K_NH.SetVal("base_value",v_K_NH);
     system->AddReactionParameter(K_NH, false);
+    system->SetAsParameter("K_NH","base_value","K_NH1");
+    system->object("K_NH")->Variable("base_value")->SetParameterAssignedTo("K_NH1");
 
     RxnParameter mu_M;
     mu_M.SetQuantities(system,"ReactionParameter");
@@ -505,24 +519,32 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     else
     mu_M.SetProperty("temperature",Workingfolder + "Data/DeNit_Temp.txt");
     system->AddReactionParameter(mu_M, false);
+    system->SetAsParameter("mu_M","base_value","mu_M1");
+    system->object("mu_M")->Variable("base_value")->SetParameterAssignedTo("mu_M1");
 
     RxnParameter K_MM;
     K_MM.SetQuantities(system,"ReactionParameter");
     K_MM.SetName("K_MM");
     K_MM.SetVal("base_value",v_K_MM);
     system->AddReactionParameter(K_MM, false);
+    system->SetAsParameter("K_MM","base_value","K_MM1");
+    system->object("K_MM")->Variable("base_value")->SetParameterAssignedTo("K_MM1");
 
     RxnParameter K_OM;
     K_OM.SetQuantities(system,"ReactionParameter");
     K_OM.SetName("K_OM");
     K_OM.SetVal("base_value",v_K_OM);
     system->AddReactionParameter(K_OM, false);
+    system->SetAsParameter("K_OM","base_value","K_OM1");
+    system->object("K_OM")->Variable("base_value")->SetParameterAssignedTo("K_OM1");
 
     RxnParameter K_NOM;
     K_NOM.SetQuantities(system,"ReactionParameter");
     K_NOM.SetName("K_NOM");
     K_NOM.SetVal("base_value",v_K_NOM);
     system->AddReactionParameter(K_NOM, false);
+    system->SetAsParameter("K_NOM","base_value","K_NOM1");
+    system->object("K_NOM")->Variable("base_value")->SetParameterAssignedTo("K_NOM1");
 
     RxnParameter b_M;
     b_M.SetQuantities(system,"ReactionParameter");
@@ -535,6 +557,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     else
     b_M.SetProperty("temperature",Workingfolder + "Data/DeNit_Temp.txt");
     system->AddReactionParameter(b_M, false);
+    system->SetAsParameter("b_M","base_value","b_M1");
+    system->object("b_M")->Variable("base_value")->SetParameterAssignedTo("b_M1");
 
     RxnParameter mu_A;
     mu_A.SetQuantities(system,"ReactionParameter");
@@ -547,24 +571,32 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     else
     mu_A.SetProperty("temperature",Workingfolder + "Data/DeNit_Temp.txt");
     system->AddReactionParameter(mu_A, false);
+    system->SetAsParameter("mu_A","base_value","mu_A1");
+    system->object("mu_A")->Variable("base_value")->SetParameterAssignedTo("mu_A1");
 
     RxnParameter K_NHA;
     K_NHA.SetQuantities(system,"ReactionParameter");
     K_NHA.SetName("K_NHA");
     K_NHA.SetVal("base_value",v_K_NHA);
     system->AddReactionParameter(K_NHA, false);
+    system->SetAsParameter("K_NHA","base_value","K_NHA1");
+    system->object("K_NHA")->Variable("base_value")->SetParameterAssignedTo("K_NHA1");
 
     RxnParameter K_NOA;
     K_NOA.SetQuantities(system,"ReactionParameter");
     K_NOA.SetName("K_NOA");
     K_NOA.SetVal("base_value",v_K_NOA);
     system->AddReactionParameter(K_NOA, false);
+    system->SetAsParameter("K_NOA","base_value","K_NOA1");
+    system->object("K_NOA")->Variable("base_value")->SetParameterAssignedTo("K_NOA1");
 
     RxnParameter K_OA;
     K_OA.SetQuantities(system,"ReactionParameter");
     K_OA.SetName("K_OA");
     K_OA.SetVal("base_value",v_K_OA);
     system->AddReactionParameter(K_OA, false);
+    system->SetAsParameter("K_OA","base_value","K_OA1");
+    system->object("K_OA")->Variable("base_value")->SetParameterAssignedTo("K_OA1");
 
     RxnParameter b_A;
     b_A.SetQuantities(system,"ReactionParameter");
@@ -577,12 +609,16 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     else
     b_A.SetProperty("temperature",Workingfolder + "Data/DeNit_Temp.txt");
     system->AddReactionParameter(b_A, false);
+    system->SetAsParameter("b_A","base_value","b_A1");
+    system->object("b_A")->Variable("base_value")->SetParameterAssignedTo("b_A1");
 
     RxnParameter eta_h;
     eta_h.SetQuantities(system,"ReactionParameter");
     eta_h.SetName("eta_h");
     eta_h.SetVal("base_value",v_eta_h);
     system->AddReactionParameter(eta_h, false);
+    system->SetAsParameter("eta_h","base_value","eta_h1");
+    system->object("eta_h")->Variable("base_value")->SetParameterAssignedTo("eta_h1");
 
     RxnParameter K_h;
     K_h.SetQuantities(system,"ReactionParameter");
@@ -595,12 +631,16 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     else
     K_h.SetProperty("temperature",Workingfolder + "Data/DeNit_Temp.txt");
     system->AddReactionParameter(K_h, false);
+    system->SetAsParameter("K_h","base_value","K_h1");
+    system->object("K_h")->Variable("base_value")->SetParameterAssignedTo("K_h1");
 
     RxnParameter K_X;
     K_X.SetQuantities(system,"ReactionParameter");
     K_X.SetName("K_X");
     K_X.SetVal("base_value",v_K_X);
     system->AddReactionParameter(K_X, false);
+    system->SetAsParameter("K_X","base_value","K_X1");
+    system->object("K_X")->Variable("base_value")->SetParameterAssignedTo("K_X1");
 
     RxnParameter K_a;
     K_a.SetQuantities(system,"ReactionParameter");
@@ -613,72 +653,96 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     else
     K_a.SetProperty("temperature",Workingfolder + "Data/DeNit_Temp.txt");
     system->AddReactionParameter(K_a, false);
+    system->SetAsParameter("K_a","base_value","K_a1");
+    system->object("K_a")->Variable("base_value")->SetParameterAssignedTo("K_a1");
 
     RxnParameter Y_H;
     Y_H.SetQuantities(system,"ReactionParameter");
     Y_H.SetName("Y_H");
     Y_H.SetVal("base_value",v_Y_H);
     system->AddReactionParameter(Y_H, false);
+    system->SetAsParameter("Y_H","base_value","Y_H1");
+    system->object("Y_H")->Variable("base_value")->SetParameterAssignedTo("Y_H1");
 
     RxnParameter Y_HM;
     Y_HM.SetQuantities(system,"ReactionParameter");
     Y_HM.SetName("Y_HM");
     Y_HM.SetVal("base_value",v_Y_HM);
     system->AddReactionParameter(Y_HM, false);
+    //system->SetAsParameter("Y_HM","base_value","Y_HM1");
+    //system->object("Y_HM")->Variable("base_value")->SetParameterAssignedTo("Y_HM1");
 
     RxnParameter Y_A;
     Y_A.SetQuantities(system,"ReactionParameter");
     Y_A.SetName("Y_A");
     Y_A.SetVal("base_value",v_Y_A);
     system->AddReactionParameter(Y_A, false);
+    //system->SetAsParameter("Y_A","base_value","Y_A1");
+    //system->object("Y_A")->Variable("base_value")->SetParameterAssignedTo("Y_A1");
 
     RxnParameter Y_M;
     Y_M.SetQuantities(system,"ReactionParameter");
     Y_M.SetName("Y_M");
     Y_M.SetVal("base_value",v_Y_M);
     system->AddReactionParameter(Y_M, false);
+    system->SetAsParameter("Y_M","base_value","Y_M1");
+    system->object("Y_M")->Variable("base_value")->SetParameterAssignedTo("Y_M1");
 
     RxnParameter f_p;
     f_p.SetQuantities(system,"ReactionParameter");
     f_p.SetName("f_p");
     f_p.SetVal("base_value",v_f_p);
     system->AddReactionParameter(f_p, false);
+    //system->SetAsParameter("f_p","base_value","f_p1");
+    //system->object("f_p")->Variable("base_value")->SetParameterAssignedTo("f_p1");
 
     RxnParameter i_XB;
     i_XB.SetQuantities(system,"ReactionParameter");
     i_XB.SetName("i_XB");
     i_XB.SetVal("base_value",v_i_XB);
     system->AddReactionParameter(i_XB, false);
+    system->SetAsParameter("i_XB","base_value","i_XB1");
+    system->object("i_XB")->Variable("base_value")->SetParameterAssignedTo("i_XB1");
 
     RxnParameter i_VSSB;
     i_VSSB.SetQuantities(system,"ReactionParameter");
     i_VSSB.SetName("i_VSSB");
     i_VSSB.SetVal("base_value",v_i_VSSB);
     system->AddReactionParameter(i_VSSB, false);
+    //system->SetAsParameter("VSSB","base_value","VSSB1");
+    //system->object("VSSB")->Variable("base_value")->SetParameterAssignedTo("VSSB1");
 
     RxnParameter i_VSSi;
     i_VSSi.SetQuantities(system,"ReactionParameter");
     i_VSSi.SetName("i_VSSi");
     i_VSSi.SetVal("base_value",v_i_VSSi);
     system->AddReactionParameter(i_VSSi, false);
+    //system->SetAsParameter("VSSi","base_value","VSSi1");
+    //system->object("VSSi")->Variable("base_value")->SetParameterAssignedTo("VSSi1");
 
     RxnParameter i_VSSs;
     i_VSSs.SetQuantities(system,"ReactionParameter");
     i_VSSs.SetName("i_VSSs");
     i_VSSs.SetVal("base_value",v_i_VSSs);
     system->AddReactionParameter(i_VSSs, false);
+    //system->SetAsParameter("VSSs","base_value","VSSs1");
+    //system->object("VSSs")->Variable("base_value")->SetParameterAssignedTo("VSSs1");
 
     RxnParameter i_VSSP;
     i_VSSP.SetQuantities(system,"ReactionParameter");
     i_VSSP.SetName("i_VSSP");
     i_VSSP.SetVal("base_value",v_i_VSSP);
     system->AddReactionParameter(i_VSSP, false);
+    //system->SetAsParameter("VSSP","base_value","VSSP1");
+    //system->object("VSSP")->Variable("base_value")->SetParameterAssignedTo("VSSP1");
 
     RxnParameter i_MeOH;
     i_MeOH.SetQuantities(system,"ReactionParameter");
     i_MeOH.SetName("i_MeOH");
     i_MeOH.SetVal("base_value",v_i_MeOH);
     system->AddReactionParameter(i_MeOH, false);
+    //system->SetAsParameter("MeOH","base_value","MeOH1");
+    //system->object("MeOH")->Variable("base_value")->SetParameterAssignedTo("MeOH1");
 
     // Sources
     Source Aeration;
