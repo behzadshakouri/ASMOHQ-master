@@ -56,6 +56,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
     bool Calibration = true; // True for Calibration
 
+    bool Const_flow = false; // True for using Constant flows
+
     double Simulation_start_time=40210; // Simulation Start Date
     double Simulation_end_time=40359; // Simulation End Date
 
@@ -122,7 +124,6 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         OUP_Temp = OUP_Generated_Residuals + Periodic_Temp; // Residual + Sinusoidal
 
         OUP_Temp.writefile(Workingfolder + "OUP_Temp.csv");
-
     }
 
 
@@ -857,6 +858,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->object("Aeration")->Variable("rate_coefficient")->SetParameterAssignedTo("K_LO2_cal");
     }
 
+
+
     // Reactions
     Reaction AerobicGH; // Reaction 1
     AerobicGH.SetQuantities(system,"Reaction");
@@ -964,6 +967,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReaction(HydrolysisEON,false);
 
 
+
     // Settling Elements
     Block Stl_element_top;
     Stl_element_top.SetQuantities(system, "Settling element");
@@ -993,6 +997,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     Stl_element_bottom.SetVal("y",1100);
     system->AddBlock(Stl_element_bottom,false);
 
+
+
     // Time-variable Fixed Head Blocks
     Block fh_clarifier;
     fh_clarifier.SetQuantities(system, "time_variable_fixed_head");
@@ -1002,7 +1008,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     fh_clarifier.SetVal("S_S:concentration",0);
     fh_clarifier.SetVal("X_b:concentration",0);
     fh_clarifier.SetVal("Storage",100000);
-    fh_clarifier.SetProperty("Dummy_timeseries",Workingfolder + "OUP_Temp.csv");
+    if (OUP)
+    fh_clarifier.SetProperty("Dummy_timeseries",Workingfolder + "OUP_Temp.csv"); // Dummy for save
     fh_clarifier.SetVal("x",1200);
     fh_clarifier.SetVal("y",600);
     system->AddBlock(fh_clarifier,false);
@@ -1015,10 +1022,12 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     fh_WAS.SetVal("S_S:concentration",0);
     fh_WAS.SetVal("X_b:concentration",0);
     fh_WAS.SetVal("Storage",100000);
-    fh_WAS.SetProperty("Dummy_timeseries",Workingfolder + "OUP_Flow_WAS_tvf.csv");
+    if (OUP)
+    fh_WAS.SetProperty("Dummy_timeseries",Workingfolder + "OUP_Flow_WAS_tvf.csv"); // Dummy for save
     fh_WAS.SetVal("x",1200);
     fh_WAS.SetVal("y",1000);
     system->AddBlock(fh_WAS,false);
+
 
 
     // Reactor_Flex Block
@@ -1047,7 +1056,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         //Reactor_Flex.SetVal("Storage",v_r_storage);
         //if (i==0) Reactor_Flex.SetVal("constant_inflow",v_r_constant_flow);
         //Reactor_Flex.SetVal("constant_inflow",v_r_constant_flow);
-        //if (i==4) Reactor_Flex.SetVal("S_M:External mass flow time-series",Workingfolder + "S_M_mfr.csv");
+        //if (i==4) Reactor_Flex.SetVal("S_M:External mass flow time-series",Workingfolder + "Data/S_M_mfr.csv");
         Reactor_Flex.SetVal("Volume",v_t_volume);
         Reactor_Flex.SetVal("x",400*(i-n_tanks));
         if (i==0) Reactor_Flex.SetVal("y",1200);
@@ -1062,40 +1071,42 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     }
 
 
-    // Producing Constant Inflows
 
+    // Producing Constant Inflows
+    if (Const_flow)
+{
     CTimeSeries<double> S_i_inflow_concentration;
     S_i_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_S_i_concentration);
-    S_i_inflow_concentration.writefile(Workingfolder + "S_i_constant_inflow_concentration.txt");
+    S_i_inflow_concentration.writefile(Workingfolder + "Data/S_i_constant_inflow_concentration.txt");
 
     CTimeSeries<double> S_S_inflow_concentration;
     S_S_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_S_S_concentration);
-    S_S_inflow_concentration.writefile(Workingfolder + "S_S_constant_inflow_concentration.txt");
+    S_S_inflow_concentration.writefile(Workingfolder + "Data/S_S_constant_inflow_concentration.txt");
 
     CTimeSeries<double> X_S_inflow_concentration;
     X_S_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_X_S_concentration);
-    X_S_inflow_concentration.writefile(Workingfolder + "X_S_constant_inflow_concentration.txt");
+    X_S_inflow_concentration.writefile(Workingfolder + "Data/X_S_constant_inflow_concentration.txt");
 
     CTimeSeries<double> X_p_inflow_concentration;
     X_p_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_X_p_concentration);
-    X_p_inflow_concentration.writefile(Workingfolder + "X_p_constant_inflow_concentration.txt");
+    X_p_inflow_concentration.writefile(Workingfolder + "Data/X_p_constant_inflow_concentration.txt");
 
     CTimeSeries<double> S_NO_inflow_concentration;
     S_NO_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_S_NO_concentration);
-    S_NO_inflow_concentration.writefile(Workingfolder + "S_NO_constant_inflow_concentration.txt");
+    S_NO_inflow_concentration.writefile(Workingfolder + "Data/S_NO_constant_inflow_concentration.txt");
 
     CTimeSeries<double> S_NH_inflow_concentration;
     S_NH_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_S_NH_concentration);
-    S_NH_inflow_concentration.writefile(Workingfolder + "S_NH_constant_inflow_concentration.txt");
+    S_NH_inflow_concentration.writefile(Workingfolder + "Data/S_NH_constant_inflow_concentration.txt");
 
     CTimeSeries<double> S_ND_inflow_concentration;
     S_ND_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_S_ND_concentration);
-    S_ND_inflow_concentration.writefile(Workingfolder + "S_ND_constant_inflow_concentration.txt");
+    S_ND_inflow_concentration.writefile(Workingfolder + "Data/S_ND_constant_inflow_concentration.txt");
 
     CTimeSeries<double> X_ND_inflow_concentration;
     X_ND_inflow_concentration.CreateConstant(0,Simulation_time_Calc, v_X_ND_concentration);
-    X_ND_inflow_concentration.writefile(Workingfolder + "X_ND_constant_inflow_concentration.txt");
-
+    X_ND_inflow_concentration.writefile(Workingfolder + "Data/X_ND_constant_inflow_concentration.txt");
+}
 
     // Constituents Inflow Calculations from Data (Time Variable)
 
@@ -1111,9 +1122,10 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     const double c_S_ND=p_36*(1-p_31); // S_ND, 8
     const double c_X_ND=p_3*p_32; // X_ND, 2
 
-    if (!OUP)
 
-    {
+    // Real data---------------------------------------------------------------------------------------------------------------------------
+    if (!OUP)
+{
 
     // Inflows and Flows
 
@@ -1164,54 +1176,54 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
     // Writing to File
 
-    Inflow_Q.writefile(Workingfolder + "Q_tvif.txt"); //
+    Inflow_Q.writefile(Workingfolder + "Data/Q_tvif.txt"); //
 
-    Flow_WAS.writefile(Workingfolder + "WAS_tvf.txt"); //
-    Flow_RAS.writefile(Workingfolder + "RAS_tvf.txt"); //
+    Flow_WAS.writefile(Workingfolder + "Data/WAS_tvf.txt"); //
+    Flow_RAS.writefile(Workingfolder + "Data/RAS_tvf.txt"); //
 
-    Flow_r_r_st.writefile(Workingfolder + "r_r_st_tvf.txt"); //
-    Flow_st_sb.writefile(Workingfolder + "st_sb_tvf.txt"); //
-    Flow_st_c.writefile(Workingfolder + "st_c_tvf.txt"); //
+    Flow_r_r_st.writefile(Workingfolder + "Data/r_r_st_tvf.txt"); //
+    Flow_st_sb.writefile(Workingfolder + "Data/st_sb_tvf.txt"); //
+    Flow_st_c.writefile(Workingfolder + "Data/st_c_tvf.txt"); //
 
-    Inflow_S_i.writefile(Workingfolder + "S_i_Inflow_concentration.txt");
-    Inflow_S_S.writefile(Workingfolder + "S_S_Inflow_concentration.txt");
-    Inflow_X_S.writefile(Workingfolder + "X_S_Inflow_concentration.txt");
-    Inflow_X_p.writefile(Workingfolder + "X_p_Inflow_concentration.txt");
-    Inflow_S_NO.writefile(Workingfolder + "S_NO_Inflow_concentration.txt");
-    Inflow_S_NH.writefile(Workingfolder + "S_NH_Inflow_concentration.txt");
-    Inflow_S_ND.writefile(Workingfolder + "S_ND_Inflow_concentration.txt");
-    Inflow_X_ND.writefile(Workingfolder + "X_ND_Inflow_concentration.txt");
+    Inflow_S_i.writefile(Workingfolder + "Data/S_i_Inflow_concentration.txt");
+    Inflow_S_S.writefile(Workingfolder + "Data/S_S_Inflow_concentration.txt");
+    Inflow_X_S.writefile(Workingfolder + "Data/X_S_Inflow_concentration.txt");
+    Inflow_X_p.writefile(Workingfolder + "Data/X_p_Inflow_concentration.txt");
+    Inflow_S_NO.writefile(Workingfolder + "Data/S_NO_Inflow_concentration.txt");
+    Inflow_S_NH.writefile(Workingfolder + "Data/S_NH_Inflow_concentration.txt");
+    Inflow_S_ND.writefile(Workingfolder + "Data/S_ND_Inflow_concentration.txt");
+    Inflow_X_ND.writefile(Workingfolder + "Data/X_ND_Inflow_concentration.txt");
 
-    Inflow_MeOH.writefile(Workingfolder + "S_M_mfr.txt"); // Methanol
+    Inflow_MeOH.writefile(Workingfolder + "Data/S_M_mfr.txt"); // Methanol
 
     // Assigning Constituents Inflow concentrations to the system (Reactor_Flex)
 
     // Constant inflows by given concentration
 /*
-    system->block("Reactor_Flex")->SetProperty("S_S:constant_inflow_concentration",Workingfolder + "S_S_constant_inflow_concentration.txt");
-    system->block("Reactor_Flex")->SetProperty("X_S:constant_inflow_concentration",Workingfolder + "X_S_constant_inflow_concentration.txt");
-    system->block("Reactor_Flex")->SetProperty("X_p:constant_inflow_concentration",Workingfolder + "X_p_constant_inflow_concentration.txt");
-    system->block("Reactor_Flex")->SetProperty("S_NO:constant_inflow_concentration",Workingfolder + "S_NO_constant_inflow_concentration.txt");
-    system->block("Reactor_Flex")->SetProperty("S_NH:constant_inflow_concentration",Workingfolder + "S_NH_constant_inflow_concentration.txt");
-    system->block("Reactor_Flex")->SetProperty("S_ND:constant_inflow_concentration",Workingfolder + "S_ND_constant_inflow_concentration.txt");
-    system->block("Reactor_Flex")->SetProperty("X_ND:constant_inflow_concentration",Workingfolder + "X_ND_constant_inflow_concentration.txt");
+    system->block("Reactor_Flex")->SetProperty("S_S:constant_inflow_concentration",Workingfolder + "Data/S_S_constant_inflow_concentration.txt");
+    system->block("Reactor_Flex")->SetProperty("X_S:constant_inflow_concentration",Workingfolder + "Data/X_S_constant_inflow_concentration.txt");
+    system->block("Reactor_Flex")->SetProperty("X_p:constant_inflow_concentration",Workingfolder + "Data/X_p_constant_inflow_concentration.txt");
+    system->block("Reactor_Flex")->SetProperty("S_NO:constant_inflow_concentration",Workingfolder + "Data/S_NO_constant_inflow_concentration.txt");
+    system->block("Reactor_Flex")->SetProperty("S_NH:constant_inflow_concentration",Workingfolder + "Data/S_NH_constant_inflow_concentration.txt");
+    system->block("Reactor_Flex")->SetProperty("S_ND:constant_inflow_concentration",Workingfolder + "Data/S_ND_constant_inflow_concentration.txt");
+    system->block("Reactor_Flex")->SetProperty("X_ND:constant_inflow_concentration",Workingfolder + "Data/X_ND_constant_inflow_concentration.txt");
 */
 
 
     // Time Variable inflows according DeNite data
 
-    system->block("Reactor_Flex(1)")->SetProperty("time_variable_inflow",Workingfolder + "Q_tvif.txt"); // Discharge (m3/day)
+    system->block("Reactor_Flex(1)")->SetProperty("time_variable_inflow",Workingfolder + "Data/Q_tvif.txt"); // Discharge (m3/day)
 
-    system->block("Reactor_Flex(1)")->SetProperty("S_i:time_variable_inflow_concentration",Workingfolder + "S_i_Inflow_concentration.txt");
-    system->block("Reactor_Flex(1)")->SetProperty("S_S:time_variable_inflow_concentration",Workingfolder + "S_S_Inflow_concentration.txt");
-    system->block("Reactor_Flex(1)")->SetProperty("X_S:time_variable_inflow_concentration",Workingfolder + "X_S_Inflow_concentration.txt");
-    system->block("Reactor_Flex(1)")->SetProperty("X_p:time_variable_inflow_concentration",Workingfolder + "X_p_Inflow_concentration.txt");
-    system->block("Reactor_Flex(1)")->SetProperty("S_NO:time_variable_inflow_concentration",Workingfolder + "S_NO_Inflow_concentration.txt");
-    system->block("Reactor_Flex(1)")->SetProperty("S_NH:time_variable_inflow_concentration",Workingfolder + "S_NH_Inflow_concentration.txt");
-    system->block("Reactor_Flex(1)")->SetProperty("S_ND:time_variable_inflow_concentration",Workingfolder + "S_ND_Inflow_concentration.txt");
-    system->block("Reactor_Flex(1)")->SetProperty("X_ND:time_variable_inflow_concentration",Workingfolder + "X_ND_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("S_i:time_variable_inflow_concentration",Workingfolder + "Data/S_i_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("S_S:time_variable_inflow_concentration",Workingfolder + "Data/S_S_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("X_S:time_variable_inflow_concentration",Workingfolder + "Data/X_S_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("X_p:time_variable_inflow_concentration",Workingfolder + "Data/X_p_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("S_NO:time_variable_inflow_concentration",Workingfolder + "Data/S_NO_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("S_NH:time_variable_inflow_concentration",Workingfolder + "Data/S_NH_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("S_ND:time_variable_inflow_concentration",Workingfolder + "Data/S_ND_Inflow_concentration.txt");
+    system->block("Reactor_Flex(1)")->SetProperty("X_ND:time_variable_inflow_concentration",Workingfolder + "Data/X_ND_Inflow_concentration.txt");
 
-    system->block("Reactor_Flex(5)")->SetProperty("S_M:external_mass_flow_timeseries",Workingfolder + "S_M_mfr.txt");
+    system->block("Reactor_Flex(5)")->SetProperty("S_M:external_mass_flow_timeseries",Workingfolder + "Data/S_M_mfr.txt");
 
     // Flex_flow Links for Reactor_Flex
     for (int i=0; i<n_tanks-1; i++)
@@ -1219,7 +1231,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         l_r_st.SetQuantities(system, "Flex_flow");
         l_r_st.SetName("Reactor_Flex(" + aquiutils::numbertostring(i+1)+"_" + aquiutils::numbertostring(i+2) + ")");
         l_r_st.SetType("Flex_flow");
-        //l_r_st.SetProperty("flow", Workingfolder + "r_r_st_tvf.txt");
+        //l_r_st.SetProperty("flow", Workingfolder + "Data/r_r_st_tvf.txt");
         l_r_st.SetVal("flow_factor",v_flow_factor_i);
         system->AddLink(l_r_st, "Reactor_Flex(" + aquiutils::numbertostring(i+1)+")", "Reactor_Flex(" + aquiutils::numbertostring(i+2)+")", false);
     }
@@ -1230,7 +1242,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_r_st.SetQuantities(system, "Flex_flow");
     l_r_st.SetName("Reactor_Flex(" + aquiutils::numbertostring(n_tanks) + ") - Settling element top");
     l_r_st.SetType("Flex_flow");
-    //l_r_st.SetProperty("flow", Workingfolder + "r_r_st_tvf.txt");
+    //l_r_st.SetProperty("flow", Workingfolder + "Data/r_r_st_tvf.txt");
     l_r_st.SetVal("flow_factor",v_flow_factor_i);
     system->AddLink(l_r_st, "Reactor_Flex(" + aquiutils::numbertostring(n_tanks) + ")", "Settling element top", false);
 
@@ -1238,7 +1250,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_st_c.SetQuantities(system, "Flex_flow");
     l_st_c.SetName("Settling element top - Clarifier");
     l_st_c.SetType("Flex_flow");
-    //l_st_c.SetProperty("flow", Workingfolder + "st_c_tvf.txt");
+    //l_st_c.SetProperty("flow", Workingfolder + "Data/st_c_tvf.txt");
     l_st_c.SetVal("flow_factor",v_flow_factor_o);
     system->AddLink(l_st_c, "Settling element top", "Clarifier", false);
 
@@ -1246,7 +1258,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_sb_was.SetQuantities(system, "Flex_flow");
     l_sb_was.SetName("Settling element bottom - WAS");
     l_sb_was.SetType("Flex_flow");
-    //l_sb_was.SetProperty("flow", Workingfolder + "WAS_tvf.txt");
+    //l_sb_was.SetProperty("flow", Workingfolder + "Data/WAS_tvf.txt");
     l_sb_was.SetVal("flow_factor",v_flow_factor_o);
     system->AddLink(l_sb_was, "Settling element bottom", "WAS", false);
 
@@ -1255,7 +1267,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_st_sb.SetQuantities(system, "Settling element interface (time variable)");
     l_st_sb.SetName("Settling element top - Settling element bottom");
     l_st_sb.SetType("Settling element interface (time variable)");
-    l_st_sb.SetProperty("flow", Workingfolder + "st_sb_tvf.txt");
+    l_st_sb.SetProperty("flow", Workingfolder + "Data/st_sb_tvf.txt");
     l_st_sb.SetVal("area", v_st_sb_area);
     system->AddLink(l_st_sb, "Settling element top", "Settling element bottom", false);
 
@@ -1264,16 +1276,16 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     l_sb_r.SetQuantities(system, "Time-Dependent flow");
     l_sb_r.SetName("Settling element bottom - Reactor_Flex(1)");
     l_sb_r.SetType("Time-Dependent flow");
-    l_sb_r.SetProperty("flow", Workingfolder + "RAS_tvf.txt");
+    l_sb_r.SetProperty("flow", Workingfolder + "Data/RAS_tvf.txt");
     system->AddLink(l_sb_r, "Settling element bottom", "Reactor_Flex(1)", false);
 
-    }
+}
 
+
+    // OUP----------------------------------------------------------------------------------------------------------------
     if (OUP)
-
-    {
+{
     // Determining Inflows by OUProcess
-
         // Inflows
 
         CTimeSeriesSet<double> Inflow_DeNit(Workingfolder + "Data/DeNit_Influent_Lump.txt",true);
@@ -1313,9 +1325,9 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
         CTimeSeries<double> OUP_Inflow_MeOH; // Methanol
 
-        //Data analysis       
+        // Data analysis
 
-        //Flow (0)
+        // Flow (0)
         CTimeSeries<double> flow_normal_score = Inflow_DeNit.BTC[0].ConverttoNormalScore();
         flow_normal_score.writefile(Workingfolder + "Data/flow_normal_score.txt");
 
@@ -1334,7 +1346,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         double flow_std = Inflow_DeNit.BTC[0].Log().std();
         double flow_autocorrelation_coeff = flow_autocorrelation.AutoCorrelationCoeff();
 
-        //TSS (1)
+        // TSS (1)
         CTimeSeries<double> TSS_normal_score = Inflow_DeNit.BTC[1].ConverttoNormalScore();
         TSS_normal_score.writefile(Workingfolder + "Data/TSS_normal_score.txt");
 
@@ -1353,7 +1365,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         double TSS_std = Inflow_DeNit.BTC[1].Log().std();
         double TSS_autocorrelation_coeff = TSS_autocorrelation.AutoCorrelationCoeff();
 
-        //VSS (2)
+        // VSS (2)
         CTimeSeries<double> VSS_normal_score = Inflow_DeNit.BTC[2].ConverttoNormalScore();
         VSS_normal_score.writefile(Workingfolder + "Data/VSS_normal_score.txt");
 
@@ -1372,7 +1384,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         double VSS_std = Inflow_DeNit.BTC[2].Log().std();
         double VSS_autocorrelation_coeff = VSS_autocorrelation.AutoCorrelationCoeff();
 
-        //BOD (3)
+        // BOD (3)
         CTimeSeries<double> BOD_normal_score = Inflow_DeNit.BTC[3].ConverttoNormalScore();
         BOD_normal_score.writefile(Workingfolder + "Data/BOD_normal_score.txt");
 
@@ -1391,7 +1403,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         double BOD_std = Inflow_DeNit.BTC[3].Log().std();
         double BOD_autocorrelation_coeff = BOD_autocorrelation.AutoCorrelationCoeff();
 
-        //sCOD (8)
+        // sCOD (8)
         CTimeSeries<double> sCOD_normal_score = Inflow_DeNit.BTC[8].ConverttoNormalScore();
         sCOD_normal_score.writefile(Workingfolder + "Data/sCOD_normal_score.txt");
 
@@ -1410,7 +1422,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         double sCOD_std = Inflow_DeNit.BTC[8].Log().std();
         double sCOD_autocorrelation_coeff = sCOD_autocorrelation.AutoCorrelationCoeff();
 
-        //NH3 (9)
+        // NH3 (9)
         CTimeSeries<double> NH3_normal_score = Inflow_DeNit.BTC[9].ConverttoNormalScore();
         NH3_normal_score.writefile(Workingfolder + "Data/NH3_normal_score.txt");
 
@@ -1429,7 +1441,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         double NH3_std = Inflow_DeNit.BTC[9].Log().std();
         double NH3_autocorrelation_coeff = NH3_autocorrelation.AutoCorrelationCoeff();
 
-        //NO3 (10)
+        // NO3 (10)
         CTimeSeries<double> NO3_normal_score = Inflow_DeNit.BTC[10].ConverttoNormalScore();
         NO3_normal_score.writefile(Workingfolder + "Data/NO3_normal_score.txt");
 
@@ -1448,7 +1460,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         double NO3_std = Inflow_DeNit.BTC[10].Log().std();
         double NO3_autocorrelation_coeff = NO3_autocorrelation.AutoCorrelationCoeff();
 
-        //WAS_Flow (0)
+        // WAS_Flow (0)
         CTimeSeries<double> was_flow_normal_score = Inflow_DeNit_wasteflow.BTC[0].ConverttoNormalScore();
         was_flow_normal_score.writefile(Workingfolder + "Data/was_flow_normal_score.txt");
 
@@ -1467,7 +1479,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         double was_flow_std = Inflow_DeNit_wasteflow.BTC[0].Log(1).std(); // Becuase of Zeros
         double was_flow_autocorrelation_coeff = was_flow_autocorrelation.AutoCorrelationCoeff();
 
-        //RAS_Flow (0)
+        // RAS_Flow (0)
         CTimeSeries<double> ras_flow_normal_score = Inflow_DeNit_returnflow.BTC[0].ConverttoNormalScore();
         ras_flow_normal_score.writefile(Workingfolder + "Data/ras_flow_normal_score.txt");
 
@@ -1486,7 +1498,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         double ras_flow_std = Inflow_DeNit_returnflow.BTC[0].Log().std();
         double ras_flow_autocorrelation_coeff = ras_flow_autocorrelation.AutoCorrelationCoeff();
 
-        //MeoH (Methanol)
+        // MeoH (Methanol)
         CTimeSeries<double> MeOH_normal_score = Inflow_DeNit_MeOH.BTC[0].ConverttoNormalScore();
         MeOH_normal_score.writefile(Workingfolder + "Data/MeOH_normal_score.txt");
 
@@ -1505,7 +1517,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         double MeOH_std = Inflow_DeNit_MeOH.BTC[0].Log().std();
         double MeOH_autocorrelation_coeff = MeOH_autocorrelation.AutoCorrelationCoeff();
 
-        //everything
+        // everything
         CTimeSeriesSet<double> normal_scores = Inflow_DeNit.ConverttoNormalScore();
         normal_scores.writetofile(Workingfolder + "Data/Normal_Scores.txt");
 
@@ -1536,7 +1548,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
         CTimeSeries<double> logstds2 = logstds;
         logstds2.writefile(Workingfolder + "Data/logstds.txt");
 
-    //OUProcess
+
+    // OUProcess
     CTimeSeries<double> OUP_Inflow_Q_NS; // Discharge (m3/day)
     OUP_Inflow_Q_NS.CreateOUProcess(0,Simulation_time_Calc,dt,flow_autocorrelation_coeff);
     OUP_Inflow_Q_NS.writefile(Workingfolder + "OUP_Inflow_Q_NS_tvif.csv");
@@ -1638,7 +1651,7 @@ bool ModelCreator_Flex::Create_Flex(System *system)
 
         OUP_Inflow_MeOH=OUP_MeOH_Flow; //MeOH
 
-        //Writing to file
+        // Writing to file
         OUP_Inflow_S_i.writefile(Workingfolder + "OUP_Inflow_S_i.csv");
         OUP_Inflow_S_S.writefile(Workingfolder + "OUP_Inflow_S_S.csv");
         OUP_Inflow_X_S.writefile(Workingfolder + "OUP_Inflow_X_S.csv");
