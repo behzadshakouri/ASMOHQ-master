@@ -52,7 +52,7 @@ public:
     const double v_i_VSSs=1.800;
     const double v_i_VSSP=1.420;
     const double v_i_MeOH=1.500;
-    const double v_k_LO2=190.446; //Aearation coeff
+    const double v_K_LO2=190.446; //Aearation coeff
 
     // Constituents Concentration
     const double v_S_i_concentration=14.14;
@@ -70,7 +70,7 @@ public:
     const double v_X_p_concentration=350; // ?
     const double v_X_ND_concentration=1;
 
-    const double v_a_rate_coefficient=v_k_LO2; // 5 ~ 10 1/hr : 120 ~ 240 1/day
+    const double v_a_rate_coefficient=v_K_LO2; // 5 ~ 10 1/hr : 120 ~ 240 1/day
     const double v_a_saturation=8.55;
 
     const double p_31=0.57;
@@ -184,8 +184,8 @@ public:
     const double v_eta_h_low=0.3;
     const double v_i_XB_high=0.1;
     const double v_i_XB_low=0.05;
-    const double v_k_LO2_high=250; // Aearation coeff UL
-    const double v_k_LO2_low=50; // Aearation coeff LL
+    const double v_K_LO2_high=250; // Aearation coeff UL
+    const double v_K_LO2_low=50; // Aearation coeff LL
     const double v_Y_H_high=0.7;
     const double v_Y_H_low=0.6;
     const double v_Y_M_high=0.5;
