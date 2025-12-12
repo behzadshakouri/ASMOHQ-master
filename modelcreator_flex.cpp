@@ -63,6 +63,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     {
         Simulation_start_time=40000; // Simulation Start Date
         Simulation_end_time=40700; // Simulation End Date
+
+        Calibration = false;
     }
 
     const double Simulation_time_Calc = Simulation_end_time - Simulation_start_time;
