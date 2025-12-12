@@ -130,213 +130,213 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     // For Calibration
     if (Calibration)
     {
-        Parameter mu_H1;
-        mu_H1.SetQuantities(system,"Parameter");
-        mu_H1.SetName("mu_H1");
-        mu_H1.SetVal("value",v_mu_H);
-        mu_H1.SetVal("high",v_mu_H_high);
-        mu_H1.SetVal("low",v_mu_H_low);
-        system->AppendParameter("mu_H1", mu_H1);
+        Parameter mu_H_cal;
+        mu_H_cal.SetQuantities(system,"Parameter");
+        mu_H_cal.SetName("mu_H_cal");
+        mu_H_cal.SetVal("value",v_mu_H);
+        mu_H_cal.SetVal("high",v_mu_H_high);
+        mu_H_cal.SetVal("low",v_mu_H_low);
+        system->AppendParameter("mu_H_cal", mu_H_cal);
 
-        Parameter b_H1;
-        b_H1.SetQuantities(system,"Parameter");
-        b_H1.SetName("b_H1");
-        b_H1.SetVal("value",v_b_H);
-        b_H1.SetVal("high",v_b_H_high);
-        b_H1.SetVal("low",v_b_H_low);
-        system->AppendParameter("b_H1", b_H1);
+        Parameter b_H_cal;
+        b_H_cal.SetQuantities(system,"Parameter");
+        b_H_cal.SetName("b_H_cal");
+        b_H_cal.SetVal("value",v_b_H);
+        b_H_cal.SetVal("high",v_b_H_high);
+        b_H_cal.SetVal("low",v_b_H_low);
+        system->AppendParameter("b_H_cal", b_H_cal);
 
-        Parameter K_S1;
-        K_S1.SetQuantities(system,"Parameter");
-        K_S1.SetName("K_S1");
-        K_S1.SetVal("value",v_K_S);
-        K_S1.SetVal("high",v_K_S_high);
-        K_S1.SetVal("low",v_K_S_low);
-        system->AppendParameter("K_S1", K_S1);
+        Parameter K_S_cal;
+        K_S_cal.SetQuantities(system,"Parameter");
+        K_S_cal.SetName("K_S_cal");
+        K_S_cal.SetVal("value",v_K_S);
+        K_S_cal.SetVal("high",v_K_S_high);
+        K_S_cal.SetVal("low",v_K_S_low);
+        system->AppendParameter("K_S_cal", K_S_cal);
 
-        Parameter K_MH1;
-        K_MH1.SetQuantities(system,"Parameter");
-        K_MH1.SetName("K_MH1");
-        K_MH1.SetVal("value",v_K_MH);
-        K_MH1.SetVal("high",v_K_MH_high);
-        K_MH1.SetVal("low",v_K_MH_low);
-        system->AppendParameter("K_MH1", K_MH1);
+        Parameter K_MH_cal;
+        K_MH_cal.SetQuantities(system,"Parameter");
+        K_MH_cal.SetName("K_MH_cal");
+        K_MH_cal.SetVal("value",v_K_MH);
+        K_MH_cal.SetVal("high",v_K_MH_high);
+        K_MH_cal.SetVal("low",v_K_MH_low);
+        system->AppendParameter("K_MH_cal", K_MH_cal);
 
-        Parameter K_OH1;
-        K_OH1.SetQuantities(system,"Parameter");
-        K_OH1.SetName("K_OH1");
-        K_OH1.SetVal("value",v_K_OH);
-        K_OH1.SetVal("high",v_K_OH_high);
-        K_OH1.SetVal("low",v_K_OH_low);
-        system->AppendParameter("K_OH1", K_OH1);
+        Parameter K_OH_cal;
+        K_OH_cal.SetQuantities(system,"Parameter");
+        K_OH_cal.SetName("K_OH_cal");
+        K_OH_cal.SetVal("value",v_K_OH);
+        K_OH_cal.SetVal("high",v_K_OH_high);
+        K_OH_cal.SetVal("low",v_K_OH_low);
+        system->AppendParameter("K_OH_cal", K_OH_cal);
 
-        Parameter K_NH1;
-        K_NH1.SetQuantities(system,"Parameter");
-        K_NH1.SetName("K_NH");
-        K_NH1.SetVal("value",v_K_NH);
-        K_NH1.SetVal("high",v_K_NH_high);
-        K_NH1.SetVal("low",v_K_NH_low);
-        system->AppendParameter("K_NH1", K_NH1);
+        Parameter K_NH_cal;
+        K_NH_cal.SetQuantities(system,"Parameter");
+        K_NH_cal.SetName("K_NH");
+        K_NH_cal.SetVal("value",v_K_NH);
+        K_NH_cal.SetVal("high",v_K_NH_high);
+        K_NH_cal.SetVal("low",v_K_NH_low);
+        system->AppendParameter("K_NH_cal", K_NH_cal);
 
-        Parameter K_NOH1;
-        K_NOH1.SetQuantities(system,"Parameter");
-        K_NOH1.SetName("K_NOH1");
-        K_NOH1.SetVal("value",v_K_NOH);
-        K_NOH1.SetVal("high",v_K_NOH_high);
-        K_NOH1.SetVal("low",v_K_NOH_low);
-        system->AppendParameter("K_NOH1", K_NOH1);
+        Parameter K_NOH_cal;
+        K_NOH_cal.SetQuantities(system,"Parameter");
+        K_NOH_cal.SetName("K_NOH_cal");
+        K_NOH_cal.SetVal("value",v_K_NOH);
+        K_NOH_cal.SetVal("high",v_K_NOH_high);
+        K_NOH_cal.SetVal("low",v_K_NOH_low);
+        system->AppendParameter("K_NOH_cal", K_NOH_cal);
 
-        Parameter eta_g1;
-        eta_g1.SetQuantities(system,"Parameter");
-        eta_g1.SetName("eta_g1");
-        eta_g1.SetVal("value",v_eta_g);
-        eta_g1.SetVal("high",v_eta_g_high);
-        eta_g1.SetVal("low",v_eta_g_low);
-        system->AppendParameter("eta_g1", eta_g1);
+        Parameter eta_g_cal;
+        eta_g_cal.SetQuantities(system,"Parameter");
+        eta_g_cal.SetName("eta_g_cal");
+        eta_g_cal.SetVal("value",v_eta_g);
+        eta_g_cal.SetVal("high",v_eta_g_high);
+        eta_g_cal.SetVal("low",v_eta_g_low);
+        system->AppendParameter("eta_g_cal", eta_g_cal);
 
-        Parameter mu_A1;
-        mu_A1.SetQuantities(system,"Parameter");
-        mu_A1.SetName("mu_A1");
-        mu_A1.SetVal("value",v_mu_A);
-        mu_A1.SetVal("high",v_mu_A_high);
-        mu_A1.SetVal("low",v_mu_A_low);
-        system->AppendParameter("mu_A1", mu_A1);
+        Parameter mu_A_cal;
+        mu_A_cal.SetQuantities(system,"Parameter");
+        mu_A_cal.SetName("mu_A_cal");
+        mu_A_cal.SetVal("value",v_mu_A);
+        mu_A_cal.SetVal("high",v_mu_A_high);
+        mu_A_cal.SetVal("low",v_mu_A_low);
+        system->AppendParameter("mu_A_cal", mu_A_cal);
 
-        Parameter b_A1;
-        b_A1.SetQuantities(system,"Parameter");
-        b_A1.SetName("b_A1");
-        b_A1.SetVal("value",v_b_A);
-        b_A1.SetVal("high",v_b_A_high);
-        b_A1.SetVal("low",v_b_A_low);
-        system->AppendParameter("b_A1", b_A1);
+        Parameter b_A_cal;
+        b_A_cal.SetQuantities(system,"Parameter");
+        b_A_cal.SetName("b_A_cal");
+        b_A_cal.SetVal("value",v_b_A);
+        b_A_cal.SetVal("high",v_b_A_high);
+        b_A_cal.SetVal("low",v_b_A_low);
+        system->AppendParameter("b_A_cal", b_A_cal);
 
-        Parameter K_OA1;
-        K_OA1.SetQuantities(system,"Parameter");
-        K_OA1.SetName("K_OA1");
-        K_OA1.SetVal("value",v_K_OA);
-        K_OA1.SetVal("high",v_K_OA_high);
-        K_OA1.SetVal("low",v_K_OA_low);
-        system->AppendParameter("K_OA1", K_OA1);
+        Parameter K_OA_cal;
+        K_OA_cal.SetQuantities(system,"Parameter");
+        K_OA_cal.SetName("K_OA_cal");
+        K_OA_cal.SetVal("value",v_K_OA);
+        K_OA_cal.SetVal("high",v_K_OA_high);
+        K_OA_cal.SetVal("low",v_K_OA_low);
+        system->AppendParameter("K_OA_cal", K_OA_cal);
 
-        Parameter K_NHA1;
-        K_NHA1.SetQuantities(system,"Parameter");
-        K_NHA1.SetName("K_NHA1");
-        K_NHA1.SetVal("value",v_K_NHA);
-        K_NHA1.SetVal("high",v_K_NHA_high);
-        K_NHA1.SetVal("low",v_K_NHA_low);
-        system->AppendParameter("K_NHA1", K_NHA1);
+        Parameter K_NHA_cal;
+        K_NHA_cal.SetQuantities(system,"Parameter");
+        K_NHA_cal.SetName("K_NHA_cal");
+        K_NHA_cal.SetVal("value",v_K_NHA);
+        K_NHA_cal.SetVal("high",v_K_NHA_high);
+        K_NHA_cal.SetVal("low",v_K_NHA_low);
+        system->AppendParameter("K_NHA_cal", K_NHA_cal);
 
-        Parameter K_NOA1;
-        K_NOA1.SetQuantities(system,"Parameter");
-        K_NOA1.SetName("K_NOA1");
-        K_NOA1.SetVal("value",v_K_NOA);
-        K_NOA1.SetVal("high",v_K_NOA_high);
-        K_NOA1.SetVal("low",v_K_NOA_low);
-        system->AppendParameter("K_NOA1", K_NOA1);
+        Parameter K_NOA_cal;
+        K_NOA_cal.SetQuantities(system,"Parameter");
+        K_NOA_cal.SetName("K_NOA_cal");
+        K_NOA_cal.SetVal("value",v_K_NOA);
+        K_NOA_cal.SetVal("high",v_K_NOA_high);
+        K_NOA_cal.SetVal("low",v_K_NOA_low);
+        system->AppendParameter("K_NOA_cal", K_NOA_cal);
 
-        Parameter mu_M1;
-        mu_M1.SetQuantities(system,"Parameter");
-        mu_M1.SetName("mu_M1");
-        mu_M1.SetVal("value",v_mu_M);
-        mu_M1.SetVal("high",v_mu_M_high);
-        mu_M1.SetVal("low",v_mu_M_low);
-        system->AppendParameter("mu_M1", mu_M1);
+        Parameter mu_M_cal;
+        mu_M_cal.SetQuantities(system,"Parameter");
+        mu_M_cal.SetName("mu_M_cal");
+        mu_M_cal.SetVal("value",v_mu_M);
+        mu_M_cal.SetVal("high",v_mu_M_high);
+        mu_M_cal.SetVal("low",v_mu_M_low);
+        system->AppendParameter("mu_M_cal", mu_M_cal);
 
-        Parameter b_M1;
-        b_M1.SetQuantities(system,"Parameter");
-        b_M1.SetName("b_M1");
-        b_M1.SetVal("value",v_b_M);
-        b_M1.SetVal("high",v_b_M_high);
-        b_M1.SetVal("low",v_b_M_low);
-        system->AppendParameter("b_M1", b_M1);
+        Parameter b_M_cal;
+        b_M_cal.SetQuantities(system,"Parameter");
+        b_M_cal.SetName("b_M_cal");
+        b_M_cal.SetVal("value",v_b_M);
+        b_M_cal.SetVal("high",v_b_M_high);
+        b_M_cal.SetVal("low",v_b_M_low);
+        system->AppendParameter("b_M_cal", b_M_cal);
 
-        Parameter K_MM1;
-        K_MM1.SetQuantities(system,"Parameter");
-        K_MM1.SetName("K_MM1");
-        K_MM1.SetVal("value",v_K_MM);
-        K_MM1.SetVal("high",v_K_MM_high);
-        K_MM1.SetVal("low",v_K_MM_low);
-        system->AppendParameter("K_MM1", K_MM1);
+        Parameter K_MM_cal;
+        K_MM_cal.SetQuantities(system,"Parameter");
+        K_MM_cal.SetName("K_MM_cal");
+        K_MM_cal.SetVal("value",v_K_MM);
+        K_MM_cal.SetVal("high",v_K_MM_high);
+        K_MM_cal.SetVal("low",v_K_MM_low);
+        system->AppendParameter("K_MM_cal", K_MM_cal);
 
-        Parameter K_OM1;
-        K_OM1.SetQuantities(system,"Parameter");
-        K_OM1.SetName("K_OM1");
-        K_OM1.SetVal("value",v_K_OM);
-        K_OM1.SetVal("high",v_K_OM_high);
-        K_OM1.SetVal("low",v_K_OM_low);
-        system->AppendParameter("K_OM1", K_OM1);
+        Parameter K_OM_cal;
+        K_OM_cal.SetQuantities(system,"Parameter");
+        K_OM_cal.SetName("K_OM_cal");
+        K_OM_cal.SetVal("value",v_K_OM);
+        K_OM_cal.SetVal("high",v_K_OM_high);
+        K_OM_cal.SetVal("low",v_K_OM_low);
+        system->AppendParameter("K_OM_cal", K_OM_cal);
 
-        Parameter K_NOM1;
-        K_NOM1.SetQuantities(system,"Parameter");
-        K_NOM1.SetName("K_NOM");
-        K_NOM1.SetVal("value",v_K_NOM);
-        K_NOM1.SetVal("high",v_K_NOM_high);
-        K_NOM1.SetVal("low",v_K_NOM_low);
-        system->AppendParameter("K_NOM1", K_NOM1);
+        Parameter K_NOM_cal;
+        K_NOM_cal.SetQuantities(system,"Parameter");
+        K_NOM_cal.SetName("K_NOM");
+        K_NOM_cal.SetVal("value",v_K_NOM);
+        K_NOM_cal.SetVal("high",v_K_NOM_high);
+        K_NOM_cal.SetVal("low",v_K_NOM_low);
+        system->AppendParameter("K_NOM_cal", K_NOM_cal);
 
-        Parameter K_a1;
-        K_a1.SetQuantities(system,"Parameter");
-        K_a1.SetName("K_a1");
-        K_a1.SetVal("value",v_K_a);
-        K_a1.SetVal("high",v_K_a_high);
-        K_a1.SetVal("low",v_K_a_low);
-        system->AppendParameter("K_a1", K_a1);
+        Parameter K_a_cal;
+        K_a_cal.SetQuantities(system,"Parameter");
+        K_a_cal.SetName("K_a_cal");
+        K_a_cal.SetVal("value",v_K_a);
+        K_a_cal.SetVal("high",v_K_a_high);
+        K_a_cal.SetVal("low",v_K_a_low);
+        system->AppendParameter("K_a_cal", K_a_cal);
 
-        Parameter K_h1;
-        K_h1.SetQuantities(system,"Parameter");
-        K_h1.SetName("K_h1");
-        K_h1.SetVal("value",v_K_h);
-        K_h1.SetVal("high",v_K_h_high);
-        K_h1.SetVal("low",v_K_h_low);
-        system->AppendParameter("K_h1", K_h1);
+        Parameter K_h_cal;
+        K_h_cal.SetQuantities(system,"Parameter");
+        K_h_cal.SetName("K_h_cal");
+        K_h_cal.SetVal("value",v_K_h);
+        K_h_cal.SetVal("high",v_K_h_high);
+        K_h_cal.SetVal("low",v_K_h_low);
+        system->AppendParameter("K_h_cal", K_h_cal);
 
-        Parameter K_X1;
-        K_X1.SetQuantities(system,"Parameter");
-        K_X1.SetName("K_X1");
-        K_X1.SetVal("value",v_K_X);
-        K_X1.SetVal("high",v_K_X_high);
-        K_X1.SetVal("low",v_K_X_low);
-        system->AppendParameter("K_X1", K_X1);
+        Parameter K_X_cal;
+        K_X_cal.SetQuantities(system,"Parameter");
+        K_X_cal.SetName("K_X_cal");
+        K_X_cal.SetVal("value",v_K_X);
+        K_X_cal.SetVal("high",v_K_X_high);
+        K_X_cal.SetVal("low",v_K_X_low);
+        system->AppendParameter("K_X_cal", K_X_cal);
 
-        Parameter eta_h1;
-        eta_h1.SetQuantities(system,"Parameter");
-        eta_h1.SetName("eta_h1");
-        eta_h1.SetVal("value",v_eta_h);
-        eta_h1.SetVal("high",v_eta_h_high);
-        eta_h1.SetVal("low",v_eta_h_low);
-        system->AppendParameter("eta_h1", eta_h1);
+        Parameter eta_h_cal;
+        eta_h_cal.SetQuantities(system,"Parameter");
+        eta_h_cal.SetName("eta_h_cal");
+        eta_h_cal.SetVal("value",v_eta_h);
+        eta_h_cal.SetVal("high",v_eta_h_high);
+        eta_h_cal.SetVal("low",v_eta_h_low);
+        system->AppendParameter("eta_h_cal", eta_h_cal);
 
-        Parameter i_XB1;
-        i_XB1.SetQuantities(system,"Parameter");
-        i_XB1.SetName("i_XB1");
-        i_XB1.SetVal("value",v_i_XB);
-        i_XB1.SetVal("high",v_i_XB_high);
-        i_XB1.SetVal("low",v_i_XB_low);
-        system->AppendParameter("i_XB1", i_XB1);
+        Parameter i_XB_cal;
+        i_XB_cal.SetQuantities(system,"Parameter");
+        i_XB_cal.SetName("i_XB_cal");
+        i_XB_cal.SetVal("value",v_i_XB);
+        i_XB_cal.SetVal("high",v_i_XB_high);
+        i_XB_cal.SetVal("low",v_i_XB_low);
+        system->AppendParameter("i_XB_cal", i_XB_cal);
 
-        Parameter K_LO2;
-        K_LO2.SetQuantities(system,"Parameter");
-        K_LO2.SetName("K_LO2");
-        K_LO2.SetVal("value",v_K_LO2);
-        K_LO2.SetVal("high",v_K_LO2_high);
-        K_LO2.SetVal("low",v_K_LO2_low);
-        system->AppendParameter("K_LO2", K_LO2);
+        Parameter K_LO2_cal;
+        K_LO2_cal.SetQuantities(system,"Parameter");
+        K_LO2_cal.SetName("K_LO2_cal");
+        K_LO2_cal.SetVal("value",v_K_LO2);
+        K_LO2_cal.SetVal("high",v_K_LO2_high);
+        K_LO2_cal.SetVal("low",v_K_LO2_low);
+        system->AppendParameter("K_LO2_cal", K_LO2_cal);
 
-        Parameter Y_H1;
-        Y_H1.SetQuantities(system,"Parameter");
-        Y_H1.SetName("Y_H1");
-        Y_H1.SetVal("value",v_Y_H);
-        Y_H1.SetVal("high",v_Y_H_high);
-        Y_H1.SetVal("low",v_Y_H_low);
-        system->AppendParameter("Y_H1", Y_H1);
+        Parameter Y_H_cal;
+        Y_H_cal.SetQuantities(system,"Parameter");
+        Y_H_cal.SetName("Y_H_cal");
+        Y_H_cal.SetVal("value",v_Y_H);
+        Y_H_cal.SetVal("high",v_Y_H_high);
+        Y_H_cal.SetVal("low",v_Y_H_low);
+        system->AppendParameter("Y_H_cal", Y_H_cal);
 
-        Parameter Y_M1;
-        Y_M1.SetQuantities(system,"Parameter");
-        Y_M1.SetName("Y_M1");
-        Y_M1.SetVal("value",v_Y_M);
-        Y_M1.SetVal("high",v_Y_M_high);
-        Y_M1.SetVal("low",v_Y_M_low);
-        system->AppendParameter("Y_M1", Y_M1);
+        Parameter Y_M_cal;
+        Y_M_cal.SetQuantities(system,"Parameter");
+        Y_M_cal.SetName("Y_M_cal");
+        Y_M_cal.SetVal("value",v_Y_M);
+        Y_M_cal.SetVal("high",v_Y_M_high);
+        Y_M_cal.SetVal("low",v_Y_M_low);
+        system->AppendParameter("Y_M_cal", Y_M_cal);
     }
 
 
@@ -440,8 +440,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(mu_H, false);
     if (Calibration)
     {
-    system->SetAsParameter("mu_H","base_value","mu_H1");
-    system->object("mu_H")->Variable("base_value")->SetParameterAssignedTo("mu_H1");
+    system->SetAsParameter("mu_H","base_value","mu_H_cal");
+    system->object("mu_H")->Variable("base_value")->SetParameterAssignedTo("mu_H_cal");
     }
 
     RxnParameter K_S;
@@ -457,8 +457,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(K_S, false);
     if (Calibration)
     {
-    system->SetAsParameter("K_S","base_value","K_S1");
-    system->object("K_S")->Variable("base_value")->SetParameterAssignedTo("K_S1");
+    system->SetAsParameter("K_S","base_value","K_S_cal");
+    system->object("K_S")->Variable("base_value")->SetParameterAssignedTo("K_S_cal");
     }
 
     RxnParameter K_MH;
@@ -468,8 +468,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(K_MH, false);
     if (Calibration)
     {
-    system->SetAsParameter("K_MH","base_value","K_MH1");
-    system->object("K_MH")->Variable("base_value")->SetParameterAssignedTo("K_MH1");
+    system->SetAsParameter("K_MH","base_value","K_MH_cal");
+    system->object("K_MH")->Variable("base_value")->SetParameterAssignedTo("K_MH_cal");
     }
 
     RxnParameter K_OH;
@@ -479,8 +479,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(K_OH, false);
     if (Calibration)
     {
-    system->SetAsParameter("K_OH","base_value","K_OH1");
-    system->object("K_OH")->Variable("base_value")->SetParameterAssignedTo("K_OH1");
+    system->SetAsParameter("K_OH","base_value","K_OH_cal");
+    system->object("K_OH")->Variable("base_value")->SetParameterAssignedTo("K_OH_cal");
     }
 
     RxnParameter K_NOH;
@@ -490,8 +490,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(K_NOH, false);
     if (Calibration)
     {
-    system->SetAsParameter("K_NOH","base_value","K_NOH1");
-    system->object("K_NOH")->Variable("base_value")->SetParameterAssignedTo("K_NOH1");
+    system->SetAsParameter("K_NOH","base_value","K_NOH_cal");
+    system->object("K_NOH")->Variable("base_value")->SetParameterAssignedTo("K_NOH_cal");
     }
 
     RxnParameter eta_g;
@@ -501,8 +501,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(eta_g, false);
     if (Calibration)
     {
-    system->SetAsParameter("eta_g","base_value","eta_g1");
-    system->object("eta_g")->Variable("base_value")->SetParameterAssignedTo("eta_g1");
+    system->SetAsParameter("eta_g","base_value","eta_g_cal");
+    system->object("eta_g")->Variable("base_value")->SetParameterAssignedTo("eta_g_cal");
     }
 
     RxnParameter b_H;
@@ -512,8 +512,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(b_H, false);
     if (Calibration)
     {
-    system->SetAsParameter("b_H","base_value","b_H1");
-    system->object("b_H")->Variable("base_value")->SetParameterAssignedTo("b_H1");
+    system->SetAsParameter("b_H","base_value","b_H_cal");
+    system->object("b_H")->Variable("base_value")->SetParameterAssignedTo("b_H_cal");
     }
 
     RxnParameter K_NH;
@@ -523,8 +523,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(K_NH, false);
     if (Calibration)
     {
-    system->SetAsParameter("K_NH","base_value","K_NH1");
-    system->object("K_NH")->Variable("base_value")->SetParameterAssignedTo("K_NH1");
+    system->SetAsParameter("K_NH","base_value","K_NH_cal");
+    system->object("K_NH")->Variable("base_value")->SetParameterAssignedTo("K_NH_cal");
     }
 
     RxnParameter mu_M;
@@ -540,8 +540,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(mu_M, false);
     if (Calibration)
     {
-    system->SetAsParameter("mu_M","base_value","mu_M1");
-    system->object("mu_M")->Variable("base_value")->SetParameterAssignedTo("mu_M1");
+    system->SetAsParameter("mu_M","base_value","mu_M_cal");
+    system->object("mu_M")->Variable("base_value")->SetParameterAssignedTo("mu_M_cal");
     }
 
     RxnParameter K_MM;
@@ -551,8 +551,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(K_MM, false);
     if (Calibration)
     {
-    system->SetAsParameter("K_MM","base_value","K_MM1");
-    system->object("K_MM")->Variable("base_value")->SetParameterAssignedTo("K_MM1");
+    system->SetAsParameter("K_MM","base_value","K_MM_cal");
+    system->object("K_MM")->Variable("base_value")->SetParameterAssignedTo("K_MM_cal");
     }
 
     RxnParameter K_OM;
@@ -562,8 +562,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(K_OM, false);
     if (Calibration)
     {
-    system->SetAsParameter("K_OM","base_value","K_OM1");
-    system->object("K_OM")->Variable("base_value")->SetParameterAssignedTo("K_OM1");
+    system->SetAsParameter("K_OM","base_value","K_OM_cal");
+    system->object("K_OM")->Variable("base_value")->SetParameterAssignedTo("K_OM_cal");
     }
 
     RxnParameter K_NOM;
@@ -573,8 +573,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(K_NOM, false);
     if (Calibration)
     {
-    system->SetAsParameter("K_NOM","base_value","K_NOM1");
-    system->object("K_NOM")->Variable("base_value")->SetParameterAssignedTo("K_NOM1");
+    system->SetAsParameter("K_NOM","base_value","K_NOM_cal");
+    system->object("K_NOM")->Variable("base_value")->SetParameterAssignedTo("K_NOM_cal");
     }
 
     RxnParameter b_M;
@@ -590,8 +590,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(b_M, false);
     if (Calibration)
     {
-    system->SetAsParameter("b_M","base_value","b_M1");
-    system->object("b_M")->Variable("base_value")->SetParameterAssignedTo("b_M1");
+    system->SetAsParameter("b_M","base_value","b_M_cal");
+    system->object("b_M")->Variable("base_value")->SetParameterAssignedTo("b_M_cal");
     }
 
     RxnParameter mu_A;
@@ -607,8 +607,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(mu_A, false);
     if (Calibration)
     {
-    system->SetAsParameter("mu_A","base_value","mu_A1");
-    system->object("mu_A")->Variable("base_value")->SetParameterAssignedTo("mu_A1");
+    system->SetAsParameter("mu_A","base_value","mu_A_cal");
+    system->object("mu_A")->Variable("base_value")->SetParameterAssignedTo("mu_A_cal");
     }
 
     RxnParameter K_NHA;
@@ -618,8 +618,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(K_NHA, false);
     if (Calibration)
     {
-    system->SetAsParameter("K_NHA","base_value","K_NHA1");
-    system->object("K_NHA")->Variable("base_value")->SetParameterAssignedTo("K_NHA1");
+    system->SetAsParameter("K_NHA","base_value","K_NHA_cal");
+    system->object("K_NHA")->Variable("base_value")->SetParameterAssignedTo("K_NHA_cal");
     }
 
     RxnParameter K_NOA;
@@ -629,8 +629,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(K_NOA, false);
     if (Calibration)
     {
-    system->SetAsParameter("K_NOA","base_value","K_NOA1");
-    system->object("K_NOA")->Variable("base_value")->SetParameterAssignedTo("K_NOA1");
+    system->SetAsParameter("K_NOA","base_value","K_NOA_cal");
+    system->object("K_NOA")->Variable("base_value")->SetParameterAssignedTo("K_NOA_cal");
     }
 
     RxnParameter K_OA;
@@ -640,8 +640,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(K_OA, false);
     if (Calibration)
     {
-    system->SetAsParameter("K_OA","base_value","K_OA1");
-    system->object("K_OA")->Variable("base_value")->SetParameterAssignedTo("K_OA1");
+    system->SetAsParameter("K_OA","base_value","K_OA_cal");
+    system->object("K_OA")->Variable("base_value")->SetParameterAssignedTo("K_OA_cal");
     }
 
     RxnParameter b_A;
@@ -657,8 +657,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(b_A, false);
     if (Calibration)
     {
-    system->SetAsParameter("b_A","base_value","b_A1");
-    system->object("b_A")->Variable("base_value")->SetParameterAssignedTo("b_A1");
+    system->SetAsParameter("b_A","base_value","b_A_cal");
+    system->object("b_A")->Variable("base_value")->SetParameterAssignedTo("b_A_cal");
     }
 
     RxnParameter eta_h;
@@ -668,8 +668,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(eta_h, false);
     if (Calibration)
     {
-    system->SetAsParameter("eta_h","base_value","eta_h1");
-    system->object("eta_h")->Variable("base_value")->SetParameterAssignedTo("eta_h1");
+    system->SetAsParameter("eta_h","base_value","eta_h_cal");
+    system->object("eta_h")->Variable("base_value")->SetParameterAssignedTo("eta_h_cal");
     }
 
     RxnParameter K_h;
@@ -685,8 +685,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(K_h, false);
     if (Calibration)
     {
-    system->SetAsParameter("K_h","base_value","K_h1");
-    system->object("K_h")->Variable("base_value")->SetParameterAssignedTo("K_h1");
+    system->SetAsParameter("K_h","base_value","K_h_cal");
+    system->object("K_h")->Variable("base_value")->SetParameterAssignedTo("K_h_cal");
     }
 
     RxnParameter K_X;
@@ -696,8 +696,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(K_X, false);
     if (Calibration)
     {
-    system->SetAsParameter("K_X","base_value","K_X1");
-    system->object("K_X")->Variable("base_value")->SetParameterAssignedTo("K_X1");
+    system->SetAsParameter("K_X","base_value","K_X_cal");
+    system->object("K_X")->Variable("base_value")->SetParameterAssignedTo("K_X_cal");
     }
 
     RxnParameter K_a;
@@ -713,8 +713,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(K_a, false);
     if (Calibration)
     {
-    system->SetAsParameter("K_a","base_value","K_a1");
-    system->object("K_a")->Variable("base_value")->SetParameterAssignedTo("K_a1");
+    system->SetAsParameter("K_a","base_value","K_a_cal");
+    system->object("K_a")->Variable("base_value")->SetParameterAssignedTo("K_a_cal");
     }
 
     RxnParameter Y_H;
@@ -724,8 +724,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(Y_H, false);
     if (Calibration)
     {
-    system->SetAsParameter("Y_H","base_value","Y_H1");
-    system->object("Y_H")->Variable("base_value")->SetParameterAssignedTo("Y_H1");
+    system->SetAsParameter("Y_H","base_value","Y_H_cal");
+    system->object("Y_H")->Variable("base_value")->SetParameterAssignedTo("Y_H_cal");
     }
 
     RxnParameter Y_HM;
@@ -735,8 +735,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(Y_HM, false);
     //if (Calibration)
     //{
-    //system->SetAsParameter("Y_HM","base_value","Y_HM1");
-    //system->object("Y_HM")->Variable("base_value")->SetParameterAssignedTo("Y_HM1");
+    //system->SetAsParameter("Y_HM","base_value","Y_HM_cal");
+    //system->object("Y_HM")->Variable("base_value")->SetParameterAssignedTo("Y_HM_cal");
     //}
 
     RxnParameter Y_A;
@@ -746,8 +746,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(Y_A, false);
     //if (Calibration)
     //{
-    //system->SetAsParameter("Y_A","base_value","Y_A1");
-    //system->object("Y_A")->Variable("base_value")->SetParameterAssignedTo("Y_A1");
+    //system->SetAsParameter("Y_A","base_value","Y_A_cal");
+    //system->object("Y_A")->Variable("base_value")->SetParameterAssignedTo("Y_A_cal");
     //}
 
     RxnParameter Y_M;
@@ -757,8 +757,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(Y_M, false);
     if (Calibration)
     {
-    system->SetAsParameter("Y_M","base_value","Y_M1");
-    system->object("Y_M")->Variable("base_value")->SetParameterAssignedTo("Y_M1");
+    system->SetAsParameter("Y_M","base_value","Y_M_cal");
+    system->object("Y_M")->Variable("base_value")->SetParameterAssignedTo("Y_M_cal");
     }
 
     RxnParameter f_p;
@@ -768,8 +768,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(f_p, false);
     //if (Calibration)
     //{
-    //system->SetAsParameter("f_p","base_value","f_p1");
-    //system->object("f_p")->Variable("base_value")->SetParameterAssignedTo("f_p1");
+    //system->SetAsParameter("f_p","base_value","f_p_cal");
+    //system->object("f_p")->Variable("base_value")->SetParameterAssignedTo("f_p_cal");
     //}
 
     RxnParameter i_XB;
@@ -779,8 +779,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(i_XB, false);
     if (Calibration)
     {
-    system->SetAsParameter("i_XB","base_value","i_XB1");
-    system->object("i_XB")->Variable("base_value")->SetParameterAssignedTo("i_XB1");
+    system->SetAsParameter("i_XB","base_value","i_XB_cal");
+    system->object("i_XB")->Variable("base_value")->SetParameterAssignedTo("i_XB_cal");
     }
 
     RxnParameter i_VSSB;
@@ -790,8 +790,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(i_VSSB, false);
     //if (Calibration)
     //{
-    //system->SetAsParameter("VSSB","base_value","VSSB1");
-    //system->object("VSSB")->Variable("base_value")->SetParameterAssignedTo("VSSB1");
+    //system->SetAsParameter("VSSB","base_value","VSSB_cal");
+    //system->object("VSSB")->Variable("base_value")->SetParameterAssignedTo("VSSB_cal");
     //}
 
     RxnParameter i_VSSi;
@@ -801,8 +801,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(i_VSSi, false);
     //if (Calibration)
     //{
-    //system->SetAsParameter("VSSi","base_value","VSSi1");
-    //system->object("VSSi")->Variable("base_value")->SetParameterAssignedTo("VSSi1");
+    //system->SetAsParameter("VSSi","base_value","VSSi_cal");
+    //system->object("VSSi")->Variable("base_value")->SetParameterAssignedTo("VSSi_cal");
     //}
 
     RxnParameter i_VSSs;
@@ -812,8 +812,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(i_VSSs, false);
     //if (Calibration)
     //{
-    //system->SetAsParameter("VSSs","base_value","VSSs1");
-    //system->object("VSSs")->Variable("base_value")->SetParameterAssignedTo("VSSs1");
+    //system->SetAsParameter("VSSs","base_value","VSSs_cal");
+    //system->object("VSSs")->Variable("base_value")->SetParameterAssignedTo("VSSs_cal");
     //}
 
     RxnParameter i_VSSP;
@@ -823,8 +823,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(i_VSSP, false);
     //if (Calibration)
     //{
-    //system->SetAsParameter("VSSP","base_value","VSSP1");
-    //system->object("VSSP")->Variable("base_value")->SetParameterAssignedTo("VSSP1");
+    //system->SetAsParameter("VSSP","base_value","VSSP_cal");
+    //system->object("VSSP")->Variable("base_value")->SetParameterAssignedTo("VSSP_cal");
     //}
 
     RxnParameter i_MeOH;
@@ -834,8 +834,8 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     system->AddReactionParameter(i_MeOH, false);
     //if (Calibration)
     //{
-    //system->SetAsParameter("MeOH","base_value","MeOH1");
-    //system->object("MeOH")->Variable("base_value")->SetParameterAssignedTo("MeOH1");
+    //system->SetAsParameter("MeOH","base_value","MeOH_cal");
+    //system->object("MeOH")->Variable("base_value")->SetParameterAssignedTo("MeOH_cal");
     //}
 
 
@@ -845,14 +845,14 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     Aeration.SetQuantities(system, "atmospheric exchange");
     Aeration.SetType("atmospheric exchange");
     Aeration.SetName("Aeration");
-    Aeration.SetVal("rate_coefficient",v_a_rate_coefficient); // ~ v_K_LO2
+    Aeration.SetVal("rate_coefficient",v_K_LO2);
     Aeration.SetVal("saturation",v_a_saturation);
     system->AddSource(Aeration, false);
     if (Calibration)
     {
     // Setting as parameter for calibration
-    system->SetAsParameter("Aeration","rate_coefficient","K_LO2");
-    system->object("Aeration")->Variable("rate_coefficient")->SetParameterAssignedTo("K_LO2");
+    system->SetAsParameter("Aeration","rate_coefficient","K_LO2_cal");
+    system->object("Aeration")->Variable("rate_coefficient")->SetParameterAssignedTo("K_LO2_cal");
     }
 
     // Reactions

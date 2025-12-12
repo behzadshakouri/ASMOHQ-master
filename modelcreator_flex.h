@@ -52,7 +52,7 @@ public:
     const double v_i_VSSs=1.800;
     const double v_i_VSSP=1.420;
     const double v_i_MeOH=1.500;
-    const double v_K_LO2=190.446; //Aearation coeff
+    const double v_K_LO2=190.446; // Aearation coeff: 5 ~ 10 1/hr : 120 ~ 240 1/day
 
     // Constituents Concentration
     const double v_S_i_concentration=14.14;
@@ -70,8 +70,7 @@ public:
     const double v_X_p_concentration=350; // ?
     const double v_X_ND_concentration=1;
 
-    const double v_a_rate_coefficient=v_K_LO2; // 5 ~ 10 1/hr : 120 ~ 240 1/day
-    const double v_a_saturation=8.55;
+    const double v_a_saturation=8.55; // Aeration saturation coeff
 
     const double p_31=0.57;
     const double p_32=1.42;
