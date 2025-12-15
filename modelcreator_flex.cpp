@@ -2017,6 +2017,10 @@ if (OUP)
     }
 
         system->SetSettingsParameter("maximum_time_allowed",86400*3);
+
+        if (Calibration)
+            system->SetSettingsParameter("maximum_time_allowed",3600);
+
         system->SetSettingsParameter("maximum_number_of_matrix_inverstions",1e6);
 
     // Observation writing time step
