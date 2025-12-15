@@ -1734,6 +1734,12 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     // For Calibration
 if (Calibration)
 {
+
+    CTimeSeries<double> R5_S_NO_Concentration_obs;
+
+    R5_S_NO_Concentration_obs = DeNit_Observed.BTC[13];
+    R5_S_NO_Concentration_obs.writefile(Workingfolder + "Data/R5_S_NO_Concentration_obs.csv"); //
+
     Observation R5_S_NO_inflow_cn; // T3B
 
     R5_S_NO_inflow_cn.SetQuantities(system, "Observation");
@@ -1741,8 +1747,8 @@ if (Calibration)
     R5_S_NO_inflow_cn.SetProperty("object","Reactor_Flex(5)");
     R5_S_NO_inflow_cn.SetName("R5_S_NO_Concentration");
     R5_S_NO_inflow_cn.SetType("Observation");
-    //R5_S_NO_inflow_cn.SetProperty("observed_data", Workingfolder + "Data/R5_S_NO_Concentration_obs.csv");
     system->AddObservation(R5_S_NO_inflow_cn,false);
+    system->observation("R5_S_NO_Concentration")->SetProperty("observed_data", Workingfolder + "Data/R5_S_NO_Concentration_obs.csv");
 
     Observation R6_S_NO_inflow_cn; // T4
 
