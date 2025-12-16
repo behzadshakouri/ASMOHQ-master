@@ -1768,7 +1768,7 @@ if (Calibration)
     R6_VSS_Concentration_obs.writefile(Workingfolder + "Data/R6_VSS_Concentration_obs.csv"); //
 
     CTimeSeries<double> R7_VSS_Concentration_obs; // T5A VSS
-    R7_VSS_Concentration_obs = DeNit_Observed.BTC[38];
+    R7_VSS_Concentration_obs = DeNit_Observed.BTC[59];
     R7_VSS_Concentration_obs.writefile(Workingfolder + "Data/R7_VSS_Concentration_obs.csv"); //
 
     CTimeSeries<double> R5_MeOH_Concentration_obs; // T3B MeOH
