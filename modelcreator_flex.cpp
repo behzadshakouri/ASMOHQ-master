@@ -1734,14 +1734,58 @@ bool ModelCreator_Flex::Create_Flex(System *system)
     // For Calibration
 if (Calibration)
 {
-
-    CTimeSeries<double> R5_S_NO_Concentration_obs;
-
+    // Creating and saving observation time series
+    CTimeSeries<double> R5_S_NO_Concentration_obs; // T3B S_NO
     R5_S_NO_Concentration_obs = DeNit_Observed.BTC[13];
     R5_S_NO_Concentration_obs.writefile(Workingfolder + "Data/R5_S_NO_Concentration_obs.csv"); //
 
-    Observation R5_S_NO_inflow_cn; // T3B
+    CTimeSeries<double> R6_S_NO_Concentration_obs; // T4 S_NO
+    R6_S_NO_Concentration_obs = DeNit_Observed.BTC[27];
+    R6_S_NO_Concentration_obs.writefile(Workingfolder + "Data/R6_S_NO_Concentration_obs.csv"); //
 
+    CTimeSeries<double> R8_S_NO_Concentration_obs; // T5B (Effluent) S_NO
+    R8_S_NO_Concentration_obs = DeNit_Observed.BTC[2];
+    R8_S_NO_Concentration_obs.writefile(Workingfolder + "Data/R8_S_NO_Concentration_obs.csv"); //
+
+    CTimeSeries<double> R4_sCOD_Concentration_obs; // T3A sCOD
+    R4_sCOD_Concentration_obs = DeNit_Observed.BTC[9];
+    R4_sCOD_Concentration_obs.writefile(Workingfolder + "Data/R4_sCOD_Concentration_obs.csv"); //
+
+    CTimeSeries<double> R5_sCOD_Concentration_obs; // T3B sCOD
+    R5_sCOD_Concentration_obs = DeNit_Observed.BTC[16];
+    R5_sCOD_Concentration_obs.writefile(Workingfolder + "Data/R5_sCOD_Concentration_obs.csv"); //
+
+    CTimeSeries<double> R6_sCOD_Concentration_obs; // T4 sCOD
+    R6_sCOD_Concentration_obs = DeNit_Observed.BTC[30];
+    R6_sCOD_Concentration_obs.writefile(Workingfolder + "Data/R6_sCOD_Concentration_obs.csv"); //
+
+    CTimeSeries<double> R6_TKN_Concentration_obs; // T4 TKN
+    R6_TKN_Concentration_obs = DeNit_Observed.BTC[29];
+    R6_TKN_Concentration_obs.writefile(Workingfolder + "Data/R6_TKN_Concentration_obs.csv"); //
+
+    CTimeSeries<double> R6_VSS_Concentration_obs; // T4 VSS
+    R6_VSS_Concentration_obs = DeNit_Observed.BTC[31];
+    R6_VSS_Concentration_obs.writefile(Workingfolder + "Data/R6_VSS_Concentration_obs.csv"); //
+
+    CTimeSeries<double> R7_VSS_Concentration_obs; // T5A VSS
+    R7_VSS_Concentration_obs = DeNit_Observed.BTC[38];
+    R7_VSS_Concentration_obs.writefile(Workingfolder + "Data/R7_VSS_Concentration_obs.csv"); //
+
+    CTimeSeries<double> R5_MeOH_Concentration_obs; // T3B MeOH
+    R5_MeOH_Concentration_obs = DeNit_Observed.BTC[12];
+    R5_MeOH_Concentration_obs.writefile(Workingfolder + "Data/R5_MeOH_Concentration_obs.csv"); //
+
+    CTimeSeries<double> R6_MeOH_Concentration_obs; // T4 MeOH
+    R6_MeOH_Concentration_obs = DeNit_Observed.BTC[26];
+    R6_MeOH_Concentration_obs.writefile(Workingfolder + "Data/R6_MeOH_Concentration_obs.csv"); //
+
+    CTimeSeries<double> R8_S_NH_Concentration_obs; // T5B S_NH
+    R8_S_NH_Concentration_obs = DeNit_Observed.BTC[3];
+    R8_S_NH_Concentration_obs.writefile(Workingfolder + "Data/R8_S_NH_Concentration_obs.csv"); //
+
+
+    // Adding Observations
+    Observation R5_S_NO_inflow_cn; // T3B S_NO
     R5_S_NO_inflow_cn.SetQuantities(system, "Observation");
     R5_S_NO_inflow_cn.SetProperty("expression","S_NO:concentration"); // time_variable_inflow_concentration
     R5_S_NO_inflow_cn.SetProperty("object","Reactor_Flex(5)");
@@ -1749,112 +1793,123 @@ if (Calibration)
     R5_S_NO_inflow_cn.SetType("Observation");
     system->AddObservation(R5_S_NO_inflow_cn,false);
     system->observation("R5_S_NO_Concentration")->SetProperty("observed_data", Workingfolder + "Data/R5_S_NO_Concentration_obs.csv");
+    system->observation("R5_S_NO_Concentration")->GetTimeSeries()->setFilename(Workingfolder + "Data/R5_S_NO_Concentration_obs.csv");
 
-    Observation R6_S_NO_inflow_cn; // T4
-
+    Observation R6_S_NO_inflow_cn; // T4 S_NO
     R6_S_NO_inflow_cn.SetQuantities(system, "Observation");
     R6_S_NO_inflow_cn.SetProperty("expression","S_NO:concentration");
     R6_S_NO_inflow_cn.SetProperty("object","Reactor_Flex(6)");
     R6_S_NO_inflow_cn.SetName("R6_S_NO_Concentration");
     R6_S_NO_inflow_cn.SetType("Observation");
     system->AddObservation(R6_S_NO_inflow_cn,false);
+    system->observation("R6_S_NO_Concentration")->SetProperty("observed_data", Workingfolder + "Data/R6_S_NO_Concentration_obs.csv");
+    system->observation("R6_S_NO_Concentration")->GetTimeSeries()->setFilename(Workingfolder + "Data/R6_S_NO_Concentration_obs.csv");
 
-    Observation R8_S_NO_inflow_cn; // T5B (Effluent)
-
+    Observation R8_S_NO_inflow_cn; // T5B (Effluent) S_NO
     R8_S_NO_inflow_cn.SetQuantities(system, "Observation");
     R8_S_NO_inflow_cn.SetProperty("expression","S_NO:concentration");
     R8_S_NO_inflow_cn.SetProperty("object","Reactor_Flex(8)");
     R8_S_NO_inflow_cn.SetName("R8_S_NO_Concentration");
     R8_S_NO_inflow_cn.SetType("Observation");
     system->AddObservation(R8_S_NO_inflow_cn,false);
+    system->observation("R8_S_NO_Concentration")->SetProperty("observed_data", Workingfolder + "Data/R8_S_NO_Concentration_obs.csv");
+    system->observation("R8_S_NO_Concentration")->GetTimeSeries()->setFilename(Workingfolder + "Data/R8_S_NO_Concentration_obs.csv");
 
-    Observation R4_sCOD_inflow_cn; // T3A
-
+    Observation R4_sCOD_inflow_cn; // T3A sCOD
     R4_sCOD_inflow_cn.SetQuantities(system, "Observation");
     R4_sCOD_inflow_cn.SetProperty("expression","S_i:concentration+S_S:concentration+S_M:concentration");
     R4_sCOD_inflow_cn.SetProperty("object","Reactor_Flex(4)");
     R4_sCOD_inflow_cn.SetName("R4_sCOD_Concentration");
     R4_sCOD_inflow_cn.SetType("Observation");
     system->AddObservation(R4_sCOD_inflow_cn,false);
+    system->observation("R4_sCOD_Concentration")->SetProperty("observed_data", Workingfolder + "Data/R4_sCOD_Concentration_obs.csv");
+    system->observation("R4_sCOD_Concentration")->GetTimeSeries()->setFilename(Workingfolder + "Data/R4_sCOD_Concentration_obs.csv");
 
-    Observation R5_sCOD_inflow_cn; // T3B
-
+    Observation R5_sCOD_inflow_cn; // T3B sCOD
     R5_sCOD_inflow_cn.SetQuantities(system, "Observation");
     R5_sCOD_inflow_cn.SetProperty("expression","S_i:concentration+S_S:concentration+S_M:concentration");
     R5_sCOD_inflow_cn.SetProperty("object","Reactor_Flex(5)");
     R5_sCOD_inflow_cn.SetName("R5_sCOD_Concentration");
     R5_sCOD_inflow_cn.SetType("Observation");
     system->AddObservation(R5_sCOD_inflow_cn,false);
+    system->observation("R5_sCOD_Concentration")->SetProperty("observed_data", Workingfolder + "Data/R5_sCOD_Concentration_obs.csv");
+    system->observation("R5_sCOD_Concentration")->GetTimeSeries()->setFilename(Workingfolder + "Data/R5_sCOD_Concentration_obs.csv");
 
-    Observation R6_sCOD_inflow_cn; // T4
-
+    Observation R6_sCOD_inflow_cn; // T4 sCOD
     R6_sCOD_inflow_cn.SetQuantities(system, "Observation");
     R6_sCOD_inflow_cn.SetProperty("expression","S_i:concentration+S_S:concentration+S_M:concentration");
     R6_sCOD_inflow_cn.SetProperty("object","Reactor_Flex(6)");
     R6_sCOD_inflow_cn.SetName("R6_sCOD_Concentration");
     R6_sCOD_inflow_cn.SetType("Observation");
     system->AddObservation(R6_sCOD_inflow_cn,false);
+    system->observation("R6_sCOD_Concentration")->SetProperty("observed_data", Workingfolder + "Data/R6_sCOD_Concentration_obs.csv");
+    system->observation("R6_sCOD_Concentration")->GetTimeSeries()->setFilename(Workingfolder + "Data/R6_sCOD_Concentration_obs.csv");
 
-    Observation R6_TKN_inflow_cn; // T4
-
+    Observation R6_TKN_inflow_cn; // T4 TKN
     R6_TKN_inflow_cn.SetQuantities(system, "Observation");
     R6_TKN_inflow_cn.SetProperty("expression","0.086*X_BH:concentration+0.086*X_BM:concentration+0.086*X_BA:concentration+0.086*X_p:concentration+S_NH:concentration+S_ND:concentration+X_ND:concentration");
     R6_TKN_inflow_cn.SetProperty("object","Reactor_Flex(6)");
     R6_TKN_inflow_cn.SetName("R6_TKN_Concentration");
     R6_TKN_inflow_cn.SetType("Observation");
     system->AddObservation(R6_TKN_inflow_cn,false);
+    system->observation("R6_TKN_Concentration")->SetProperty("observed_data", Workingfolder + "Data/R6_TKN_Concentration_obs.csv");
+    system->observation("R6_TKN_Concentration")->GetTimeSeries()->setFilename(Workingfolder + "Data/R6_TKN_Concentration_obs.csv");
 
-    Observation R6_VSS_inflow_cn; // T4
-
+    Observation R6_VSS_inflow_cn; // T4 VSS
     R6_VSS_inflow_cn.SetQuantities(system, "Observation");
     R6_VSS_inflow_cn.SetProperty("expression","0.556*X_S:concentration+0.704*X_BH:concentration+0.704*X_BM:concentration+0.704*X_BA:concentration+0.704*X_p:concentration");
     R6_VSS_inflow_cn.SetProperty("object","Reactor_Flex(6)");
     R6_VSS_inflow_cn.SetName("R6_VSS_Concentration");
     R6_VSS_inflow_cn.SetType("Observation");
     system->AddObservation(R6_VSS_inflow_cn,false);
+    system->observation("R6_VSS_Concentration")->SetProperty("observed_data", Workingfolder + "Data/R6_VSS_Concentration_obs.csv");
+    system->observation("R6_VSS_Concentration")->GetTimeSeries()->setFilename(Workingfolder + "Data/R6_VSS_Concentration_obs.csv");
 
-    Observation R8_VSS_inflow_cn; // T5B
+    Observation R7_VSS_inflow_cn; // T5A VSS
+    R7_VSS_inflow_cn.SetQuantities(system, "Observation");
+    R7_VSS_inflow_cn.SetProperty("expression","0.556*X_S:concentration+0.704*X_BH:concentration+0.704*X_BM:concentration+0.704*X_BA:concentration+0.704*X_p:concentration");
+    R7_VSS_inflow_cn.SetProperty("object","Reactor_Flex(7)");
+    R7_VSS_inflow_cn.SetName("R7_VSS_Concentration");
+    R7_VSS_inflow_cn.SetType("Observation");
+    system->AddObservation(R7_VSS_inflow_cn,false);
+    system->observation("R7_VSS_Concentration")->SetProperty("observed_data", Workingfolder + "Data/R7_VSS_Concentration_obs.csv");
+    system->observation("R7_VSS_Concentration")->GetTimeSeries()->setFilename(Workingfolder + "Data/R7_VSS_Concentration_obs.csv");
 
-    R8_VSS_inflow_cn.SetQuantities(system, "Observation");
-    R8_VSS_inflow_cn.SetProperty("expression","0.556*X_S:concentration+0.704*X_BH:concentration+0.704*X_BM:concentration+0.704*X_BA:concentration+0.704*X_p:concentration");
-    R8_VSS_inflow_cn.SetProperty("object","Reactor_Flex(8)");
-    R8_VSS_inflow_cn.SetName("R8_VSS_Concentration");
-    R8_VSS_inflow_cn.SetType("Observation");
-    system->AddObservation(R8_VSS_inflow_cn,false);
-
-    Observation R5_MeOH_inflow_cn; // T3B
-
+    Observation R5_MeOH_inflow_cn; // T3B MeOH
     R5_MeOH_inflow_cn.SetQuantities(system, "Observation");
     R5_MeOH_inflow_cn.SetProperty("expression","S_M:concentration");
     R5_MeOH_inflow_cn.SetProperty("object","Reactor_Flex(5)");
     R5_MeOH_inflow_cn.SetName("R5_MeOH_Concentration");
     R5_MeOH_inflow_cn.SetType("Observation");
     system->AddObservation(R5_MeOH_inflow_cn,false);
+    system->observation("R5_MeOH_Concentration")->SetProperty("observed_data", Workingfolder + "Data/R5_MeOH_Concentration_obs.csv");
+    system->observation("R5_MeOH_Concentration")->GetTimeSeries()->setFilename(Workingfolder + "Data/R5_MeOH_Concentration_obs.csv");
 
-    Observation R6_MeOH_inflow_cn; // T4
-
+    Observation R6_MeOH_inflow_cn; // T4 MeOH
     R6_MeOH_inflow_cn.SetQuantities(system, "Observation");
     R6_MeOH_inflow_cn.SetProperty("expression","S_M:concentration");
     R6_MeOH_inflow_cn.SetProperty("object","Reactor_Flex(6)");
     R6_MeOH_inflow_cn.SetName("R6_MeOH_Concentration");
     R6_MeOH_inflow_cn.SetType("Observation");
     system->AddObservation(R6_MeOH_inflow_cn,false);
+    system->observation("R6_MeOH_Concentration")->SetProperty("observed_data", Workingfolder + "Data/R6_MeOH_Concentration_obs.csv");
+    system->observation("R6_MeOH_Concentration")->GetTimeSeries()->setFilename(Workingfolder + "Data/R6_MeOH_Concentration_obs.csv");
 
-    Observation R8_S_NH_inflow_cn; // T5B
-
+    Observation R8_S_NH_inflow_cn; // T5B S_NH
     R8_S_NH_inflow_cn.SetQuantities(system, "Observation");
     R8_S_NH_inflow_cn.SetProperty("expression","S_NH:concentration");
     R8_S_NH_inflow_cn.SetProperty("object","Reactor_Flex(8)");
     R8_S_NH_inflow_cn.SetName("R8_S_NH_Concentration");
     R8_S_NH_inflow_cn.SetType("Observation");
     system->AddObservation(R8_S_NH_inflow_cn,false);
+    system->observation("R8_S_NH_Concentration")->SetProperty("observed_data", Workingfolder + "Data/R8_S_NH_Concentration_obs.csv");
+    system->observation("R8_S_NH_Concentration")->GetTimeSeries()->setFilename(Workingfolder + "Data/R8_S_NH_Concentration_obs.csv");
 }
 
     // For FFNWrapper (OUP)
 if (OUP)
 {
     Observation total_inflow;
-
     total_inflow.SetQuantities(system, "Observation");
     total_inflow.SetProperty("expression","inflow");
     total_inflow.SetProperty("object","Reactor_Flex(1)");
@@ -1863,7 +1918,6 @@ if (OUP)
     system->AddObservation(total_inflow,false);
 
     Observation WAS_flow;
-
     WAS_flow.SetQuantities(system, "Observation");
     WAS_flow.SetProperty("expression","Dummy_timeseries");
     WAS_flow.SetProperty("object","WAS");
@@ -1873,7 +1927,6 @@ if (OUP)
 
     /*
     Observation WAS_flow;
-
     WAS_flow.SetQuantities(system, "Observation");
     WAS_flow.SetProperty("expression","flow");
     WAS_flow.SetProperty("object","Settling element bottom - WAS");
@@ -1883,7 +1936,6 @@ if (OUP)
     */
 
     Observation RAS_flow;
-
     RAS_flow.SetQuantities(system, "Observation");
     RAS_flow.SetProperty("expression","flow");
     RAS_flow.SetProperty("object","Settling element bottom - Reactor_Flex(1)");
@@ -1892,7 +1944,6 @@ if (OUP)
     system->AddObservation(RAS_flow,false);
 
     Observation Temp;
-
     Temp.SetQuantities(system, "Observation");
     Temp.SetProperty("expression","Dummy_timeseries");
     Temp.SetProperty("object","Clarifier");
@@ -1902,7 +1953,6 @@ if (OUP)
 
 
     Observation R1_VSS_inflow_cn;
-
     R1_VSS_inflow_cn.SetQuantities(system, "Observation");
     //R1_VSS_inflow_cn.SetProperty("expression","0.556*X_S:time_variable_inflow_concentration+0.704*X_BH:time_variable_inflow_concentration+0.704*X_BM:time_variable_inflow_concentration+0.704*X_BA:time_variable_inflow_concentration+0.704*X_p:time_variable_inflow_concentration");
     R1_VSS_inflow_cn.SetProperty("expression","X_S:time_variable_inflow_concentration/" + QString::number(c_X_S).toStdString());
@@ -1912,7 +1962,6 @@ if (OUP)
     system->AddObservation(R1_VSS_inflow_cn,false);
 
     Observation R1_sCOD_inflow_cn;
-
     R1_sCOD_inflow_cn.SetQuantities(system, "Observation");
     //R1_sCOD_inflow_cn.SetProperty("expression","S_i:time_variable_inflow_concentration+S_S:time_variable_inflow_concentration+S_M:time_variable_inflow_concentration");
     R1_sCOD_inflow_cn.SetProperty("expression","S_S:time_variable_inflow_concentration/" + QString::number(c_S_S).toStdString());
@@ -1922,7 +1971,6 @@ if (OUP)
     system->AddObservation(R1_sCOD_inflow_cn,false);
 
     Observation R1_NH3_inflow_cn;
-
     R1_NH3_inflow_cn.SetQuantities(system, "Observation");
     R1_NH3_inflow_cn.SetProperty("expression","S_NH:time_variable_inflow_concentration");
     R1_NH3_inflow_cn.SetProperty("object","Reactor_Flex(1)");
@@ -1931,7 +1979,6 @@ if (OUP)
     system->AddObservation(R1_NH3_inflow_cn,false);
 
     Observation R1_NO3_inflow_cn;
-
     R1_NO3_inflow_cn.SetQuantities(system, "Observation");
     R1_NO3_inflow_cn.SetProperty("expression","S_NO:time_variable_inflow_concentration");
     R1_NO3_inflow_cn.SetProperty("object","Reactor_Flex(1)");
@@ -1940,7 +1987,6 @@ if (OUP)
     system->AddObservation(R1_NO3_inflow_cn,false);
 
     Observation R1_MeOH_inflow_cn;
-
     R1_MeOH_inflow_cn.SetQuantities(system, "Observation");
     R1_MeOH_inflow_cn.SetProperty("expression","S_M:external_mass_flow_timeseries");
     R1_MeOH_inflow_cn.SetProperty("object","Reactor_Flex(5)");
@@ -1949,7 +1995,6 @@ if (OUP)
     system->AddObservation(R1_MeOH_inflow_cn,false);
 
     Observation Stl_t_S_NO_flow_cn;
-
     Stl_t_S_NO_flow_cn.SetQuantities(system, "Observation");
     Stl_t_S_NO_flow_cn.SetProperty("expression","S_NO:concentration");
     Stl_t_S_NO_flow_cn.SetProperty("object","Settling element top");
@@ -1958,7 +2003,6 @@ if (OUP)
     system->AddObservation(Stl_t_S_NO_flow_cn,false);
 
     Observation Stl_t_S_NH3_flow_cn;
-
     Stl_t_S_NH3_flow_cn.SetQuantities(system, "Observation");
     Stl_t_S_NH3_flow_cn.SetProperty("expression","S_NH:concentration"); // use NH instead of NH3
     Stl_t_S_NH3_flow_cn.SetProperty("object","Settling element top");
@@ -1967,7 +2011,6 @@ if (OUP)
     system->AddObservation(Stl_t_S_NH3_flow_cn,false);
 
     Observation Stl_t_S_ND_flow_cn;
-
     Stl_t_S_ND_flow_cn.SetQuantities(system, "Observation");
     Stl_t_S_ND_flow_cn.SetProperty("expression","S_ND:concentration");
     Stl_t_S_ND_flow_cn.SetProperty("object","Settling element top");
@@ -1976,7 +2019,6 @@ if (OUP)
     system->AddObservation(Stl_t_S_ND_flow_cn,false);
 
     Observation Stl_t_sCOD_flow_cn;
-
     Stl_t_sCOD_flow_cn.SetQuantities(system, "Observation");
     Stl_t_sCOD_flow_cn.SetProperty("expression","S_i:concentration+S_S:concentration+S_M:concentration");
     Stl_t_sCOD_flow_cn.SetProperty("object","Settling element top");
@@ -1985,7 +2027,6 @@ if (OUP)
     system->AddObservation(Stl_t_sCOD_flow_cn,false);
 
     Observation Stl_t_VSS_flow_cn;
-
     Stl_t_VSS_flow_cn.SetQuantities(system, "Observation");
     Stl_t_VSS_flow_cn.SetProperty("expression","0.556*X_S:concentration+0.704*X_BH:concentration+0.704*X_BM:concentration+0.704*X_BA:concentration+0.704*X_p:concentration");
     Stl_t_VSS_flow_cn.SetProperty("object","Settling element top");
@@ -1994,7 +2035,6 @@ if (OUP)
     system->AddObservation(Stl_t_VSS_flow_cn,false);
 
     Observation Stl_t_TKN_flow_cn;
-
     Stl_t_TKN_flow_cn.SetQuantities(system, "Observation");
     Stl_t_TKN_flow_cn.SetProperty("expression","0.086*X_BH:concentration+0.086*X_BM:concentration+0.086*X_BA:concentration+0.06*X_p:concentration+S_NH:concentration+S_ND:concentration+X_ND:concentration"); // use NH instead of NH3
     Stl_t_TKN_flow_cn.SetProperty("object","Settling element top");
