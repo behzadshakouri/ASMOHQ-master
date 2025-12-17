@@ -1737,10 +1737,14 @@ if (Calibration)
     // Creating and saving observation time series
     CTimeSeries<double> R5_S_NO_Concentration_obs; // T3B S_NO
     R5_S_NO_Concentration_obs = DeNit_Observed.BTC[13];
+    R5_S_NO_Concentration_obs.append(DeNit_Observed.BTC[20]);
     R5_S_NO_Concentration_obs.writefile(Workingfolder + "Data/R5_S_NO_Concentration_obs.csv"); //
 
     CTimeSeries<double> R6_S_NO_Concentration_obs; // T4 S_NO
     R6_S_NO_Concentration_obs = DeNit_Observed.BTC[27];
+    R6_S_NO_Concentration_obs.append(DeNit_Observed.BTC[34]);
+    R6_S_NO_Concentration_obs.append(DeNit_Observed.BTC[41]);
+    R6_S_NO_Concentration_obs.append(DeNit_Observed.BTC[48]);
     R6_S_NO_Concentration_obs.writefile(Workingfolder + "Data/R6_S_NO_Concentration_obs.csv"); //
 
     CTimeSeries<double> R8_S_NO_Concentration_obs; // T5B (Effluent) S_NO
@@ -1753,18 +1757,28 @@ if (Calibration)
 
     CTimeSeries<double> R5_sCOD_Concentration_obs; // T3B sCOD
     R5_sCOD_Concentration_obs = DeNit_Observed.BTC[16];
+    R5_sCOD_Concentration_obs.append(DeNit_Observed.BTC[23]);
     R5_sCOD_Concentration_obs.writefile(Workingfolder + "Data/R5_sCOD_Concentration_obs.csv"); //
 
     CTimeSeries<double> R6_sCOD_Concentration_obs; // T4 sCOD
     R6_sCOD_Concentration_obs = DeNit_Observed.BTC[30];
+    R6_sCOD_Concentration_obs.append(DeNit_Observed.BTC[37]);
+    R6_sCOD_Concentration_obs.append(DeNit_Observed.BTC[44]);
+    R6_sCOD_Concentration_obs.append(DeNit_Observed.BTC[51]);
     R6_sCOD_Concentration_obs.writefile(Workingfolder + "Data/R6_sCOD_Concentration_obs.csv"); //
 
     CTimeSeries<double> R6_TKN_Concentration_obs; // T4 TKN
     R6_TKN_Concentration_obs = DeNit_Observed.BTC[29];
+    R6_TKN_Concentration_obs.append(DeNit_Observed.BTC[36]);
+    R6_TKN_Concentration_obs.append(DeNit_Observed.BTC[43]);
+    R6_TKN_Concentration_obs.append(DeNit_Observed.BTC[50]);
     R6_TKN_Concentration_obs.writefile(Workingfolder + "Data/R6_TKN_Concentration_obs.csv"); //
 
     CTimeSeries<double> R6_VSS_Concentration_obs; // T4 VSS
     R6_VSS_Concentration_obs = DeNit_Observed.BTC[31];
+    R6_VSS_Concentration_obs.append(DeNit_Observed.BTC[38]);
+    R6_VSS_Concentration_obs.append(DeNit_Observed.BTC[45]);
+    R6_VSS_Concentration_obs.append(DeNit_Observed.BTC[52]);
     R6_VSS_Concentration_obs.writefile(Workingfolder + "Data/R6_VSS_Concentration_obs.csv"); //
 
     CTimeSeries<double> R7_VSS_Concentration_obs; // T5A VSS
@@ -1773,10 +1787,14 @@ if (Calibration)
 
     CTimeSeries<double> R5_MeOH_Concentration_obs; // T3B MeOH
     R5_MeOH_Concentration_obs = DeNit_Observed.BTC[12];
+    R5_MeOH_Concentration_obs.append(DeNit_Observed.BTC[19]);
     R5_MeOH_Concentration_obs.writefile(Workingfolder + "Data/R5_MeOH_Concentration_obs.csv"); //
 
     CTimeSeries<double> R6_MeOH_Concentration_obs; // T4 MeOH
     R6_MeOH_Concentration_obs = DeNit_Observed.BTC[26];
+    R6_MeOH_Concentration_obs.append(DeNit_Observed.BTC[33]);
+    R6_MeOH_Concentration_obs.append(DeNit_Observed.BTC[40]);
+    R6_MeOH_Concentration_obs.append(DeNit_Observed.BTC[47]);
     R6_MeOH_Concentration_obs.writefile(Workingfolder + "Data/R6_MeOH_Concentration_obs.csv"); //
 
     CTimeSeries<double> R8_S_NH_Concentration_obs; // T5B S_NH
