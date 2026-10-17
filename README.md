@@ -36,3 +36,14 @@ Open `ASMOHQ.pro` in a compatible Qt development environment, configure the
 required local OpenHydroQual resources, and build the application. This is
 research software; dependency versions and file paths may require adjustment
 for the local system.
+
+## Citation
+
+If you use this repository, please cite the associated ASM1 surrogate-modeling
+publication:
+
+Shakouri, B., Murthy, S., De Clippeleir, H., Lesnik, K., & Massoudieh, A.
+(2026). “Surrogate modeling of ASM1 using feedforward and LSTM neural networks.”
+*Journal of Water Process Engineering, 81*, 109246.
+[https://doi.org/10.1016/j.jwpe.2025.109246](https://doi.org/10.1016/j.jwpe.2025.109246)
+· [Google Scholar record](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=0lTtuMoAAAAJ&citation_for_view=0lTtuMoAAAAJ:4JMBOYKVnBMC)
